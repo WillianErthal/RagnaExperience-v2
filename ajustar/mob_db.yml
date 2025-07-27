@@ -1,11 +1,276 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2024 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Monster Database
+###########################################################################
+#
+# Monster Settings
+#
+###########################################################################
+# - Id                      Monster ID.
+#   AegisName               Server name to reference the monster in scripts and lookups, should use no spaces.
+#   Name                    Name in English.
+#   JapaneseName            Name in Japanese. (Default: 'Name' value)
+#   Level                   Level. (Default: 1)
+#   Hp                      Total HP. (Default: 1)
+#   Sp                      Total SP. (Default: 1)
+#   BaseExp                 Base experience gained. (Default: 0)
+#   JobExp                  Job experience gained. (Default: 0)
+#   MvpExp                  MVP experience gained. (Default: 0)
+#   Attack                  Minimum attack in pre-renewal and base attack in renewal. (Default: 0)
+#   Attack2                 Maximum attack in pre-renewal and base magic attack in renewal. (Default: 0)
+#   Defense                 Physical defense of the monster, reduces melee and ranged physical attack/skill damage. (Default: 0)
+#   MagicDefense            Magic defense of the monster, reduces magical skill damage. (Default: 0)
+#   Resistance              Physical resistance of the monster, reduces melee and ranged physical attack/skill damage. (Default: 0)
+#   MagicResistance         Magic resistance of the monster, reduces magical skill damage. (Default: 0)
+#   Str                     Strength which affects attack. (Default: 1)
+#   Agi                     Agility which affects flee. (Default: 1)
+#   Vit                     Vitality which affects defense. (Default: 1)
+#   Int                     Intelligence which affects magic attack. (Default: 1)
+#   Dex                     Dexterity which affects hit rate. (Default: 1)
+#   Luk                     Luck which affects perfect dodge/lucky flee/perfect flee/lucky dodge rate. (Default: 1)
+#   AttackRange             Attack range. (Default: 0)
+#   SkillRange              Skill cast range. (Default: 0)
+#   ChaseRange              Chase range. (Default: 0)
+#   Size                    Size. (Default: Small)
+#   Race                    Race. (Default: Formless)
+#   RaceGroups:             List of secondary groups the monster may be part of. (Optional)
+#     <group>: <value>      Group to toggle.
+#   Element                 Element. (Default: Neutral)
+#   ElementLevel            Level of element. (Default: 1)
+#   WalkSpeed               Walk speed. (Default: DEFAULT_WALK_SPEED)
+#   AttackDelay             Attack speed. (Default: 0)
+#   AttackMotion            Attack animation speed. (Default: 0)
+#   ClientAttackMotion      Client attack speed. (Default: AttackMotion)
+#   DamageMotion            Damage animation speed. (Default: 0)
+#   DamageTaken             Rate at which the monster will receive incoming damage. (Default: 100)
+#   GroupId                 Monster group ID. (Default: 0)
+#   Title                   Monster title. (Default: None)
+#   Ai                      Aegis monster type AI behavior. (Default: 06)
+#   Class                   Aegis monster class. (Default: Normal)
+#   Modes:                  List of unique behavior not defined by AI, Class, or Attribute. (Optional)
+#     <mode>: <value>       Mode to toggle.
+#   MvpDrops:               List of possible MVP prize items. Max of MAX_MVP_DROP. (Optional)
+#     - Item                Item name.
+#       Rate                Drop rate of item.
+#       RandomOptionGroup   Random Option Group applied to item on drop. (Default: None)
+#       Index               Index used for overwriting item. (Optional)
+#   Drops:                  List of possible normal item drops. Max of MAX_MOB_DROP. (Optional)
+#     - Item                Item name.
+#       Rate                Drop rate of item.
+#       StealProtected      If the item is shielded from TF_STEAL. (Default: false)
+#       RandomOptionGroup   Random Option Group applied to item on drop. (Default: None)
+#       Index               Index used for overwriting item. (Optional)
+###########################################################################
+
 Header:
   Type: MOB_DB
-  Version: 3
+  Version: 5
 
 Body:
+
   - Id: 1001
     AegisName: SCORPION
-    Name: Escorpi„o
+    ClientAttackMotion: 384
+    Int: 0
+    ClientAttackMotion: 288
+#  - Id: 1003
+#    AegisName: TESTEGG
+#    Name: Test Egg
+#    Level: 2
+#    Hp: 100000
+#    BaseExp: 10
+#    JobExp: 10
+#    Attack: 3
+#    Attack2: 9
+#    Defense: 99
+#    Agi: 99
+#    SkillRange: 10
+#    ChaseRange: 12
+#    Size: Small
+#    Race: Insect
+#    Element: Earth
+#    ElementLevel: 1
+#    WalkSpeed: 512
+#    AttackMotion: 512
+    ClientAttackMotion: 648
+    Luk: 0
+    ClientAttackMotion: 432
+#  - Id: 1006
+#    AegisName: THIEF_BUG_LARVA
+#    Name: Thief Bug Larva
+#    Level: 1
+#    Size: Small
+#    Race: Formless
+#    Element: Water
+#    ElementLevel: 0
+#    Ai: 25
+#    Modes:
+#      NoCast: true
+#      CastSensorChase: true
+#      CastSensorIdle: true
+#      ChangeChase: true
+    Int: 0
+    ClientAttackMotion: 192
+    Int: 0
+    ClientAttackMotion: 768
+    Int: 0
+    ClientAttackMotion: 504
+    ClientAttackMotion: 288
+    ClientAttackMotion: 288
+    ClientAttackMotion: 336
+    ClientAttackMotion: 216
+    ClientAttackMotion: 576
+    Int: 0
+    Luk: 0
+    ClientAttackMotion: 816
+    ClientAttackMotion: 672
+#  - Id: 1017
+#    AegisName: THIEF_BUG_FEMALE
+#    Name: Thief Bug Female
+#    Level: 10
+#    Hp: 170
+#    BaseExp: 35
+#    JobExp: 18
+#    Attack: 33
+#    Attack2: 40
+#    Defense: 5
+#    MagicDefense: 5
+#    Agi: 15
+#    Vit: 10
+#    Int: 5
+#    Dex: 23
+#    Luk: 5
+#    AttackRange: 1
+#    SkillRange: 10
+#    ChaseRange: 12
+#    Size: Medium
+#    Race: Insect
+#    Element: Dark
+#    ElementLevel: 1
+#    WalkSpeed: 200
+#    AttackDelay: 988
+#    AttackMotion: 288
+#    DamageMotion: 768
+#    Ai: 25
+#    Modes:
+#      NoCast: true
+#      CastSensorChase: true
+#      CastSensorIdle: true
+#      ChangeChase: true
+#    Drops:
+#      - Item: Worm_Peelings
+#        Rate: 3500
+#        StealProtected: true
+    ClientAttackMotion: 432
+    ClientAttackMotion: 480
+    Int: 0
+    ClientAttackMotion: 384
+#  - Id: 1021
+#    AegisName: THIEF_BUG_MALE
+#    Name: Thief Bug Male
+#    Level: 19
+#    Hp: 583
+#    BaseExp: 223
+#    JobExp: 93
+#    Attack: 76
+#    Attack2: 88
+#    Defense: 15
+#    MagicDefense: 5
+#    Agi: 29
+#    Vit: 16
+#    Int: 5
+#    Dex: 36
+#    Luk: 52
+#    AttackRange: 1
+#    SkillRange: 10
+#    ChaseRange: 12
+#    Size: Medium
+#    Race: Insect
+#    Element: Dark
+#    ElementLevel: 1
+#    WalkSpeed: 300
+#    AttackDelay: 988
+#    AttackMotion: 288
+#    DamageMotion: 768
+#    Ai: 25
+#    Modes:
+#      NoCast: true
+#      Looter: true
+#      NoRandomWalk: true
+#      CastSensorChase: true
+#      CastSensorIdle: true
+#      ChangeChase: true
+#    Drops:
+#      - Item: Emveretarcon
+#        Rate: 40
+#        StealProtected: true
+    ClientAttackMotion: 672
+    ClientAttackMotion: 288
+    ClientAttackMotion: 288
+    ClientAttackMotion: 480
+#  - Id: 1027
+#    AegisName: RAPTICE
+#    Name: Raptice
+#    Level: 17
+#    Hp: 600
+#    BaseExp: 100
+#    JobExp: 55
+#    Defense: 5
+#    MagicDefense: 10
+#    Str: 5
+#    Agi: 20
+#    Vit: 20
+#    Dex: 28
+#    Luk: 10
+#    AttackRange: 1
+#    SkillRange: 10
+#    ChaseRange: 12
+#    Size: Medium
+#    Race: Brute
+#    Element: Earth
+#    ElementLevel: 1
+#    WalkSpeed: 200
+#    AttackDelay: 2000
+#    AttackMotion: 1000
+#    DamageMotion: 500
+#    Ai: 25
+#    Modes:
+#      NoRandomWalk: true
+#      CastSensorIdle: true
+#    Drops:
+#      - Item: Jellopy
+#        Rate: 7000
+    ClientAttackMotion: 216
+    ClientAttackMotion: 480
+    ClientAttackMotion: 288
+    Int: 0
+    ClientAttackMotion: 288
+    Int: 0
+    ClientAttackMotion: 480
+    ClientAttackMotion: 288
+    ClientAttackMotion: 336
+    ClientAttackMotion: 288
+    Int: 0
+    ClientAttackMotion: 408
+    ClientAttackMotion: 288
+    ClientAttackMotion: 192
+    Name: Escorpi√£o
     Level: 24
     Hp: 1109
     BaseExp: 287
@@ -94,7 +359,7 @@ Body:
         StealProtected: true
   - Id: 1004
     AegisName: HORNET
-    Name: Zang„o
+    Name: Zang√£o
     Level: 8
     Hp: 169
     BaseExp: 19
@@ -708,7 +973,7 @@ Body:
         StealProtected: true
   - Id: 1020
     AegisName: MANDRAGORA
-    Name: Mandr·gora
+    Name: Mandr√°gora
     Level: 12
     Hp: 405
     BaseExp: 45
@@ -845,8 +1110,8 @@ Body:
         StealProtected: true
   - Id: 1025
     AegisName: SNAKE
-    Name: JibÛia
-    JapaneseName: JibÛia
+    Name: Jib√≥ia
+    JapaneseName: Jib√≥ia
     Level: 15
     Hp: 471
     BaseExp: 72
@@ -1161,7 +1426,7 @@ Body:
         StealProtected: true
   - Id: 1033
     AegisName: ELDER_WILOW
-    Name: Salgueiro Anci„o
+    Name: Salgueiro Anci√£o
     Level: 20
     Hp: 693
     BaseExp: 163
@@ -1250,7 +1515,7 @@ Body:
         StealProtected: true
   - Id: 1035
     AegisName: HUNTER_FLY
-    Name: Mosca CaÁadora
+    Name: Mosca Ca√ßadora
     Level: 42
     Hp: 5242
     BaseExp: 1517
@@ -1299,7 +1564,7 @@ Body:
         StealProtected: true
   - Id: 1036
     AegisName: GHOUL
-    Name: CarniÁal
+    Name: Carni√ßal
     Level: 40
     Hp: 5418
     BaseExp: 1088
@@ -1391,7 +1656,7 @@ Body:
         StealProtected: true
   - Id: 1038
     AegisName: OSIRIS
-    Name: OsÌris
+    Name: Os√≠ris
     Level: 78
     Hp: 415400
     BaseExp: 71500
@@ -1448,7 +1713,61 @@ Body:
         StealProtected: true
   - Id: 1039
     AegisName: BAPHOMET
-    Name: BafomÈ
+    ClientAttackMotion: 600
+    Int: 0
+    Luk: 0
+    ClientAttackMotion: 912
+    Int: 0
+    ClientAttackMotion: 288
+    ClientAttackMotion: 288
+#  - Id: 1043
+#    AegisName: SEAHORES
+#    Name: Seahorse
+#    Level: 18
+#    Hp: 1452
+#    BaseExp: 122
+#    JobExp: 78
+#    Attack: 100
+#    Attack2: 150
+#    Defense: 15
+#    MagicDefense: 7
+#    AttackRange: 3
+#    SkillRange: 10
+#    ChaseRange: 10
+#    Size: Small
+#    Race: Fish
+#    Element: Earth
+#    ElementLevel: 1
+#    WalkSpeed: 200
+#    AttackDelay: 1500
+#    AttackMotion: 800
+#    DamageMotion: 600
+#    Ai: 25
+#    Modes:
+#      NoRandomWalk: true
+#      CastSensorIdle: true
+    ClientAttackMotion: 384
+    ClientAttackMotion: 216
+    ClientAttackMotion: 192
+    Int: 0
+    ClientAttackMotion: 672
+    Int: 0
+    ClientAttackMotion: 288
+    ClientAttackMotion: 240
+    ClientAttackMotion: 240
+    Int: 0
+    Luk: 0
+    ClientAttackMotion: 720
+    ClientAttackMotion: 768
+    ClientAttackMotion: 720
+    Luk: 0
+    ClientAttackMotion: 720
+    ClientAttackMotion: 480
+    ClientAttackMotion: 480
+    ClientAttackMotion: 360
+    ClientAttackMotion: 432
+    ClientAttackMotion: 504
+    Name: Bafom√©
     Level: 81
     Hp: 668000
     BaseExp: 107250
@@ -1550,7 +1869,7 @@ Body:
         StealProtected: true
   - Id: 1041
     AegisName: MUMMY
-    Name: M˙mia
+    Name: M√∫mia
     Level: 37
     Hp: 5176
     BaseExp: 800
@@ -1595,7 +1914,7 @@ Body:
         StealProtected: true
   - Id: 1042
     AegisName: STEEL_CHONCHON
-    Name: Chonchon de AÁo
+    Name: Chonchon de A√ßo
     Level: 17
     Hp: 530
     BaseExp: 109
@@ -1829,7 +2148,7 @@ Body:
         StealProtected: true
   - Id: 1048
     AegisName: THIEF_BUG_EGG
-    Name: Ovo de Besouro-Ladr„o
+    Name: Ovo de Besouro-Ladr√£o
     Level: 4
     Hp: 48
     BaseExp: 8
@@ -1960,7 +2279,7 @@ Body:
         StealProtected: true
   - Id: 1051
     AegisName: THIEF_BUG
-    Name: Besouro-Ladr„o
+    Name: Besouro-Ladr√£o
     Level: 6
     Hp: 126
     BaseExp: 17
@@ -2051,7 +2370,7 @@ Body:
         StealProtected: true
   - Id: 1053
     AegisName: THIEF_BUG_
-    Name: Besouro-Ladr„o FÍmea
+    Name: Besouro-Ladr√£o F√™mea
     Level: 10
     Hp: 170
     BaseExp: 35
@@ -2099,7 +2418,7 @@ Body:
         StealProtected: true
   - Id: 1054
     AegisName: THIEF_BUG__
-    Name: Besouro-Ladr„o Macho
+    Name: Besouro-Ladr√£o Macho
     Level: 19
     Hp: 583
     BaseExp: 223
@@ -2388,7 +2707,107 @@ Body:
         StealProtected: true
   - Id: 1060
     AegisName: BIGFOOT
-    Name: PÈ Grande
+    ClientAttackMotion: 1092
+    ClientAttackMotion: 720
+    ClientAttackMotion: 288
+    ClientAttackMotion: 264
+    Int: 0
+    ClientAttackMotion: 696
+    ClientAttackMotion: 108
+    ClientAttackMotion: 420
+    ClientAttackMotion: 192
+    Int: 0
+    ClientAttackMotion: 336
+    ClientAttackMotion: 192
+    ClientAttackMotion: 480
+    ClientAttackMotion: 360
+    ClientAttackMotion: 432
+    Int: 0
+    ClientAttackMotion: 288
+    Int: 0
+    ClientAttackMotion: 468
+#  - Id: 1075
+#    AegisName: TURTLE
+#    Name: Turtle
+#    Level: 3
+#    Hp: 77
+#    Attack: 1
+#    Attack2: 2
+#    Defense: 35
+#    AttackRange: 1
+#    SkillRange: 7
+#    ChaseRange: 12
+#    Size: Small
+#    Race: Fish
+#    Element: Earth
+#    ElementLevel: 1
+#    WalkSpeed: 200
+#    AttackDelay: 500
+#    AttackMotion: 500
+#    DamageMotion: 500
+#    Ai: 01
+    Int: 0
+    Luk: 0
+    ClientAttackMotion: 336
+    Int: 0
+    Luk: 0
+    ClientAttackMotion: 576
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    ClientAttackMotion: 960
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    ClientAttackMotion: 960
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    ClientAttackMotion: 960
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    ClientAttackMotion: 960
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    ClientAttackMotion: 960
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    ClientAttackMotion: 2016
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    ClientAttackMotion: 0
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    ClientAttackMotion: 0
+    Name: P√© Grande
     Level: 25
     Hp: 1619
     BaseExp: 310
@@ -2522,7 +2941,7 @@ Body:
         StealProtected: true
   - Id: 1063
     AegisName: LUNATIC
-    Name: Lun·tico
+    Name: Lun√°tico
     Level: 3
     Hp: 60
     BaseExp: 6
@@ -3487,7 +3906,7 @@ Body:
         StealProtected: true
   - Id: 1086
     AegisName: GOLDEN_BUG
-    Name: Besouro-Ladr„o Dourado
+    Name: Besouro-Ladr√£o Dourado
     Level: 64
     Hp: 126000
     BaseExp: 14300
@@ -3513,6 +3932,7 @@ Body:
     WalkSpeed: 100
     AttackDelay: 768
     AttackMotion: 768
+    ClientAttackMotion: 720
     DamageMotion: 480
     Ai: 07
     Class: Boss
@@ -3543,7 +3963,8 @@ Body:
         StealProtected: true
   - Id: 1087
     AegisName: ORK_HERO
-    Name: Orc HÈroi
+    ClientAttackMotion: 660
+    Name: Orc H√©roi
     Level: 77
     Hp: 585700
     BaseExp: 58630
@@ -3625,6 +4046,7 @@ Body:
     WalkSpeed: 200
     AttackDelay: 1080
     AttackMotion: 648
+    ClientAttackMotion: 600
     DamageMotion: 480
     Ai: 21
     Modes:
@@ -3671,6 +4093,7 @@ Body:
     WalkSpeed: 200
     AttackDelay: 1236
     AttackMotion: 336
+    ClientAttackMotion: 168
     DamageMotion: 432
     Ai: 21
     Class: Boss
@@ -3704,6 +4127,7 @@ Body:
     MagicDefense: 10
     Agi: 2
     Vit: 2
+    Int: 0
     Dex: 17
     Luk: 60
     AttackRange: 1
@@ -3716,6 +4140,7 @@ Body:
     WalkSpeed: 300
     AttackDelay: 1072
     AttackMotion: 672
+    ClientAttackMotion: 288
     DamageMotion: 480
     Ai: 21
     Class: Boss
@@ -3739,7 +4164,109 @@ Body:
         StealProtected: true
   - Id: 1091
     AegisName: DRAGON_FLY
-    Name: LibÈlula
+    ClientAttackMotion: 288
+    ClientAttackMotion: 216
+    Int: 0
+    ClientAttackMotion: 264
+    ClientAttackMotion: 312
+    ClientAttackMotion: 180
+    ClientAttackMotion: 312
+    Int: 0
+    ClientAttackMotion: 672
+    ClientAttackMotion: 480
+    ClientAttackMotion: 576
+    ClientAttackMotion: 216
+    ClientAttackMotion: 216
+    ClientAttackMotion: 288
+    ClientAttackMotion: 216
+    ClientAttackMotion: 504
+    ClientAttackMotion: 144
+    ClientAttackMotion: 180
+    ClientAttackMotion: 252
+    ClientAttackMotion: 288
+    ClientAttackMotion: 288
+    ClientAttackMotion: 288
+    Int: 0
+    Luk: 0
+    ClientAttackMotion: 288
+    ClientAttackMotion: 108
+    Int: 0
+    ClientAttackMotion: 288
+    Int: 0
+    ClientAttackMotion: 252
+    ClientAttackMotion: 408
+    Int: 0
+    Luk: 0
+    ClientAttackMotion: 480
+    ClientAttackMotion: 168
+    ClientAttackMotion: 180
+    ClientAttackMotion: 324
+    ClientAttackMotion: 336
+    ClientAttackMotion: 480
+    ClientAttackMotion: 384
+    ClientAttackMotion: 384
+    ClientAttackMotion: 384
+    ClientAttackMotion: 384
+    ClientAttackMotion: 384
+    ClientAttackMotion: 288
+    ClientAttackMotion: 336
+    Int: 0
+    Luk: 0
+    ClientAttackMotion: 552
+    ClientAttackMotion: 192
+    ClientAttackMotion: 312
+    ClientAttackMotion: 240
+    ClientAttackMotion: 240
+    ClientAttackMotion: 240
+    ClientAttackMotion: 240
+#  - Id: 1136
+#    AegisName: KOBOLD_4
+#    Name: Kobold
+#    Level: 31
+#    Hp: 2179
+#    BaseExp: 806
+#    JobExp: 407
+#    Attack: 262
+#    Attack2: 324
+#    Defense: 15
+#    MagicDefense: 10
+#    Agi: 31
+#    Vit: 31
+#    Int: 20
+#    Dex: 46
+#    Luk: 20
+#    AttackRange: 1
+#    SkillRange: 10
+#    ChaseRange: 12
+#    Size: Medium
+#    Race: Demihuman
+#    Element: Poison
+#    ElementLevel: 2
+#    WalkSpeed: 200
+#    AttackDelay: 1528
+#    AttackMotion: 528
+#    DamageMotion: 360
+#    Ai: 13
+#    Modes:
+#      NoRandomWalk: true
+#    Drops:
+#      - Item: Steel
+#        Rate: 50
+#        StealProtected: true
+    Int: 0
+    ClientAttackMotion: 192
+    ClientAttackMotion: 336
+    ClientAttackMotion: 432
+    Int: 0
+    ClientAttackMotion: 720
+    Int: 0
+    ClientAttackMotion: 240
+    ClientAttackMotion: 240
+    ClientAttackMotion: 468
+    ClientAttackMotion: 192
+    ClientAttackMotion: 144
+    ClientAttackMotion: 624
+    Name: Lib√©lula
     Level: 8
     Hp: 2400
     BaseExp: 88
@@ -4194,7 +4721,7 @@ Body:
         StealProtected: true
   - Id: 1101
     AegisName: BAPHOMET_
-    Name: BafomÈ Jr.
+    Name: Bafom√© Jr.
     Level: 50
     Hp: 8578
     BaseExp: 2706
@@ -5827,7 +6354,7 @@ Body:
         StealProtected: true
   - Id: 1138
     AegisName: MAGNOLIA
-    Name: MagnÛlia
+    Name: Magn√≥lia
     Level: 26
     Hp: 3195
     BaseExp: 393
@@ -6311,6 +6838,7 @@ Body:
     WalkSpeed: 180
     AttackDelay: 1720
     AttackMotion: 1320
+    ClientAttackMotion: 1080
     DamageMotion: 360
     Ai: 21
     Modes:
@@ -6360,6 +6888,7 @@ Body:
     WalkSpeed: 200
     AttackDelay: 1360
     AttackMotion: 960
+    ClientAttackMotion: 576
     DamageMotion: 432
     Ai: 09
     Drops:
@@ -6408,6 +6937,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 1276
     AttackMotion: 576
+    ClientAttackMotion: 120
     DamageMotion: 288
     Ai: 21
     Class: Boss
@@ -6440,7 +6970,20 @@ Body:
         StealProtected: true
   - Id: 1151
     AegisName: MYST
-    Name: NÈvoa
+    Int: 0
+    ClientAttackMotion: 336
+    Int: 0
+    ClientAttackMotion: 288
+    Int: 0
+    ClientAttackMotion: 768
+    ClientAttackMotion: 288
+    ClientAttackMotion: 336
+    ClientAttackMotion: 336
+    ClientAttackMotion: 576
+    Int: 0
+    ClientAttackMotion: 432
+    ClientAttackMotion: 324
+    Name: N√©voa
     Level: 38
     Hp: 3745
     BaseExp: 1391
@@ -6704,7 +7247,7 @@ Body:
         StealProtected: true
   - Id: 1157
     AegisName: PHARAOH
-    Name: FaraÛ
+    Name: Fara√≥
     Level: 93
     Hp: 445997
     BaseExp: 114990
@@ -6883,6 +7426,7 @@ Body:
     WalkSpeed: 200
     AttackDelay: 1288
     AttackMotion: 288
+    ClientAttackMotion: 144
     DamageMotion: 576
     Ai: 07
     Modes:
@@ -6917,7 +7461,9 @@ Body:
     MagicDefense: 5
     Agi: 10
     Vit: 10
+    Int: 0
     Dex: 15
+    Luk: 0
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -6928,6 +7474,7 @@ Body:
     WalkSpeed: 400
     AttackDelay: 2208
     AttackMotion: 1008
+    ClientAttackMotion: 576
     DamageMotion: 324
     Ai: 01
     Drops:
@@ -6973,6 +7520,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 512
     AttackMotion: 528
+    ClientAttackMotion: 432
     DamageMotion: 240
     Ai: 04
     Drops:
@@ -7020,6 +7568,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 824
     AttackMotion: 780
+    ClientAttackMotion: 384
     DamageMotion: 420
     Ai: 09
     Drops:
@@ -7065,6 +7614,7 @@ Body:
     WalkSpeed: 400
     AttackDelay: 1516
     AttackMotion: 816
+    ClientAttackMotion: 432
     DamageMotion: 432
     Ai: 04
     Drops:
@@ -7112,6 +7662,7 @@ Body:
     WalkSpeed: 250
     AttackDelay: 1672
     AttackMotion: 720
+    ClientAttackMotion: 576
     DamageMotion: 288
     Ai: 04
     Drops:
@@ -7158,6 +7709,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 1960
     AttackMotion: 960
+    ClientAttackMotion: 192
     DamageMotion: 384
     Ai: 17
     Drops:
@@ -7180,7 +7732,135 @@ Body:
         StealProtected: true
   - Id: 1167
     AegisName: SAVAGE_BABE
-    Name: BebÍ Selvagem
+    ClientAttackMotion: 312
+#  - Id: 1168
+#    AegisName: SCORPION_KING
+#    Name: Scorpion King
+#    Level: 50
+#    Hp: 6354
+#    BaseExp: 2187
+#    JobExp: 1346
+#    Attack: 500
+#    Attack2: 603
+#    Defense: 40
+#    MagicDefense: 10
+#    Agi: 50
+#    Vit: 47
+#    Dex: 83
+#    Luk: 30
+#    AttackRange: 1
+#    SkillRange: 10
+#    ChaseRange: 12
+#    Size: Large
+#    Race: Demihuman
+#    Element: Fire
+#    ElementLevel: 1
+#    WalkSpeed: 200
+#    AttackDelay: 1700
+#    AttackMotion: 1000
+#    DamageMotion: 500
+#    Ai: 24
+#    Modes:
+#      CastSensorIdle: true
+#    Drops:
+#      - Item: Flame_Heart
+#        Rate: 45
+#        StealProtected: true
+    ClientAttackMotion: 432
+    ClientAttackMotion: 324
+#  - Id: 1171
+#    AegisName: SOLDIER_ANDRE
+#    Name: Soldier Andre
+#    Level: 22
+#    Hp: 1245
+#    BaseExp: 219
+#    JobExp: 138
+#    Attack: 105
+#    Attack2: 127
+#    Defense: 20
+#    Agi: 22
+#    Vit: 44
+#    Int: 20
+#    Dex: 40
+#    Luk: 10
+#    AttackRange: 1
+#    SkillRange: 10
+#    ChaseRange: 12
+#    Size: Small
+#    Race: Insect
+#    Element: Earth
+#    ElementLevel: 2
+#    WalkSpeed: 200
+#    AttackDelay: 1001
+#    AttackMotion: 1
+#    DamageMotion: 1
+#    Ai: 09
+#    Drops:
+#      - Item: Jaws_Of_Ant
+#        Rate: 2700
+#        StealProtected: true
+    ClientAttackMotion: 720
+    ClientAttackMotion: 252
+    ClientAttackMotion: 576
+    Int: 0
+    ClientAttackMotion: 288
+    Luk: 0
+    ClientAttackMotion: 720
+    Int: 0
+    Luk: 0
+    ClientAttackMotion: 720
+    ClientAttackMotion: 360
+#  - Id: 1181
+#    AegisName: ZOMBIE_DRAGON
+#    Name: Zombie Dragon
+#    Level: 1
+#    Hp: 1000
+#    BaseExp: 49500
+#    JobExp: 1650
+#    Attack: 7900
+#    Attack2: 9140
+#    Str: 120
+#    Agi: 145
+#    Vit: 145
+#    Int: 145
+#    Dex: 130
+#    Luk: 120
+#    AttackRange: 3
+#    SkillRange: 10
+#    ChaseRange: 12
+#    Size: Large
+#    Race: Dragon
+#    Element: Undead
+#    ElementLevel: 4
+#    WalkSpeed: 400
+#    AttackDelay: 2700
+#    AttackMotion: 1000
+#    DamageMotion: 500
+#    Ai: 21
+#    Modes:
+#      NoRandomWalk: true
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    ClientAttackMotion: 0
+    ClientAttackMotion: 288
+    ClientAttackMotion: 192
+    Int: 0
+    Luk: 0
+    ClientAttackMotion: 720
+    Int: 0
+    Luk: 0
+    ClientAttackMotion: 1344
+    Int: 0
+    Luk: 0
+    ClientAttackMotion: 0
+    ClientAttackMotion: 960
+    ClientAttackMotion: 864
+    ClientAttackMotion: 624
+    Name: Beb√™ Selvagem
     Level: 7
     Hp: 182
     BaseExp: 14
@@ -7224,7 +7904,7 @@ Body:
         StealProtected: true
   - Id: 1169
     AegisName: SKEL_WORKER
-    Name: Esqueleto Oper·rio
+    Name: Esqueleto Oper√°rio
     Level: 30
     Hp: 2872
     BaseExp: 397
@@ -7975,7 +8655,156 @@ Body:
         StealProtected: true
   - Id: 1191
     AegisName: MIMIC
-    Name: MÌmico
+    ClientAttackMotion: 480
+    ClientAttackMotion: 384
+    ClientAttackMotion: 540
+    ClientAttackMotion: 480
+    ClientAttackMotion: 468
+    Int: 0
+    ClientAttackMotion: 864
+    Int: 0
+    ClientAttackMotion: 480
+    ClientAttackMotion: 288
+    ClientAttackMotion: 1152
+    ClientAttackMotion: 1920
+    ClientAttackMotion: 900
+    ClientAttackMotion: 960
+    ClientAttackMotion: 768
+    ClientAttackMotion: 576
+    ClientAttackMotion: 480
+    ClientAttackMotion: 660
+    ClientAttackMotion: 336
+    ClientAttackMotion: 672
+    ClientAttackMotion: 648
+#  - Id: 1210
+#    AegisName: FILAMENTOUS
+#    Name: Filamentous
+#    Level: 51
+#    Hp: 6088
+#    BaseExp: 1926
+#    JobExp: 1353
+#    Attack: 425
+#    Attack2: 525
+#    Defense: 35
+#    MagicDefense: 10
+#    Agi: 35
+#    Vit: 30
+#    Int: 5
+#    Dex: 83
+#    Luk: 40
+#    AttackRange: 1
+#    SkillRange: 10
+#    ChaseRange: 12
+#    Size: Medium
+#    Race: Insect
+#    Element: Fire
+#    ElementLevel: 1
+#    WalkSpeed: 200
+#    AttackDelay: 1500
+#    AttackMotion: 500
+#    DamageMotion: 1000
+#    Ai: 09
+#    Drops:
+#      - Item: Stiff_Horn
+#        Rate: 4850
+#        StealProtected: true
+    ClientAttackMotion: 720
+    ClientAttackMotion: 384
+    ClientAttackMotion: 336
+    ClientAttackMotion: 360
+    ClientAttackMotion: 288
+    ClientAttackMotion: 336
+    ClientAttackMotion: 720
+    ClientAttackMotion: 216
+    ClientAttackMotion: 192
+#  - Id: 1222
+#    AegisName: L_HIGH_ORC
+#    Name: High Orc
+#    Level: 52
+#    Hp: 6890
+#    BaseExp: 2128
+#    JobExp: 1490
+#    Attack: 428
+#    Attack2: 533
+#    Defense: 15
+#    MagicDefense: 5
+#    Agi: 46
+#    Vit: 55
+#    Int: 35
+#    Dex: 82
+#    Luk: 40
+#    AttackRange: 1
+#    SkillRange: 10
+#    ChaseRange: 12
+#    Size: Large
+#    Race: Demihuman
+#    Element: Fire
+#    ElementLevel: 2
+#    WalkSpeed: 200
+#    AttackDelay: 1500
+#    AttackMotion: 500
+#    DamageMotion: 1000
+#    Ai: 21
+#    Drops:
+#      - Item: Ogre_Tooth
+#        Rate: 2500
+#        StealProtected: true
+    Int: 0
+    ClientAttackMotion: 192
+    Int: 0
+    ClientAttackMotion: 768
+    ClientAttackMotion: 432
+    Int: 0
+    ClientAttackMotion: 672
+#  - Id: 1233
+#    AegisName: CONCEIVE_PECOPECO
+#    Name: Peco Peco
+#    Level: 19
+#    Hp: 531
+#    BaseExp: 159
+#    JobExp: 36
+#    Attack: 50
+#    Attack2: 64
+#    Agi: 13
+#    Vit: 13
+#    Int: 25
+#    Dex: 27
+#    Luk: 9
+#    AttackRange: 1
+#    SkillRange: 10
+#    ChaseRange: 12
+#    Size: Large
+#    Race: Brute
+#    Element: Fire
+#    ElementLevel: 1
+#    WalkSpeed: 200
+#    AttackDelay: 1564
+#    AttackMotion: 864
+#    DamageMotion: 576
+#    Ai: 01
+#    Drops:
+#      - Item: Bill_Of_Birds
+#        Rate: 6000
+#        StealProtected: true
+    ClientAttackMotion: 360
+    Luk: 0
+    ClientAttackMotion: 672
+    Int: 0
+    ClientAttackMotion: 672
+    ClientAttackMotion: 180
+    ClientAttackMotion: 144
+    ClientAttackMotion: 144
+    Int: 0
+    ClientAttackMotion: 240
+    Int: 0
+    ClientAttackMotion: 240
+    ClientAttackMotion: 288
+    ClientAttackMotion: 1092
+    ClientAttackMotion: 192
+    ClientAttackMotion: 384
+    ClientAttackMotion: 336
+    ClientAttackMotion: 432
+    Name: M√≠mico
     Level: 51
     Hp: 6120
     Sp: 182
@@ -8819,7 +9648,7 @@ Body:
         StealProtected: true
   - Id: 1209
     AegisName: CRAMP
-    Name: C„ibra
+    Name: C√£ibra
     Level: 56
     Hp: 4720
     BaseExp: 2300
@@ -8912,7 +9741,7 @@ Body:
         StealProtected: true
   - Id: 1212
     AegisName: IRON_FIST
-    Name: M„o de Ferro
+    Name: M√£o de Ferro
     Level: 47
     Hp: 4221
     BaseExp: 1435
@@ -10104,6 +10933,7 @@ Body:
     WalkSpeed: 400
     AttackDelay: 1296
     AttackMotion: 1296
+    ClientAttackMotion: 1224
     DamageMotion: 432
     Ai: 05
     Drops:
@@ -10151,6 +10981,7 @@ Body:
     WalkSpeed: 400
     AttackDelay: 1248
     AttackMotion: 1248
+    ClientAttackMotion: 432
     DamageMotion: 432
     Ai: 17
     Drops:
@@ -10196,6 +11027,7 @@ Body:
     WalkSpeed: 400
     AttackDelay: 672
     AttackMotion: 672
+    ClientAttackMotion: 336
     DamageMotion: 288
     Ai: 21
     Drops:
@@ -10245,6 +11077,7 @@ Body:
     WalkSpeed: 200
     AttackDelay: 468
     AttackMotion: 468
+    ClientAttackMotion: 252
     DamageMotion: 288
     Ai: 21
     Class: Boss
@@ -10304,6 +11137,7 @@ Body:
     WalkSpeed: 400
     AttackDelay: 608
     AttackMotion: 408
+    ClientAttackMotion: 312
     DamageMotion: 336
     Ai: 21
     Class: Boss
@@ -10334,7 +11168,29 @@ Body:
         StealProtected: true
   - Id: 1253
     AegisName: GARGOYLE
-    Name: G·rgula
+    ClientAttackMotion: 600
+    ClientAttackMotion: 252
+    ClientAttackMotion: 384
+    ClientAttackMotion: 396
+    Int: 0
+    ClientAttackMotion: 540
+    ClientAttackMotion: 528
+    ClientAttackMotion: 288
+    ClientAttackMotion: 360
+    ClientAttackMotion: 840
+    ClientAttackMotion: 900
+    ClientAttackMotion: 720
+    ClientAttackMotion: 384
+    ClientAttackMotion: 108
+    Int: 0
+    ClientAttackMotion: 336
+    ClientAttackMotion: 576
+    ClientAttackMotion: 288
+    ClientAttackMotion: 432
+    ClientAttackMotion: 384
+    ClientAttackMotion: 540
+    ClientAttackMotion: 408
+    Name: G√°rgula
     Level: 48
     Hp: 3950
     BaseExp: 1650
@@ -10514,7 +11370,7 @@ Body:
         StealProtected: true
   - Id: 1257
     AegisName: INJUSTICE
-    Name: InjustiÁado
+    Name: Injusti√ßado
     Level: 51
     Hp: 7600
     BaseExp: 2118
@@ -10743,8 +11599,8 @@ Body:
         StealProtected: true
   - Id: 1262
     AegisName: MUTANT_DRAGON
-    Name: Drag„o Mutante
-    JapaneseName: Drag„o Mutante
+    Name: Drag√£o Mutante
+    JapaneseName: Drag√£o Mutante
     Level: 65
     Hp: 62600
     BaseExp: 4730
@@ -10792,7 +11648,7 @@ Body:
         StealProtected: true
   - Id: 1263
     AegisName: WIND_GHOST
-    Name: Xam„ do Vento
+    Name: Xam√£ do Vento
     Level: 51
     Hp: 4820
     BaseExp: 2424
@@ -10839,7 +11695,7 @@ Body:
         StealProtected: true
   - Id: 1264
     AegisName: MERMAN
-    Name: Trit„o
+    Name: Trit√£o
     Level: 53
     Hp: 14690
     BaseExp: 4500
@@ -11016,7 +11872,7 @@ Body:
         StealProtected: true
   - Id: 1268
     AegisName: BLOODY_KNIGHT
-    Name: Cavaleiro Sanguin·rio
+    Name: Cavaleiro Sanguin√°rio
     Level: 82
     Hp: 57870
     BaseExp: 10120
@@ -11063,7 +11919,7 @@ Body:
         StealProtected: true
   - Id: 1269
     AegisName: CLOCK
-    Name: RelÛgio
+    Name: Rel√≥gio
     Level: 60
     Hp: 11050
     BaseExp: 3410
@@ -11281,6 +12137,7 @@ Body:
     WalkSpeed: 200
     AttackDelay: 1050
     AttackMotion: 900
+    ClientAttackMotion: 540
     DamageMotion: 288
     Ai: 21
     Drops:
@@ -11327,6 +12184,7 @@ Body:
     WalkSpeed: 200
     AttackDelay: 1332
     AttackMotion: 1332
+    ClientAttackMotion: 936
     DamageMotion: 672
     Ai: 10
     Drops:
@@ -11371,6 +12229,7 @@ Body:
     WalkSpeed: 200
     AttackDelay: 502
     AttackMotion: 2304
+    ClientAttackMotion: 2112
     DamageMotion: 480
     Ai: 17
     Drops:
@@ -11418,6 +12277,7 @@ Body:
     WalkSpeed: 200
     AttackDelay: 1152
     AttackMotion: 1152
+    ClientAttackMotion: 972
     DamageMotion: 480
     Ai: 05
     Modes:
@@ -11440,7 +12300,40 @@ Body:
         StealProtected: true
   - Id: 1277
     AegisName: GREATEST_GENERAL
-    Name: Guardi„o da Floresta
+    ClientAttackMotion: 816
+    ClientAttackMotion: 720
+    ClientAttackMotion: 540
+    ClientAttackMotion: 324
+    ClientAttackMotion: 504
+    ClientAttackMotion: 504
+    ClientAttackMotion: 384
+#  - Id: 1284
+#    AegisName: HUGELING
+#    Name: Hugeling
+#    Level: 1
+#    Hp: 5000
+#    BaseExp: 2
+#    JobExp: 1
+#    Attack: 7
+#    Attack2: 10
+#    Dex: 6
+#    AttackRange: 4
+#    SkillRange: 10
+#    ChaseRange: 12
+#    Size: Large
+#    Race: Plant
+#    Element: Water
+#    ElementLevel: 1
+#    WalkSpeed: 200
+#    AttackDelay: 1872
+#    AttackMotion: 672
+#    DamageMotion: 480
+#    Ai: 17
+#    Drops:
+#      - Item: Apple
+#        Rate: 100
+#        StealProtected: true
+    Name: Guardi√£o da Floresta
     Level: 40
     Hp: 3632
     BaseExp: 1238
@@ -11627,7 +12520,7 @@ Body:
         StealProtected: true
   - Id: 1281
     AegisName: SAGEWORM
-    Name: Verme S·bio
+    Name: Verme S√°bio
     Level: 43
     Hp: 3850
     BaseExp: 1155
@@ -11768,7 +12661,7 @@ Body:
         StealProtected: true
   - Id: 1285
     AegisName: ARCHER_GUARDIAN
-    Name: Guardi„o Arqueiro
+    Name: Guardi√£o Arqueiro
     Level: 74
     Hp: 28634
     BaseExp: 1
@@ -11806,7 +12699,7 @@ Body:
       KnockBackImmune: true
   - Id: 1286
     AegisName: KNIGHT_GUARDIAN
-    Name: Guardi„o Cavaleiro
+    Name: Guardi√£o Cavaleiro
     Level: 86
     Hp: 30214
     BaseExp: 1
@@ -11844,7 +12737,8 @@ Body:
       KnockBackImmune: true
   - Id: 1287
     AegisName: SOLDIER_GUARDIAN
-    Name: Guardi„o Soldado
+    ClientAttackMotion: 624
+    Name: Guardi√£o Soldado
     Level: 56
     Hp: 15670
     BaseExp: 1
@@ -11929,6 +12823,7 @@ Body:
     WalkSpeed: 100
     AttackDelay: 1024
     AttackMotion: 1000
+    ClientAttackMotion: 624
     DamageMotion: 480
     Ai: 21
     Class: Boss
@@ -11977,6 +12872,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 2276
     AttackMotion: 576
+    ClientAttackMotion: 216
     DamageMotion: 432
     Ai: 21
     Drops:
@@ -11999,7 +12895,29 @@ Body:
         StealProtected: true
   - Id: 1291
     AegisName: WRAITH_DEAD
-    Name: ApariÁ„o
+    ClientAttackMotion: 720
+    ClientAttackMotion: 1728
+    ClientAttackMotion: 432
+    ClientAttackMotion: 240
+    ClientAttackMotion: 2304
+    ClientAttackMotion: 240
+    ClientAttackMotion: 288
+    ClientAttackMotion: 816
+    ClientAttackMotion: 1056
+    ClientAttackMotion: 192
+    ClientAttackMotion: 288
+    ClientAttackMotion: 5280
+    ClientAttackMotion: 648
+    ClientAttackMotion: 216
+    ClientAttackMotion: 576
+    ClientAttackMotion: 1152
+    ClientAttackMotion: 120
+    ClientAttackMotion: 2496
+    ClientAttackMotion: 552
+    ClientAttackMotion: 1728
+    ClientAttackMotion: 192
+    ClientAttackMotion: 624
+    Name: Apari√ß√£o
     Level: 74
     Hp: 43021
     BaseExp: 10341
@@ -12095,7 +13013,7 @@ Body:
         StealProtected: true
   - Id: 1293
     AegisName: CREMY_FEAR
-    Name: Creamy AmeaÁador
+    Name: Creamy Amea√ßador
     Level: 62
     Hp: 13387
     BaseExp: 7365
@@ -12193,7 +13111,7 @@ Body:
         StealProtected: true
   - Id: 1295
     AegisName: OWL_BARON
-    Name: Bar„o Coruja
+    Name: Bar√£o Coruja
     Level: 75
     Hp: 60746
     BaseExp: 10967
@@ -12241,7 +13159,7 @@ Body:
         StealProtected: true
   - Id: 1296
     AegisName: KOBOLD_LEADER
-    Name: LÌder Cobold
+    Name: L√≠der Cobold
     Level: 65
     Hp: 18313
     BaseExp: 7432
@@ -12290,7 +13208,7 @@ Body:
         StealProtected: true
   - Id: 1297
     AegisName: ANCIENT_MUMMY
-    Name: M˙mia Anci„
+    Name: M√∫mia Anci√£
     Level: 64
     Hp: 40599
     BaseExp: 8040
@@ -12384,7 +13302,7 @@ Body:
         StealProtected: true
   - Id: 1299
     AegisName: GOBLIN_LEADER
-    Name: LÌder Goblin
+    Name: L√≠der Goblin
     Level: 64
     Hp: 20152
     BaseExp: 6036
@@ -12531,7 +13449,7 @@ Body:
         StealProtected: true
   - Id: 1302
     AegisName: DARK_ILLUSION
-    Name: Ilus„o das Trevas
+    Name: Ilus√£o das Trevas
     Level: 77
     Hp: 103631
     BaseExp: 11163
@@ -12579,7 +13497,7 @@ Body:
         StealProtected: true
   - Id: 1303
     AegisName: GIANT_HONET
-    Name: Zang„o Gigante
+    Name: Zang√£o Gigante
     Level: 56
     Hp: 13105
     BaseExp: 5785
@@ -12677,7 +13595,7 @@ Body:
         StealProtected: true
   - Id: 1305
     AegisName: ANCIENT_WORM
-    Name: Verme Anci„o
+    Name: Verme Anci√£o
     Level: 67
     Hp: 22598
     BaseExp: 8174
@@ -13092,6 +14010,7 @@ Body:
     WalkSpeed: 250
     AttackDelay: 1100
     AttackMotion: 560
+    ClientAttackMotion: 576
     DamageMotion: 580
     Ai: 21
     Drops:
@@ -13139,6 +14058,7 @@ Body:
     WalkSpeed: 250
     AttackDelay: 1100
     AttackMotion: 483
+    ClientAttackMotion: 720
     DamageMotion: 528
     Ai: 17
     Drops:
@@ -13188,6 +14108,7 @@ Body:
     WalkSpeed: 155
     AttackDelay: 1000
     AttackMotion: 900
+    ClientAttackMotion: 540
     DamageMotion: 432
     Ai: 21
     Drops:
@@ -13235,6 +14156,7 @@ Body:
     WalkSpeed: 250
     AttackDelay: 1452
     AttackMotion: 483
+    ClientAttackMotion: 1248
     DamageMotion: 528
     Ai: 17
     Drops:
@@ -13283,6 +14205,7 @@ Body:
     WalkSpeed: 200
     AttackDelay: 1612
     AttackMotion: 622
+    ClientAttackMotion: 576
     DamageMotion: 583
     Ai: 04
     Drops:
@@ -13330,6 +14253,7 @@ Body:
     WalkSpeed: 250
     AttackDelay: 1452
     AttackMotion: 483
+    ClientAttackMotion: 1200
     DamageMotion: 528
     Ai: 21
     Drops:
@@ -13377,6 +14301,7 @@ Body:
     WalkSpeed: 250
     AttackDelay: 1452
     AttackMotion: 483
+    ClientAttackMotion: 540
     DamageMotion: 528
     Ai: 21
     Drops:
@@ -13424,6 +14349,7 @@ Body:
     WalkSpeed: 195
     AttackDelay: 1345
     AttackMotion: 824
+    ClientAttackMotion: 768
     DamageMotion: 440
     Ai: 21
     Class: Boss
@@ -13472,6 +14398,7 @@ Body:
     WalkSpeed: 175
     AttackDelay: 862
     AttackMotion: 534
+    ClientAttackMotion: 360
     DamageMotion: 312
     Ai: 21
     Modes:
@@ -13521,6 +14448,7 @@ Body:
     WalkSpeed: 160
     AttackDelay: 1120
     AttackMotion: 552
+    ClientAttackMotion: 756
     DamageMotion: 511
     Ai: 02
     Drops:
@@ -13568,6 +14496,7 @@ Body:
     WalkSpeed: 190
     AttackDelay: 1132
     AttackMotion: 583
+    ClientAttackMotion: 432
     DamageMotion: 532
     Ai: 04
     Drops:
@@ -13590,7 +14519,207 @@ Body:
         StealProtected: true
   - Id: 1324
     AegisName: TREASURE_BOX1
-    Name: Ba˙ do Tesouro
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Luk: 0
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Luk: 0
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Luk: 0
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Luk: 0
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Luk: 0
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Luk: 0
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Luk: 0
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Luk: 0
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Luk: 0
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Luk: 0
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Luk: 0
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Luk: 0
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Luk: 0
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Luk: 0
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Luk: 0
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Luk: 0
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Luk: 0
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Luk: 0
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Luk: 0
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Luk: 0
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Luk: 0
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Luk: 0
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Luk: 0
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Luk: 0
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Luk: 0
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Luk: 0
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Luk: 0
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Luk: 0
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Luk: 0
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Luk: 0
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Luk: 0
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Luk: 0
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Luk: 0
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Luk: 0
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Luk: 0
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Luk: 0
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Luk: 0
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Luk: 0
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Luk: 0
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Luk: 0
+    Name: Ba√∫ do Tesouro
     Level: 99
     Dex: 999
     Size: Small
@@ -13620,7 +14749,7 @@ Body:
         StealProtected: true
   - Id: 1325
     AegisName: TREASURE_BOX2
-    Name: Ba˙ do Tesouro
+    Name: Ba√∫ do Tesouro
     Level: 99
     Dex: 999
     Size: Small
@@ -13650,7 +14779,7 @@ Body:
         StealProtected: true
   - Id: 1326
     AegisName: TREASURE_BOX3
-    Name: Ba˙ do Tesouro
+    Name: Ba√∫ do Tesouro
     Level: 99
     Dex: 999
     Size: Small
@@ -13680,7 +14809,7 @@ Body:
         StealProtected: true
   - Id: 1327
     AegisName: TREASURE_BOX4
-    Name: Ba˙ do Tesouro
+    Name: Ba√∫ do Tesouro
     Level: 99
     Dex: 999
     Size: Small
@@ -13710,7 +14839,7 @@ Body:
         StealProtected: true
   - Id: 1328
     AegisName: TREASURE_BOX5
-    Name: Ba˙ do Tesouro
+    Name: Ba√∫ do Tesouro
     Level: 99
     Dex: 999
     Size: Small
@@ -13740,7 +14869,7 @@ Body:
         StealProtected: true
   - Id: 1329
     AegisName: TREASURE_BOX6
-    Name: Ba˙ do Tesouro
+    Name: Ba√∫ do Tesouro
     Level: 99
     Dex: 999
     Size: Small
@@ -13770,7 +14899,7 @@ Body:
         StealProtected: true
   - Id: 1330
     AegisName: TREASURE_BOX7
-    Name: Ba˙ do Tesouro
+    Name: Ba√∫ do Tesouro
     Level: 99
     Dex: 999
     Size: Small
@@ -13800,7 +14929,7 @@ Body:
         StealProtected: true
   - Id: 1331
     AegisName: TREASURE_BOX8
-    Name: Ba˙ do Tesouro
+    Name: Ba√∫ do Tesouro
     Level: 99
     Dex: 999
     Size: Small
@@ -13830,7 +14959,7 @@ Body:
         StealProtected: true
   - Id: 1332
     AegisName: TREASURE_BOX9
-    Name: Ba˙ do Tesouro
+    Name: Ba√∫ do Tesouro
     Level: 99
     Dex: 999
     Size: Small
@@ -13860,7 +14989,7 @@ Body:
         StealProtected: true
   - Id: 1333
     AegisName: TREASURE_BOX10
-    Name: Ba˙ do Tesouro
+    Name: Ba√∫ do Tesouro
     Level: 99
     Dex: 999
     Size: Small
@@ -13890,7 +15019,7 @@ Body:
         StealProtected: true
   - Id: 1334
     AegisName: TREASURE_BOX11
-    Name: Ba˙ do Tesouro
+    Name: Ba√∫ do Tesouro
     Level: 99
     Dex: 999
     Size: Small
@@ -13920,7 +15049,7 @@ Body:
         StealProtected: true
   - Id: 1335
     AegisName: TREASURE_BOX12
-    Name: Ba˙ do Tesouro
+    Name: Ba√∫ do Tesouro
     Level: 99
     Dex: 999
     Size: Small
@@ -13950,7 +15079,7 @@ Body:
         StealProtected: true
   - Id: 1336
     AegisName: TREASURE_BOX13
-    Name: Ba˙ do Tesouro
+    Name: Ba√∫ do Tesouro
     Level: 99
     Dex: 999
     Size: Small
@@ -13980,7 +15109,7 @@ Body:
         StealProtected: true
   - Id: 1337
     AegisName: TREASURE_BOX14
-    Name: Ba˙ do Tesouro
+    Name: Ba√∫ do Tesouro
     Level: 99
     Dex: 999
     Size: Small
@@ -14010,7 +15139,7 @@ Body:
         StealProtected: true
   - Id: 1338
     AegisName: TREASURE_BOX15
-    Name: Ba˙ do Tesouro
+    Name: Ba√∫ do Tesouro
     Level: 99
     Dex: 999
     Size: Small
@@ -14040,7 +15169,7 @@ Body:
         StealProtected: true
   - Id: 1339
     AegisName: TREASURE_BOX16
-    Name: Ba˙ do Tesouro
+    Name: Ba√∫ do Tesouro
     Level: 99
     Dex: 999
     Size: Small
@@ -14070,7 +15199,7 @@ Body:
         StealProtected: true
   - Id: 1340
     AegisName: TREASURE_BOX17
-    Name: Ba˙ do Tesouro
+    Name: Ba√∫ do Tesouro
     Level: 99
     Dex: 999
     Size: Small
@@ -14100,7 +15229,7 @@ Body:
         StealProtected: true
   - Id: 1341
     AegisName: TREASURE_BOX18
-    Name: Ba˙ do Tesouro
+    Name: Ba√∫ do Tesouro
     Level: 99
     Dex: 999
     Size: Small
@@ -14130,7 +15259,7 @@ Body:
         StealProtected: true
   - Id: 1342
     AegisName: TREASURE_BOX19
-    Name: Ba˙ do Tesouro
+    Name: Ba√∫ do Tesouro
     Level: 99
     Dex: 999
     Size: Small
@@ -14160,7 +15289,7 @@ Body:
         StealProtected: true
   - Id: 1343
     AegisName: TREASURE_BOX20
-    Name: Ba˙ do Tesouro
+    Name: Ba√∫ do Tesouro
     Level: 99
     Dex: 999
     Size: Small
@@ -14190,7 +15319,7 @@ Body:
         StealProtected: true
   - Id: 1344
     AegisName: TREASURE_BOX21
-    Name: Ba˙ do Tesouro
+    Name: Ba√∫ do Tesouro
     Level: 99
     Dex: 999
     Size: Small
@@ -14220,7 +15349,7 @@ Body:
         StealProtected: true
   - Id: 1345
     AegisName: TREASURE_BOX22
-    Name: Ba˙ do Tesouro
+    Name: Ba√∫ do Tesouro
     Level: 99
     Dex: 999
     Size: Small
@@ -14250,7 +15379,7 @@ Body:
         StealProtected: true
   - Id: 1346
     AegisName: TREASURE_BOX23
-    Name: Ba˙ do Tesouro
+    Name: Ba√∫ do Tesouro
     Level: 99
     Dex: 999
     Size: Small
@@ -14280,7 +15409,7 @@ Body:
         StealProtected: true
   - Id: 1347
     AegisName: TREASURE_BOX24
-    Name: Ba˙ do Tesouro
+    Name: Ba√∫ do Tesouro
     Level: 99
     Dex: 999
     Size: Small
@@ -14310,7 +15439,7 @@ Body:
         StealProtected: true
   - Id: 1348
     AegisName: TREASURE_BOX25
-    Name: Ba˙ do Tesouro
+    Name: Ba√∫ do Tesouro
     Level: 99
     Dex: 999
     Size: Small
@@ -14340,7 +15469,7 @@ Body:
         StealProtected: true
   - Id: 1349
     AegisName: TREASURE_BOX26
-    Name: Ba˙ do Tesouro
+    Name: Ba√∫ do Tesouro
     Level: 99
     Dex: 999
     Size: Small
@@ -14370,7 +15499,7 @@ Body:
         StealProtected: true
   - Id: 1350
     AegisName: TREASURE_BOX27
-    Name: Ba˙ do Tesouro
+    Name: Ba√∫ do Tesouro
     Level: 99
     Dex: 999
     Size: Small
@@ -14400,7 +15529,7 @@ Body:
         StealProtected: true
   - Id: 1351
     AegisName: TREASURE_BOX28
-    Name: Ba˙ do Tesouro
+    Name: Ba√∫ do Tesouro
     Level: 99
     Dex: 999
     Size: Small
@@ -14430,7 +15559,7 @@ Body:
         StealProtected: true
   - Id: 1352
     AegisName: TREASURE_BOX29
-    Name: Ba˙ do Tesouro
+    Name: Ba√∫ do Tesouro
     Level: 99
     Dex: 999
     Size: Small
@@ -14460,7 +15589,7 @@ Body:
         StealProtected: true
   - Id: 1353
     AegisName: TREASURE_BOX30
-    Name: Ba˙ do Tesouro
+    Name: Ba√∫ do Tesouro
     Level: 99
     Dex: 999
     Size: Small
@@ -14490,7 +15619,7 @@ Body:
         StealProtected: true
   - Id: 1354
     AegisName: TREASURE_BOX31
-    Name: Ba˙ do Tesouro
+    Name: Ba√∫ do Tesouro
     Level: 99
     Dex: 999
     Size: Small
@@ -14520,7 +15649,7 @@ Body:
         StealProtected: true
   - Id: 1355
     AegisName: TREASURE_BOX32
-    Name: Ba˙ do Tesouro
+    Name: Ba√∫ do Tesouro
     Level: 99
     Dex: 999
     Size: Small
@@ -14550,7 +15679,7 @@ Body:
         StealProtected: true
   - Id: 1356
     AegisName: TREASURE_BOX33
-    Name: Ba˙ do Tesouro
+    Name: Ba√∫ do Tesouro
     Level: 99
     Dex: 999
     Size: Small
@@ -14580,7 +15709,7 @@ Body:
         StealProtected: true
   - Id: 1357
     AegisName: TREASURE_BOX34
-    Name: Ba˙ do Tesouro
+    Name: Ba√∫ do Tesouro
     Level: 99
     Dex: 999
     Size: Small
@@ -14610,7 +15739,7 @@ Body:
         StealProtected: true
   - Id: 1358
     AegisName: TREASURE_BOX35
-    Name: Ba˙ do Tesouro
+    Name: Ba√∫ do Tesouro
     Level: 99
     Dex: 999
     Size: Small
@@ -14640,7 +15769,7 @@ Body:
         StealProtected: true
   - Id: 1359
     AegisName: TREASURE_BOX36
-    Name: Ba˙ do Tesouro
+    Name: Ba√∫ do Tesouro
     Level: 99
     Dex: 999
     Size: Small
@@ -14670,7 +15799,7 @@ Body:
         StealProtected: true
   - Id: 1360
     AegisName: TREASURE_BOX37
-    Name: Ba˙ do Tesouro
+    Name: Ba√∫ do Tesouro
     Level: 99
     Dex: 999
     Size: Small
@@ -14700,7 +15829,7 @@ Body:
         StealProtected: true
   - Id: 1361
     AegisName: TREASURE_BOX38
-    Name: Ba˙ do Tesouro
+    Name: Ba√∫ do Tesouro
     Level: 99
     Dex: 999
     Size: Small
@@ -14730,7 +15859,7 @@ Body:
         StealProtected: true
   - Id: 1362
     AegisName: TREASURE_BOX39
-    Name: Ba˙ do Tesouro
+    Name: Ba√∫ do Tesouro
     Level: 99
     Dex: 999
     Size: Small
@@ -14760,7 +15889,7 @@ Body:
         StealProtected: true
   - Id: 1363
     AegisName: TREASURE_BOX40
-    Name: Ba˙ do Tesouro
+    Name: Ba√∫ do Tesouro
     Level: 99
     Dex: 999
     Size: Small
@@ -14815,6 +15944,7 @@ Body:
     WalkSpeed: 155
     AttackDelay: 1000
     AttackMotion: 900
+    ClientAttackMotion: 1440
     DamageMotion: 432
     Ai: 21
     Modes:
@@ -14848,6 +15978,7 @@ Body:
     WalkSpeed: 400
     AttackDelay: 1840
     AttackMotion: 1440
+    ClientAttackMotion: 720
     DamageMotion: 384
     Ai: 17
     Drops:
@@ -14896,6 +16027,7 @@ Body:
     WalkSpeed: 400
     AttackDelay: 2190
     AttackMotion: 2040
+    ClientAttackMotion: 720
     DamageMotion: 336
     Ai: 09
     Drops:
@@ -14940,6 +16072,7 @@ Body:
     WalkSpeed: 180
     AttackDelay: 1732
     AttackMotion: 1332
+    ClientAttackMotion: 468
     DamageMotion: 540
     Ai: 20
     Modes:
@@ -14956,7 +16089,13 @@ Body:
         StealProtected: true
   - Id: 1368
     AegisName: GEOGRAPHER
-    Name: Planta CarnÌvora
+    ClientAttackMotion: 480
+    ClientAttackMotion: 2304
+    ClientAttackMotion: 576
+    ClientAttackMotion: 420
+    ClientAttackMotion: 720
+    ClientAttackMotion: 768
+    Name: Planta Carn√≠vora
     Level: 56
     Hp: 8071
     BaseExp: 2715
@@ -15259,6 +16398,7 @@ Body:
     WalkSpeed: 165
     AttackDelay: 850
     AttackMotion: 600
+    ClientAttackMotion: 420
     DamageMotion: 336
     Ai: 21
     Modes:
@@ -15307,6 +16447,7 @@ Body:
     WalkSpeed: 170
     AttackDelay: 1160
     AttackMotion: 960
+    ClientAttackMotion: 540
     DamageMotion: 336
     Ai: 04
     Drops:
@@ -15349,6 +16490,7 @@ Body:
     WalkSpeed: 155
     AttackDelay: 972
     AttackMotion: 672
+    ClientAttackMotion: 384
     DamageMotion: 470
     Ai: 04
     Modes:
@@ -15371,7 +16513,20 @@ Body:
         StealProtected: true
   - Id: 1377
     AegisName: ELDER
-    Name: Anci„o
+    ClientAttackMotion: 720
+    ClientAttackMotion: 672
+    ClientAttackMotion: 720
+    ClientAttackMotion: 540
+    ClientAttackMotion: 840
+    ClientAttackMotion: 864
+    ClientAttackMotion: 480
+    ClientAttackMotion: 336
+    ClientAttackMotion: 336
+    ClientAttackMotion: 720
+    ClientAttackMotion: 384
+    ClientAttackMotion: 312
+    ClientAttackMotion: 780
+    Name: Anci√£o
     Level: 64
     Hp: 21592
     BaseExp: 5650
@@ -15583,7 +16738,7 @@ Body:
         StealProtected: true
   - Id: 1382
     AegisName: DIABOLIC
-    Name: DiabÛlico
+    Name: Diab√≥lico
     Level: 67
     Hp: 9642
     BaseExp: 3662
@@ -15709,7 +16864,7 @@ Body:
         StealProtected: true
   - Id: 1385
     AegisName: DELETER_
-    Name: DeletÈrio
+    Name: Delet√©rio
     Level: 65
     Hp: 15168
     BaseExp: 3403
@@ -15795,7 +16950,7 @@ Body:
         StealProtected: true
   - Id: 1387
     AegisName: GIG
-    Name: Ferr„o
+    Name: Ferr√£o
     Level: 60
     Hp: 8409
     BaseExp: 3934
@@ -15885,7 +17040,7 @@ Body:
         StealProtected: true
   - Id: 1389
     AegisName: DRACULA
-    Name: Dr·cula
+    Name: Dr√°cula
     Level: 85
     Hp: 320096
     BaseExp: 120157
@@ -15964,6 +17119,7 @@ Body:
     WalkSpeed: 170
     AttackDelay: 1356
     AttackMotion: 1056
+    ClientAttackMotion: 240
     DamageMotion: 540
     Ai: 05
     Drops:
@@ -16010,6 +17166,7 @@ Body:
     WalkSpeed: 165
     AttackDelay: 1430
     AttackMotion: 1080
+    ClientAttackMotion: 480
     DamageMotion: 1080
     Ai: 07
     Drops:
@@ -16056,6 +17213,7 @@ Body:
     WalkSpeed: 155
     AttackDelay: 2416
     AttackMotion: 2016
+    ClientAttackMotion: 1008
     DamageMotion: 432
     Ai: 05
     Drops:
@@ -16078,7 +17236,16 @@ Body:
         StealProtected: true
   - Id: 1393
     AegisName: G_MUMMY
-    Name: M˙mia
+    Int: 0
+    ClientAttackMotion: 288
+    Int: 0
+    Luk: 0
+    ClientAttackMotion: 816
+    ClientAttackMotion: 960
+    ClientAttackMotion: 960
+    ClientAttackMotion: 960
+    ClientAttackMotion: 960
+    Name: M√∫mia
     Level: 37
     Hp: 5176
     Attack: 305
@@ -16240,7 +17407,7 @@ Body:
         StealProtected: true
   - Id: 1398
     AegisName: CRYSTAL_4
-    Name: Cristal de ¡gua
+    Name: Cristal de √Ågua
     Level: 1
     Hp: 15
     Defense: 100
@@ -16278,7 +17445,8 @@ Body:
         StealProtected: true
   - Id: 1399
     AegisName: EVENT_BAPHO
-    Name: BafomÈ
+    ClientAttackMotion: 384
+    Name: Bafom√©
     Level: 68
     Hp: 1264000
     BaseExp: 261750
@@ -16359,6 +17527,7 @@ Body:
     WalkSpeed: 155
     AttackDelay: 1638
     AttackMotion: 2016
+    ClientAttackMotion: 432
     DamageMotion: 576
     Ai: 01
     Drops:
@@ -16408,6 +17577,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 1003
     AttackMotion: 1152
+    ClientAttackMotion: 2112
     DamageMotion: 336
     Ai: 21
     Drops:
@@ -16455,6 +17625,7 @@ Body:
     WalkSpeed: 160
     AttackDelay: 1148
     AttackMotion: 1728
+    ClientAttackMotion: 624
     DamageMotion: 864
     Ai: 01
     Drops:
@@ -16503,6 +17674,7 @@ Body:
     WalkSpeed: 170
     AttackDelay: 1084
     AttackMotion: 2304
+    ClientAttackMotion: 480
     DamageMotion: 576
     Ai: 05
     Drops:
@@ -16550,6 +17722,7 @@ Body:
     WalkSpeed: 250
     AttackDelay: 1938
     AttackMotion: 2112
+    ClientAttackMotion: 1920
     DamageMotion: 768
     Ai: 17
     Modes:
@@ -16599,6 +17772,7 @@ Body:
     WalkSpeed: 200
     AttackDelay: 1439
     AttackMotion: 1920
+    ClientAttackMotion: 624
     DamageMotion: 672
     Ai: 04
     Modes:
@@ -16647,6 +17821,7 @@ Body:
     WalkSpeed: 165
     AttackDelay: 2012
     AttackMotion: 1728
+    ClientAttackMotion: 576
     DamageMotion: 672
     Ai: 04
     Drops:
@@ -16667,6 +17842,14 @@ Body:
       - Item: Kapha_Card
         Rate: 1
         StealProtected: true
+#  - Id: 1407
+#    AegisName: DOKEBI_
+#    Name: Dokebi
+#    Level: 1
+#    Size: Small
+#    Race: Formless
+#    Element: Water
+#    ElementLevel: 0
   - Id: 1408
     AegisName: BLOOD_BUTTERFLY
     Name: Borboleta Sangrenta
@@ -16693,6 +17876,7 @@ Body:
     WalkSpeed: 145
     AttackDelay: 472
     AttackMotion: 576
+    ClientAttackMotion: 480
     DamageMotion: 288
     Ai: 13
     Modes:
@@ -16740,6 +17924,7 @@ Body:
     WalkSpeed: 160
     AttackDelay: 647
     AttackMotion: 768
+    ClientAttackMotion: 336
     DamageMotion: 420
     Ai: 17
     Drops:
@@ -16786,6 +17971,7 @@ Body:
     WalkSpeed: 410
     AttackDelay: 400
     AttackMotion: 672
+    ClientAttackMotion: 576
     DamageMotion: 480
     Ai: 05
     Drops:
@@ -16802,9 +17988,117 @@ Body:
       - Item: Live_Peach_Tree_Card
         Rate: 1
         StealProtected: true
+#  - Id: 1411
+#    AegisName: PEACH_TREE_BULLET
+#    Name: Peach Tree Bullet... (mode  129)
+#    JapaneseName: Peach Tree Bullet
+#    Size: Small
+#    Race: Formless
+#    Element: Neutral
+#    ElementLevel: 0
   - Id: 1412
     AegisName: EVIL_CLOUD_HERMIT
-    Name: Ermit„o Maligno
+    ClientAttackMotion: 624
+    ClientAttackMotion: 540
+#  - Id: 1414
+#    AegisName: GINSENG_BULLET
+#    Name: Ginseng Bullet... (mode 129)
+#    JapaneseName: Ginseng Bullet
+#    Size: Small
+#    Race: Formless
+#    Element: Neutral
+#    ElementLevel: 0
+    ClientAttackMotion: 240
+    ClientAttackMotion: 576
+    ClientAttackMotion: 288
+    ClientAttackMotion: 1440
+    Luk: 0
+    ClientAttackMotion: 432
+    ClientAttackMotion: 672
+    ClientAttackMotion: 480
+    ClientAttackMotion: 288
+    Int: 0
+    ClientAttackMotion: 408
+    ClientAttackMotion: 288
+    ClientAttackMotion: 384
+    ClientAttackMotion: 216
+    ClientAttackMotion: 720
+    Int: 0
+    Luk: 0
+    ClientAttackMotion: 576
+    ClientAttackMotion: 576
+    ClientAttackMotion: 216
+    ClientAttackMotion: 216
+    ClientAttackMotion: 216
+    ClientAttackMotion: 288
+    Int: 0
+    Luk: 0
+    ClientAttackMotion: 288
+    ClientAttackMotion: 168
+    ClientAttackMotion: 192
+    ClientAttackMotion: 312
+    ClientAttackMotion: 240
+    ClientAttackMotion: 336
+    ClientAttackMotion: 288
+    ClientAttackMotion: 336
+    ClientAttackMotion: 1092
+    ClientAttackMotion: 1224
+    ClientAttackMotion: 336
+    ClientAttackMotion: 252
+    Int: 0
+    ClientAttackMotion: 540
+    ClientAttackMotion: 288
+    ClientAttackMotion: 360
+    ClientAttackMotion: 900
+    ClientAttackMotion: 720
+    ClientAttackMotion: 384
+    ClientAttackMotion: 540
+    ClientAttackMotion: 972
+    ClientAttackMotion: 540
+    ClientAttackMotion: 504
+    ClientAttackMotion: 384
+    ClientAttackMotion: 336
+    ClientAttackMotion: 432
+    ClientAttackMotion: 240
+    ClientAttackMotion: 144
+    ClientAttackMotion: 576
+    Int: 0
+    ClientAttackMotion: 288
+    Int: 0
+    ClientAttackMotion: 768
+    ClientAttackMotion: 288
+    ClientAttackMotion: 336
+    ClientAttackMotion: 336
+    ClientAttackMotion: 384
+    ClientAttackMotion: 432
+    ClientAttackMotion: 432
+    Luk: 0
+    ClientAttackMotion: 720
+    ClientAttackMotion: 360
+    ClientAttackMotion: 960
+    ClientAttackMotion: 864
+    ClientAttackMotion: 480
+    ClientAttackMotion: 384
+    ClientAttackMotion: 540
+    ClientAttackMotion: 480
+    ClientAttackMotion: 468
+    Int: 0
+    ClientAttackMotion: 864
+    Int: 0
+    ClientAttackMotion: 480
+    ClientAttackMotion: 1152
+    ClientAttackMotion: 1920
+    ClientAttackMotion: 900
+    ClientAttackMotion: 960
+    ClientAttackMotion: 768
+    ClientAttackMotion: 576
+    ClientAttackMotion: 480
+    ClientAttackMotion: 660
+    ClientAttackMotion: 336
+    ClientAttackMotion: 672
+    ClientAttackMotion: 288
+    ClientAttackMotion: 1152
+    Name: Ermit√£o Maligno
     JapaneseName: Evil Cloud Hermit
     Level: 56
     Hp: 10392
@@ -16851,7 +18145,7 @@ Body:
         StealProtected: true
   - Id: 1413
     AegisName: WILD_GINSENG
-    Name: Ermit„o Selvagem
+    Name: Ermit√£o Selvagem
     JapaneseName: Wild Ginseng
     Level: 46
     Hp: 6900
@@ -17169,7 +18463,7 @@ Body:
       Detector: true
   - Id: 1422
     AegisName: G_HUNTER_FLY
-    Name: Mosca CaÁadora
+    Name: Mosca Ca√ßadora
     Level: 42
     Hp: 5242
     Attack: 246
@@ -17198,7 +18492,7 @@ Body:
       Detector: true
   - Id: 1423
     AegisName: G_GHOUL
-    Name: CarniÁal
+    Name: Carni√ßal
     Level: 39
     Hp: 5118
     Attack: 420
@@ -17404,7 +18698,7 @@ Body:
       Detector: true
   - Id: 1431
     AegisName: G_BAPHOMET_
-    Name: BafomÈ Jr..
+    Name: Bafom√© Jr..
     Level: 50
     Hp: 8578
     Attack: 487
@@ -17794,7 +19088,7 @@ Body:
     Ai: 04
   - Id: 1446
     AegisName: G_INJUSTICE
-    Name: InjustiÁado
+    Name: Injusti√ßado
     Level: 51
     Hp: 7600
     Attack: 480
@@ -17874,7 +19168,7 @@ Body:
       Detector: true
   - Id: 1449
     AegisName: G_MUTANT_DRAGON
-    Name: Drag„o Mutante
+    Name: Drag√£o Mutante
     JapaneseName: Mutant Dragon
     Level: 65
     Hp: 62600
@@ -17903,7 +19197,7 @@ Body:
     Class: Boss
   - Id: 1450
     AegisName: G_WIND_GHOST
-    Name: Xam„ do Vento
+    Name: Xam√£ do Vento
     Level: 51
     Hp: 4820
     Attack: 489
@@ -17930,7 +19224,7 @@ Body:
       Detector: true
   - Id: 1451
     AegisName: G_MERMAN
-    Name: Trit„o
+    Name: Trit√£o
     Level: 53
     Hp: 12300
     Attack: 482
@@ -18380,7 +19674,7 @@ Body:
     Ai: 04
   - Id: 1468
     AegisName: G_REQUIEM
-    Name: RÈquiem
+    Name: R√©quiem
     Level: 35
     Hp: 3089
     Attack: 220
@@ -18405,7 +19699,7 @@ Body:
     Ai: 04
   - Id: 1469
     AegisName: G_SKEL_WORKER
-    Name: Esqueleto Oper·rio
+    Name: Esqueleto Oper√°rio
     Level: 30
     Hp: 2872
     Attack: 242
@@ -18530,7 +19824,7 @@ Body:
     Ai: 04
   - Id: 1474
     AegisName: G_MIMIC
-    Name: MÌmico
+    Name: M√≠mico
     Level: 51
     Hp: 6120
     Attack: 150
@@ -19076,7 +20370,50 @@ Body:
         StealProtected: true
   - Id: 1493
     AegisName: DRYAD
-    Name: DrÌade
+    ClientAttackMotion: 288
+    Int: 0
+    Luk: 0
+    ClientAttackMotion: 240
+    ClientAttackMotion: 96
+#  - Id: 1496
+#    AegisName: STONE_SHOOTER_BULLET
+#    Name: Stone Shooter Bullet
+#    Size: Small
+#    Race: Formless
+#    Element: Neutral
+#    ElementLevel: 0
+    ClientAttackMotion: 384
+    ClientAttackMotion: 420
+    ClientAttackMotion: 420
+    ClientAttackMotion: 288
+#  - Id: 1501
+#    AegisName: PARASITE_BULLET
+#    Name: Parasite Bullet... (mode 2181)
+#    JapaneseName: Parasite Bullet
+#    Size: Small
+#    Race: Formless
+#    Element: Neutral
+#    ElementLevel: 0
+    ClientAttackMotion: 288
+    Str: 0
+    ClientAttackMotion: 480
+    Str: 0
+    ClientAttackMotion: 384
+    Str: 0
+    ClientAttackMotion: 1440
+    Str: 0
+    ClientAttackMotion: 360
+    Str: 0
+    ClientAttackMotion: 480
+    Str: 0
+    ClientAttackMotion: 420
+    Str: 0
+    ClientAttackMotion: 288
+    Str: 0
+    ClientAttackMotion: 540
+    Str: 0
+    ClientAttackMotion: 720
+    Name: Dr√≠ade
     Level: 50
     Hp: 8791
     BaseExp: 2763
@@ -19452,7 +20789,7 @@ Body:
         StealProtected: true
   - Id: 1503
     AegisName: GIBBET
-    Name: ¡rvore Maldita
+    Name: √Årvore Maldita
     Level: 58
     Hp: 6841
     BaseExp: 4011
@@ -19898,6 +21235,7 @@ Body:
     WalkSpeed: 180
     AttackDelay: 890
     AttackMotion: 1320
+    ClientAttackMotion: 1080
     DamageMotion: 720
     Ai: 04
     Drops:
@@ -19942,6 +21280,7 @@ Body:
     WalkSpeed: 200
     AttackDelay: 1257
     AttackMotion: 528
+    ClientAttackMotion: 864
     DamageMotion: 432
     Ai: 04
     Drops:
@@ -19986,6 +21325,7 @@ Body:
     WalkSpeed: 160
     AttackDelay: 600
     AttackMotion: 840
+    ClientAttackMotion: 480
     DamageMotion: 504
     Ai: 02
     Drops:
@@ -20030,6 +21370,7 @@ Body:
     WalkSpeed: 450
     AttackDelay: 879
     AttackMotion: 672
+    ClientAttackMotion: 288
     DamageMotion: 576
     Ai: 04
     Drops:
@@ -20074,6 +21415,7 @@ Body:
     WalkSpeed: 445
     AttackDelay: 106
     AttackMotion: 1056
+    ClientAttackMotion: 624
     DamageMotion: 576
     Ai: 17
     Drops:
@@ -20116,6 +21458,7 @@ Body:
     WalkSpeed: 165
     AttackDelay: 1120
     AttackMotion: 576
+    ClientAttackMotion: 336
     DamageMotion: 420
     Ai: 04
     Modes:
@@ -20160,6 +21503,7 @@ Body:
     WalkSpeed: 160
     AttackDelay: 576
     AttackMotion: 960
+    ClientAttackMotion: 768
     DamageMotion: 480
     Ai: 21
     Drops:
@@ -20206,6 +21550,7 @@ Body:
     WalkSpeed: 170
     AttackDelay: 1728
     AttackMotion: 816
+    ClientAttackMotion: 240
     DamageMotion: 1188
     Ai: 21
     Drops:
@@ -20236,6 +21581,7 @@ Body:
     MagicDefense: 10
     Agi: 14
     Vit: 14
+    Int: 0
     Dex: 19
     Luk: 15
     AttackRange: 1
@@ -20248,6 +21594,7 @@ Body:
     WalkSpeed: 170
     AttackDelay: 1152
     AttackMotion: 672
+    ClientAttackMotion: 432
     DamageMotion: 672
     Ai: 01
     Drops:
@@ -20284,11 +21631,81 @@ Body:
     WalkSpeed: 200
     AttackDelay: 520
     AttackMotion: 2304
+    ClientAttackMotion: 2112
     DamageMotion: 480
     Ai: 17
   - Id: 1522
     AegisName: G_ANCIENT_MUMMY
-    Name: M˙mia Anci„
+    ClientAttackMotion: 288
+    ClientAttackMotion: 480
+    ClientAttackMotion: 240
+    ClientAttackMotion: 288
+    ClientAttackMotion: 480
+    ClientAttackMotion: 384
+    ClientAttackMotion: 432
+    ClientAttackMotion: 288
+    ClientAttackMotion: 780
+    ClientAttackMotion: 624
+    ClientAttackMotion: 480
+    ClientAttackMotion: 576
+    ClientAttackMotion: 384
+    ClientAttackMotion: 384
+    ClientAttackMotion: 384
+    ClientAttackMotion: 384
+    ClientAttackMotion: 384
+    ClientAttackMotion: 1056
+    Int: 0
+    Luk: 0
+    ClientAttackMotion: 912
+    ClientAttackMotion: 816
+    ClientAttackMotion: 1152
+    ClientAttackMotion: 576
+    ClientAttackMotion: 432
+    ClientAttackMotion: 240
+    ClientAttackMotion: 240
+    ClientAttackMotion: 240
+    ClientAttackMotion: 240
+    ClientAttackMotion: 720
+    ClientAttackMotion: 576
+    ClientAttackMotion: 468
+    ClientAttackMotion: 1920
+    Int: 0
+    ClientAttackMotion: 336
+    ClientAttackMotion: 720
+    ClientAttackMotion: 288
+    ClientAttackMotion: 624
+    ClientAttackMotion: 1008
+    ClientAttackMotion: 576
+    ClientAttackMotion: 384
+    ClientAttackMotion: 2112
+    ClientAttackMotion: 480
+    ClientAttackMotion: 216
+    ClientAttackMotion: 624
+    ClientAttackMotion: 576
+    ClientAttackMotion: 540
+    ClientAttackMotion: 720
+    ClientAttackMotion: 576
+    ClientAttackMotion: 312
+    ClientAttackMotion: 288
+    ClientAttackMotion: 648
+    ClientAttackMotion: 288
+    Int: 0
+    ClientAttackMotion: 288
+    ClientAttackMotion: 720
+    ClientAttackMotion: 720
+    ClientAttackMotion: 180
+    ClientAttackMotion: 336
+    ClientAttackMotion: 528
+    Int: 0
+    Luk: 0
+    ClientAttackMotion: 552
+    Int: 0
+    ClientAttackMotion: 336
+    ClientAttackMotion: 420
+    ClientAttackMotion: 600
+    ClientAttackMotion: 864
+    ClientAttackMotion: 384
+    Name: M√∫mia Anci√£
     Level: 64
     Hp: 40599
     Attack: 836
@@ -20394,7 +21811,7 @@ Body:
     Ai: 21
   - Id: 1526
     AegisName: G_BLOOD_BUTTERFLY
-    Name: Borboleta Sanguin·ria
+    Name: Borboleta Sanguin√°ria
     Level: 55
     Hp: 8082
     Attack: 121
@@ -20448,7 +21865,7 @@ Body:
     Ai: 17
   - Id: 1528
     AegisName: G_CLOCK
-    Name: RelÛgio
+    Name: Rel√≥gio
     Level: 60
     Hp: 11050
     Attack: 720
@@ -20503,7 +21920,7 @@ Body:
     Class: Boss
   - Id: 1530
     AegisName: G_DRACULA
-    Name: Dr·cula
+    Name: Dr√°cula
     Level: 85
     Hp: 320096
     Attack: 1625
@@ -20530,7 +21947,7 @@ Body:
     Class: Boss
   - Id: 1531
     AegisName: G_EVIL_CLOUD_HERMIT
-    Name: Ermit„o Maligno
+    Name: Ermit√£o Maligno
     JapaneseName: Evil Cloud Hermit
     Level: 56
     Hp: 10392
@@ -20741,7 +22158,7 @@ Body:
     Ai: 13
   - Id: 1539
     AegisName: G_GOBLIN_LEADER
-    Name: LÌder Goblin
+    Name: L√≠der Goblin
     Level: 64
     Hp: 20152
     Attack: 663
@@ -20791,7 +22208,7 @@ Body:
     Ai: 17
   - Id: 1541
     AegisName: G_GREATEST_GENERAL
-    Name: Guardi„o da Floresta
+    Name: Guardi√£o da Floresta
     Level: 40
     Hp: 3632
     Attack: 350
@@ -20975,7 +22392,7 @@ Body:
     Ai: 13
   - Id: 1548
     AegisName: G_KOBOLD_LEADER
-    Name: LÌder Kobold
+    Name: L√≠der Kobold
     Level: 65
     Hp: 18313
     Attack: 649
@@ -21110,7 +22527,7 @@ Body:
       Detector: true
   - Id: 1553
     AegisName: G_MYST
-    Name: NÈvoa
+    Name: N√©voa
     Level: 38
     Hp: 3745
     Attack: 365
@@ -21269,7 +22686,7 @@ Body:
     Ai: 04
   - Id: 1559
     AegisName: G_SCORPION
-    Name: Escorpi„o
+    Name: Escorpi√£o
     Level: 24
     Hp: 1109
     Attack: 80
@@ -21434,7 +22851,7 @@ Body:
       Detector: true
   - Id: 1565
     AegisName: G_WILD_GINSENG
-    Name: Ermit„o Selvagem
+    Name: Ermit√£o Selvagem
     JapaneseName: Wild Ginseng
     Level: 46
     Hp: 6900
@@ -21462,7 +22879,7 @@ Body:
     Ai: 17
   - Id: 1566
     AegisName: G_WRAITH_DEAD
-    Name: ApariÁ„o
+    Name: Apari√ß√£o
     Level: 74
     Hp: 43021
     Attack: 1366
@@ -21489,7 +22906,7 @@ Body:
     Ai: 21
   - Id: 1567
     AegisName: G_ANCIENT_WORM
-    Name: Verme Anci„o
+    Name: Verme Anci√£o
     Level: 67
     Hp: 22598
     Attack: 948
@@ -21544,7 +22961,7 @@ Body:
     Class: Boss
   - Id: 1569
     AegisName: G_BLOODY_KNIGHT
-    Name: Cavaleiro Sanguin·rio
+    Name: Cavaleiro Sanguin√°rio
     Level: 82
     Hp: 57870
     Attack: 2150
@@ -21571,7 +22988,7 @@ Body:
     Ai: 21
   - Id: 1570
     AegisName: G_CRAMP
-    Name: C„ibra
+    Name: C√£ibra
     Level: 56
     Hp: 4720
     Attack: 395
@@ -21645,7 +23062,7 @@ Body:
     Ai: 02
   - Id: 1573
     AegisName: G_ELDER
-    Name: Anci„o
+    Name: Anci√£o
     Level: 64
     Hp: 21592
     Attack: 421
@@ -21671,7 +23088,7 @@ Body:
     Ai: 04
   - Id: 1574
     AegisName: G_ELDER_WILOW
-    Name: Salgueiro Anci„o
+    Name: Salgueiro Anci√£o
     Level: 20
     Hp: 693
     Attack: 58
@@ -22010,6 +23427,7 @@ Body:
     WalkSpeed: 140
     AttackDelay: 512
     AttackMotion: 1152
+    ClientAttackMotion: 384
     DamageMotion: 672
     Ai: 13
     Modes:
@@ -22054,6 +23472,7 @@ Body:
     WalkSpeed: 400
     AttackDelay: 1872
     AttackMotion: 672
+    ClientAttackMotion: 240
     DamageMotion: 480
     Ai: 02
     Drops:
@@ -22098,6 +23517,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 960
     AttackMotion: 864
+    ClientAttackMotion: 720
     DamageMotion: 720
     Ai: 02
     Drops:
@@ -22144,6 +23564,7 @@ Body:
     WalkSpeed: 100
     AttackDelay: 1152
     AttackMotion: 1536
+    ClientAttackMotion: 384
     DamageMotion: 576
     Ai: 09
     Drops:
@@ -22190,6 +23611,7 @@ Body:
     WalkSpeed: 200
     AttackDelay: 1864
     AttackMotion: 864
+    ClientAttackMotion: 672
     DamageMotion: 288
     Ai: 01
     Drops:
@@ -22212,7 +23634,48 @@ Body:
         StealProtected: true
   - Id: 1589
     AegisName: G_MANDRAGORA
-    Name: Mandr·gora
+    Int: 0
+    ClientAttackMotion: 384
+    ClientAttackMotion: 480
+    ClientAttackMotion: 264
+    ClientAttackMotion: 576
+    ClientAttackMotion: 288
+    ClientAttackMotion: 540
+    ClientAttackMotion: 288
+    ClientAttackMotion: 384
+    ClientAttackMotion: 600
+    ClientAttackMotion: 468
+    Int: 0
+    Luk: 0
+    ClientAttackMotion: 1344
+    ClientAttackMotion: 1200
+    ClientAttackMotion: 720
+    ClientAttackMotion: 1248
+    ClientAttackMotion: 1092
+    ClientAttackMotion: 648
+    ClientAttackMotion: 5280
+    ClientAttackMotion: 288
+    ClientAttackMotion: 384
+    Luk: 0
+    ClientAttackMotion: 720
+    ClientAttackMotion: 480
+    ClientAttackMotion: 480
+    ClientAttackMotion: 960
+    ClientAttackMotion: 1080
+    ClientAttackMotion: 288
+    ClientAttackMotion: 300
+    ClientAttackMotion: 624
+    Str: 0
+    ClientAttackMotion: 240
+    ClientAttackMotion: 240
+    ClientAttackMotion: 240
+    Str: 0
+    ClientAttackMotion: 120
+    ClientAttackMotion: 528
+    ClientAttackMotion: 528
+    ClientAttackMotion: 600
+    ClientAttackMotion: 480
+    Name: Mandr√°gora
     Level: 12
     Hp: 405
     Attack: 26
@@ -22236,7 +23699,7 @@ Body:
     Ai: 10
   - Id: 1590
     AegisName: G_GEOGRAPHER
-    Name: Planta CarnÌvora
+    Name: Planta Carn√≠vora
     Level: 56
     Hp: 8071
     Attack: 467
@@ -22262,7 +23725,7 @@ Body:
     Ai: 10
   - Id: 1591
     AegisName: A_LUNATIC
-    Name: Lun·tico
+    Name: Lun√°tico
     Level: 29
     Hp: 2334
     Attack: 221
@@ -22332,7 +23795,7 @@ Body:
         Rate: 10000
   - Id: 1593
     AegisName: A_ANCIENT_MUMMY
-    Name: M˙mia Anci„
+    Name: M√∫mia Anci√£
     Level: 52
     Hp: 8613
     Attack: 830
@@ -22447,7 +23910,7 @@ Body:
       Detector: true
   - Id: 1597
     AegisName: G_GARGOYLE
-    Name: G·rgula
+    Name: G√°rgula
     Level: 48
     Hp: 3950
     Attack: 290
@@ -22610,7 +24073,7 @@ Body:
     Ai: 21
   - Id: 1603
     AegisName: G_BIGFOOT
-    Name: PÈ Grande
+    Name: P√© Grande
     Level: 25
     Hp: 1619
     Attack: 198
@@ -22635,7 +24098,7 @@ Body:
     Ai: 17
   - Id: 1604
     AegisName: G_GIANT_HONET
-    Name: Zang„o Gigante
+    Name: Zang√£o Gigante
     Level: 56
     Hp: 13105
     Attack: 650
@@ -22664,7 +24127,7 @@ Body:
       Detector: true
   - Id: 1605
     AegisName: G_DARK_ILLUSION
-    Name: Ilus„o das Trevas
+    Name: Ilus√£o das Trevas
     Level: 77
     Hp: 103631
     Attack: 1300
@@ -22746,7 +24209,7 @@ Body:
     Ai: 21
   - Id: 1608
     AegisName: G_THIEF_BUG__
-    Name: Besouro-Ladr„o FÍmea
+    Name: Besouro-Ladr√£o F√™mea
     Level: 19
     Hp: 583
     Attack: 76
@@ -23251,7 +24714,7 @@ Body:
         StealProtected: true
   - Id: 1620
     AegisName: NOXIOUS
-    Name: Nuvem TÛxica
+    Name: Nuvem T√≥xica
     Level: 35
     Hp: 2038
     BaseExp: 698
@@ -23464,6 +24927,7 @@ Body:
     WalkSpeed: 220
     AttackDelay: 1152
     AttackMotion: 528
+    ClientAttackMotion: 240
     DamageMotion: 360
     Ai: 04
   - Id: 1625
@@ -23476,6 +24940,7 @@ Body:
     Attack: 164
     Attack2: 494
     MagicDefense: 8
+    Str: 0
     Agi: 31
     Vit: 21
     Int: 50
@@ -23491,6 +24956,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 720
     AttackMotion: 360
+    ClientAttackMotion: 120
     DamageMotion: 360
     Ai: 04
     Modes:
@@ -23521,6 +24987,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 432
     AttackMotion: 384
+    ClientAttackMotion: 288
     DamageMotion: 192
     Ai: 21
     Class: Boss
@@ -23562,6 +25029,7 @@ Body:
     WalkSpeed: 200
     AttackDelay: 140
     AttackMotion: 864
+    ClientAttackMotion: 384
     DamageMotion: 430
     Ai: 04
     Modes:
@@ -23601,6 +25069,7 @@ Body:
     WalkSpeed: 300
     AttackDelay: 140
     AttackMotion: 960
+    ClientAttackMotion: 240
     DamageMotion: 504
     Ai: 03
     Drops:
@@ -23642,6 +25111,7 @@ Body:
     WalkSpeed: 200
     AttackDelay: 336
     AttackMotion: 540
+    ClientAttackMotion: 360
     DamageMotion: 432
     Ai: 04
     Drops:
@@ -23681,6 +25151,7 @@ Body:
     WalkSpeed: 130
     AttackDelay: 576
     AttackMotion: 960
+    ClientAttackMotion: 768
     DamageMotion: 480
     Ai: 04
     Class: Boss
@@ -23739,6 +25210,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 1728
     AttackMotion: 816
+    ClientAttackMotion: 240
     DamageMotion: 1188
     Ai: 04
     Drops:
@@ -23784,6 +25256,7 @@ Body:
     WalkSpeed: 140
     AttackDelay: 432
     AttackMotion: 540
+    ClientAttackMotion: 240
     DamageMotion: 432
     Ai: 17
     Modes:
@@ -23831,6 +25304,7 @@ Body:
     WalkSpeed: 190
     AttackDelay: 336
     AttackMotion: 840
+    ClientAttackMotion: 300
     DamageMotion: 360
     Ai: 17
     Drops:
@@ -23875,6 +25349,7 @@ Body:
     WalkSpeed: 170
     AttackDelay: 76
     AttackMotion: 384
+    ClientAttackMotion: 288
     DamageMotion: 288
     Ai: 09
     Modes:
@@ -23925,6 +25400,7 @@ Body:
     WalkSpeed: 180
     AttackDelay: 76
     AttackMotion: 384
+    ClientAttackMotion: 288
     DamageMotion: 288
     Ai: 09
     Modes:
@@ -23975,6 +25451,7 @@ Body:
     WalkSpeed: 180
     AttackDelay: 76
     AttackMotion: 384
+    ClientAttackMotion: 240
     DamageMotion: 288
     Ai: 09
     Drops:
@@ -24022,6 +25499,7 @@ Body:
     WalkSpeed: 180
     AttackDelay: 1152
     AttackMotion: 384
+    ClientAttackMotion: 288
     DamageMotion: 288
     Ai: 20
     Drops:
@@ -24069,6 +25547,7 @@ Body:
     WalkSpeed: 180
     AttackDelay: 76
     AttackMotion: 384
+    ClientAttackMotion: 288
     DamageMotion: 288
     Ai: 09
     Drops:
@@ -24116,6 +25595,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 1152
     AttackMotion: 384
+    ClientAttackMotion: 288
     DamageMotion: 288
     Ai: 20
     Drops:
@@ -24163,6 +25643,7 @@ Body:
     WalkSpeed: 100
     AttackDelay: 76
     AttackMotion: 384
+    ClientAttackMotion: 288
     DamageMotion: 288
     Ai: 21
     Class: Boss
@@ -24197,6 +25678,7 @@ Body:
     WalkSpeed: 100
     AttackDelay: 76
     AttackMotion: 384
+    ClientAttackMotion: 288
     DamageMotion: 288
     Ai: 21
     Class: Boss
@@ -24232,6 +25714,7 @@ Body:
     WalkSpeed: 100
     AttackDelay: 76
     AttackMotion: 384
+    ClientAttackMotion: 240
     DamageMotion: 288
     Ai: 21
     Class: Boss
@@ -24266,6 +25749,7 @@ Body:
     WalkSpeed: 125
     AttackDelay: 1152
     AttackMotion: 384
+    ClientAttackMotion: 288
     DamageMotion: 288
     Ai: 21
     Class: Boss
@@ -24300,6 +25784,7 @@ Body:
     WalkSpeed: 100
     AttackDelay: 76
     AttackMotion: 384
+    ClientAttackMotion: 288
     DamageMotion: 288
     Ai: 21
     Class: Boss
@@ -24334,6 +25819,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 1152
     AttackMotion: 384
+    ClientAttackMotion: 288
     DamageMotion: 288
     Ai: 21
     Class: Boss
@@ -24369,6 +25855,7 @@ Body:
     WalkSpeed: 100
     AttackDelay: 76
     AttackMotion: 384
+    ClientAttackMotion: 288
     DamageMotion: 288
     Ai: 21
     Class: Boss
@@ -24427,6 +25914,7 @@ Body:
     WalkSpeed: 100
     AttackDelay: 76
     AttackMotion: 384
+    ClientAttackMotion: 288
     DamageMotion: 288
     Ai: 21
     Class: Boss
@@ -24486,6 +25974,7 @@ Body:
     WalkSpeed: 100
     AttackDelay: 76
     AttackMotion: 384
+    ClientAttackMotion: 240
     DamageMotion: 288
     Ai: 21
     Class: Boss
@@ -24544,6 +26033,7 @@ Body:
     WalkSpeed: 125
     AttackDelay: 1152
     AttackMotion: 384
+    ClientAttackMotion: 288
     DamageMotion: 288
     Ai: 21
     Class: Boss
@@ -24602,6 +26092,7 @@ Body:
     WalkSpeed: 100
     AttackDelay: 76
     AttackMotion: 384
+    ClientAttackMotion: 288
     DamageMotion: 288
     Ai: 21
     Class: Boss
@@ -24660,6 +26151,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 1152
     AttackMotion: 384
+    ClientAttackMotion: 288
     DamageMotion: 288
     Ai: 21
     Class: Boss
@@ -24718,6 +26210,7 @@ Body:
     WalkSpeed: 145
     AttackDelay: 576
     AttackMotion: 432
+    ClientAttackMotion: 288
     DamageMotion: 288
     Ai: 04
     Drops:
@@ -24765,6 +26258,7 @@ Body:
     WalkSpeed: 120
     AttackDelay: 576
     AttackMotion: 432
+    ClientAttackMotion: 288
     DamageMotion: 288
     Ai: 04
     Drops:
@@ -24813,6 +26307,7 @@ Body:
     WalkSpeed: 120
     AttackDelay: 576
     AttackMotion: 432
+    ClientAttackMotion: 240
     DamageMotion: 288
     Ai: 04
     Drops:
@@ -24860,6 +26355,7 @@ Body:
     WalkSpeed: 130
     AttackDelay: 576
     AttackMotion: 432
+    ClientAttackMotion: 336
     DamageMotion: 288
     Ai: 04
     Drops:
@@ -24908,6 +26404,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 576
     AttackMotion: 432
+    ClientAttackMotion: 336
     DamageMotion: 288
     Ai: 04
     Drops:
@@ -24955,6 +26452,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 576
     AttackMotion: 432
+    ClientAttackMotion: 336
     DamageMotion: 288
     Ai: 04
     Drops:
@@ -25004,6 +26502,7 @@ Body:
     WalkSpeed: 100
     AttackDelay: 1008
     AttackMotion: 864
+    ClientAttackMotion: 288
     DamageMotion: 288
     Ai: 21
     Class: Boss
@@ -25059,6 +26558,7 @@ Body:
     WalkSpeed: 120
     AttackDelay: 1008
     AttackMotion: 864
+    ClientAttackMotion: 288
     DamageMotion: 288
     Ai: 04
     Drops:
@@ -25090,6 +26590,7 @@ Body:
     WalkSpeed: 120
     AttackDelay: 1008
     AttackMotion: 864
+    ClientAttackMotion: 240
     DamageMotion: 288
     Ai: 04
     Drops:
@@ -25120,6 +26621,7 @@ Body:
     WalkSpeed: 130
     AttackDelay: 1008
     AttackMotion: 864
+    ClientAttackMotion: 336
     DamageMotion: 288
     Ai: 04
     Drops:
@@ -25151,6 +26653,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 1008
     AttackMotion: 864
+    ClientAttackMotion: 336
     DamageMotion: 288
     Ai: 04
     Drops:
@@ -25181,6 +26684,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 1008
     AttackMotion: 864
+    ClientAttackMotion: 336
     DamageMotion: 288
     Ai: 04
     Drops:
@@ -25188,7 +26692,30 @@ Body:
         Rate: 10
   - Id: 1664
     AegisName: POTON_CANON
-    Name: Canh„o de FÛton
+    ClientAttackMotion: 480
+    ClientAttackMotion: 480
+    ClientAttackMotion: 480
+    ClientAttackMotion: 480
+    ClientAttackMotion: 192
+    ClientAttackMotion: 336
+    ClientAttackMotion: 336
+    ClientAttackMotion: 336
+    ClientAttackMotion: 336
+    ClientAttackMotion: 336
+    Str: 0
+    ClientAttackMotion: 480
+    ClientAttackMotion: 600
+    ClientAttackMotion: 600
+    ClientAttackMotion: 600
+    ClientAttackMotion: 600
+    ClientAttackMotion: 600
+    ClientAttackMotion: 288
+    ClientAttackMotion: 240
+    ClientAttackMotion: 336
+    ClientAttackMotion: 480
+    ClientAttackMotion: 192
+    ClientAttackMotion: 528
+    Name: Canh√£o de F√≥ton
     Level: 66
     Hp: 8000
     BaseExp: 3900
@@ -25223,7 +26750,7 @@ Body:
         Rate: 1000
   - Id: 1665
     AegisName: POTON_CANON_1
-    Name: Canh„o de FÛton
+    Name: Canh√£o de F√≥ton
     Level: 67
     Hp: 7500
     BaseExp: 4300
@@ -25260,7 +26787,7 @@ Body:
         Rate: 5
   - Id: 1666
     AegisName: POTON_CANON_2
-    Name: Canh„o de FÛton
+    Name: Canh√£o de F√≥ton
     Level: 64
     Hp: 7100
     BaseExp: 3100
@@ -25295,7 +26822,7 @@ Body:
         Rate: 1000
   - Id: 1667
     AegisName: POTON_CANON_3
-    Name: Canh„o de FÛton
+    Name: Canh√£o de F√≥ton
     Level: 65
     Hp: 7800
     BaseExp: 3800
@@ -25980,7 +27507,7 @@ Body:
         StealProtected: true
   - Id: 1683
     AegisName: G_POTON_CANON
-    Name: Canh„o de FÛton
+    Name: Canh√£o de F√≥ton
     Level: 46
     Hp: 7000
     Attack: 560
@@ -26116,6 +27643,7 @@ Body:
     WalkSpeed: 200
     AttackDelay: 672
     AttackMotion: 864
+    ClientAttackMotion: 504
     DamageMotion: 288
     Ai: 04
     Drops:
@@ -26160,6 +27688,7 @@ Body:
     WalkSpeed: 200
     AttackDelay: 720
     AttackMotion: 528
+    ClientAttackMotion: 336
     DamageMotion: 432
     Ai: 02
     Drops:
@@ -26207,6 +27736,7 @@ Body:
     WalkSpeed: 100
     AttackDelay: 576
     AttackMotion: 432
+    ClientAttackMotion: 384
     DamageMotion: 360
     Ai: 10
     Class: Boss
@@ -26265,6 +27795,7 @@ Body:
     WalkSpeed: 130
     AttackDelay: 576
     AttackMotion: 960
+    ClientAttackMotion: 768
     DamageMotion: 480
     Ai: 21
     Class: Boss
@@ -26285,6 +27816,7 @@ Body:
     WalkSpeed: 160
     AttackDelay: 1120
     AttackMotion: 552
+    ClientAttackMotion: 2304
     DamageMotion: 511
     Ai: 02
     Modes:
@@ -26325,6 +27857,7 @@ Body:
     WalkSpeed: 100
     AttackDelay: 1152
     AttackMotion: 1536
+    ClientAttackMotion: 384
     DamageMotion: 576
     Ai: 04
     Drops:
@@ -26368,6 +27901,7 @@ Body:
     WalkSpeed: 100
     AttackDelay: 140
     AttackMotion: 384
+    ClientAttackMotion: 288
     DamageMotion: 504
     Ai: 04
     Drops:
@@ -26413,6 +27947,7 @@ Body:
     WalkSpeed: 100
     AttackDelay: 608
     AttackMotion: 1440
+    ClientAttackMotion: 1296
     DamageMotion: 576
     Ai: 04
     Drops:
@@ -26454,6 +27989,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 608
     AttackMotion: 1440
+    ClientAttackMotion: 1296
     DamageMotion: 576
     Ai: 04
     Drops:
@@ -26495,6 +28031,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 608
     AttackMotion: 1440
+    ClientAttackMotion: 1296
     DamageMotion: 576
     Ai: 04
     Drops:
@@ -26536,6 +28073,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 608
     AttackMotion: 1440
+    ClientAttackMotion: 1296
     DamageMotion: 576
     Ai: 04
     Drops:
@@ -26577,6 +28115,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 608
     AttackMotion: 1440
+    ClientAttackMotion: 1296
     DamageMotion: 576
     Ai: 04
     Drops:
@@ -26621,6 +28160,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 176
     AttackMotion: 912
+    ClientAttackMotion: 528
     DamageMotion: 300
     Ai: 21
     Drops:
@@ -26643,7 +28183,17 @@ Body:
         StealProtected: true
   - Id: 1699
     AegisName: ANCIENT_MIMIC
-    Name: MÌmico Antigo
+    ClientAttackMotion: 240
+    ClientAttackMotion: 300
+    ClientAttackMotion: 240
+    ClientAttackMotion: 240
+    ClientAttackMotion: 384
+    ClientAttackMotion: 192
+    ClientAttackMotion: 384
+    ClientAttackMotion: 300
+    ClientAttackMotion: 480
+    ClientAttackMotion: 672
+    Name: M√≠mico Antigo
     Level: 60
     Hp: 8080
     BaseExp: 2950
@@ -26786,7 +28336,7 @@ Body:
         StealProtected: true
   - Id: 1702
     AegisName: RETRIBUTION
-    Name: Baronesa RetribuiÁ„o
+    Name: Baronesa Retribui√ß√£o
     JapaneseName: Retribution
     Level: 79
     Hp: 46666
@@ -27072,7 +28622,7 @@ Body:
         StealProtected: true
   - Id: 1708
     AegisName: THANATOS
-    Name: MemÛria de Thanatos
+    Name: Mem√≥ria de Thanatos
     JapaneseName: Thanatos
     Level: 99
     Hp: 445660
@@ -27157,6 +28707,7 @@ Body:
     WalkSpeed: 100
     AttackDelay: 115
     AttackMotion: 288
+    ClientAttackMotion: 192
     DamageMotion: 420
     Ai: 20
     Class: Boss
@@ -27195,6 +28746,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 160
     AttackMotion: 528
+    ClientAttackMotion: 384
     DamageMotion: 360
     Ai: 20
     Class: Boss
@@ -27233,6 +28785,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 160
     AttackMotion: 480
+    ClientAttackMotion: 300
     DamageMotion: 360
     Ai: 20
     Class: Boss
@@ -27271,6 +28824,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 160
     AttackMotion: 672
+    ClientAttackMotion: 480
     DamageMotion: 480
     Ai: 20
     Class: Boss
@@ -27307,6 +28861,7 @@ Body:
     WalkSpeed: 170
     AttackDelay: 168
     AttackMotion: 1008
+    ClientAttackMotion: 528
     DamageMotion: 300
     Ai: 09
     Drops:
@@ -27353,6 +28908,7 @@ Body:
     WalkSpeed: 100
     AttackDelay: 108
     AttackMotion: 576
+    ClientAttackMotion: 384
     DamageMotion: 432
     Ai: 09
     Drops:
@@ -27399,6 +28955,7 @@ Body:
     WalkSpeed: 110
     AttackDelay: 151
     AttackMotion: 288
+    ClientAttackMotion: 240
     DamageMotion: 360
     Ai: 04
     Drops:
@@ -27437,6 +28994,7 @@ Body:
     WalkSpeed: 180
     AttackDelay: 168
     AttackMotion: 768
+    ClientAttackMotion: 528
     DamageMotion: 360
     Ai: 09
     Drops:
@@ -27483,6 +29041,7 @@ Body:
     WalkSpeed: 120
     AttackDelay: 108
     AttackMotion: 576
+    ClientAttackMotion: 384
     DamageMotion: 432
     Ai: 09
     Drops:
@@ -27527,6 +29086,7 @@ Body:
     WalkSpeed: 100
     AttackDelay: 252
     AttackMotion: 816
+    ClientAttackMotion: 528
     DamageMotion: 480
     Ai: 04
     Drops:
@@ -27568,6 +29128,7 @@ Body:
     WalkSpeed: 250
     AttackDelay: 432
     AttackMotion: 936
+    ClientAttackMotion: 240
     DamageMotion: 360
     Ai: 21
     Class: Boss
@@ -27625,6 +29186,7 @@ Body:
     WalkSpeed: 160
     AttackDelay: 140
     AttackMotion: 672
+    ClientAttackMotion: 384
     DamageMotion: 432
     Ai: 21
     Class: Boss
@@ -27648,7 +29210,26 @@ Body:
         StealProtected: true
   - Id: 1721
     AegisName: DRAGON_EGG
-    Name: Ovo de Drag„o
+    ClientAttackMotion: 0
+    ClientAttackMotion: 192
+    ClientAttackMotion: 288
+    ClientAttackMotion: 480
+    Int: 0
+    ClientAttackMotion: 288
+    ClientAttackMotion: 264
+    ClientAttackMotion: 312
+    ClientAttackMotion: 216
+    ClientAttackMotion: 216
+    ClientAttackMotion: 288
+    ClientAttackMotion: 192
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Luk: 0
+    ClientAttackMotion: 384
+    ClientAttackMotion: 384
+    Name: Ovo de Drag√£o
     Level: 43
     Hp: 18322
     BaseExp: 6740
@@ -27754,7 +29335,7 @@ Body:
     Ai: 21
   - Id: 1724
     AegisName: A_POTON_CANON
-    Name: Canh„o de FÛton
+    Name: Canh√£o de F√≥ton
     Level: 66
     Hp: 8000
     Attack: 1000
@@ -27802,7 +29383,7 @@ Body:
     Ai: 02
   - Id: 1726
     AegisName: R_LUNATIC
-    Name: Lun·tico
+    Name: Lun√°tico
     Level: 3
     Hp: 60
     Attack: 9
@@ -27827,7 +29408,7 @@ Body:
     Ai: 02
   - Id: 1727
     AegisName: R_SAVAGE_BABE
-    Name: BebÍ Selvagem
+    Name: Beb√™ Selvagem
     Level: 7
     Hp: 182
     Attack: 20
@@ -27876,7 +29457,7 @@ Body:
     Ai: 02
   - Id: 1729
     AegisName: R_BAPHOMET_
-    Name: BafomÈ Jr..
+    Name: Bafom√© Jr..
     Level: 50
     Hp: 8578
     Attack: 487
@@ -27964,7 +29545,7 @@ Body:
         Rate: 10000
   - Id: 1732
     AegisName: G_TREASURE_BOX
-    Name: Ba˙ de Tesouro
+    Name: Ba√∫ de Tesouro
     Level: 98
     Dex: 999
     Size: Small
@@ -28091,6 +29672,7 @@ Body:
     WalkSpeed: 250
     AttackDelay: 1080
     AttackMotion: 480
+    ClientAttackMotion: 240
     DamageMotion: 504
     Ai: 13
     Modes:
@@ -28140,6 +29722,7 @@ Body:
     WalkSpeed: 200
     AttackDelay: 1296
     AttackMotion: 432
+    ClientAttackMotion: 288
     DamageMotion: 360
     Ai: 13
     Modes:
@@ -28189,6 +29772,7 @@ Body:
     WalkSpeed: 220
     AttackDelay: 1440
     AttackMotion: 576
+    ClientAttackMotion: 336
     DamageMotion: 600
     Ai: 17
     Drops:
@@ -28236,6 +29820,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 720
     AttackMotion: 360
+    ClientAttackMotion: 216
     DamageMotion: 360
     Ai: 04
     Drops:
@@ -28274,6 +29859,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 1080
     AttackMotion: 480
+    ClientAttackMotion: 2112
     DamageMotion: 504
     Ai: 13
     Modes:
@@ -28306,6 +29892,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 1296
     AttackMotion: 432
+    ClientAttackMotion: 288
     DamageMotion: 360
     Ai: 13
     Modes:
@@ -28336,6 +29923,7 @@ Body:
     WalkSpeed: 400
     AttackDelay: 1248
     AttackMotion: 1248
+    ClientAttackMotion: 336
     DamageMotion: 240
     Ai: 04
   - Id: 1742
@@ -28361,6 +29949,7 @@ Body:
     WalkSpeed: 200
     AttackDelay: 1078
     AttackMotion: 768
+    ClientAttackMotion: 576
     DamageMotion: 384
     Ai: 04
     Modes:
@@ -28390,6 +29979,7 @@ Body:
     WalkSpeed: 400
     AttackDelay: 1248
     AttackMotion: 1248
+    ClientAttackMotion: 336
     DamageMotion: 432
     Ai: 04
   - Id: 1744
@@ -28416,6 +30006,7 @@ Body:
     WalkSpeed: 100
     AttackDelay: 964
     AttackMotion: 864
+    ClientAttackMotion: 840
     DamageMotion: 288
     Ai: 04
   - Id: 1745
@@ -28443,6 +30034,7 @@ Body:
     WalkSpeed: 110
     AttackDelay: 720
     AttackMotion: 360
+    ClientAttackMotion: 216
     DamageMotion: 360
     Ai: 05
     Modes:
@@ -28475,6 +30067,7 @@ Body:
     WalkSpeed: 200
     AttackDelay: 1440
     AttackMotion: 576
+    ClientAttackMotion: 336
     DamageMotion: 600
     Ai: 04
     Drops:
@@ -28503,6 +30096,7 @@ Body:
     WalkSpeed: 200
     AttackDelay: 1576
     AttackMotion: 576
+    ClientAttackMotion: 288
     DamageMotion: 576
     Ai: 04
   - Id: 1748
@@ -28527,6 +30121,7 @@ Body:
     WalkSpeed: 200
     AttackDelay: 1576
     AttackMotion: 576
+    ClientAttackMotion: 288
     DamageMotion: 576
     Ai: 04
   - Id: 1749
@@ -28553,6 +30148,7 @@ Body:
     WalkSpeed: 180
     AttackDelay: 1720
     AttackMotion: 1320
+    ClientAttackMotion: 1080
     DamageMotion: 360
     Ai: 04
     Modes:
@@ -28566,6 +30162,11 @@ Body:
     Attack2: 200
     Defense: 100
     MagicDefense: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
     Luk: 100
     AttackRange: 1
     SkillRange: 7
@@ -28577,6 +30178,7 @@ Body:
     WalkSpeed: 1000
     AttackDelay: 1
     AttackMotion: 1
+    ClientAttackMotion: 960
     DamageMotion: 1
     Modes:
       IgnoreMagic: true
@@ -28585,7 +30187,8 @@ Body:
       IgnoreRanged: true
   - Id: 1751
     AegisName: RANDGRIS
-    Name: ValquÌria Randgris
+    ClientAttackMotion: 504
+    Name: Valqu√≠ria Randgris
     Level: 99
     Hp: 3567200
     BaseExp: 2854900
@@ -28665,6 +30268,7 @@ Body:
     WalkSpeed: 190
     AttackDelay: 720
     AttackMotion: 384
+    ClientAttackMotion: 360
     DamageMotion: 480
     Ai: 20
     Modes:
@@ -28713,6 +30317,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 480
     AttackMotion: 576
+    ClientAttackMotion: 192
     DamageMotion: 432
     Ai: 20
     Modes:
@@ -28760,6 +30365,7 @@ Body:
     WalkSpeed: 250
     AttackDelay: 672
     AttackMotion: 780
+    ClientAttackMotion: 360
     DamageMotion: 480
     Ai: 21
     Class: Boss
@@ -28808,6 +30414,7 @@ Body:
     WalkSpeed: 250
     AttackDelay: 672
     AttackMotion: 780
+    ClientAttackMotion: 360
     DamageMotion: 480
     Ai: 21
     Class: Boss
@@ -28854,6 +30461,7 @@ Body:
     WalkSpeed: 160
     AttackDelay: 140
     AttackMotion: 672
+    ClientAttackMotion: 384
     DamageMotion: 432
     Ai: 04
     Class: Boss
@@ -28881,6 +30489,7 @@ Body:
     WalkSpeed: 170
     AttackDelay: 168
     AttackMotion: 1008
+    ClientAttackMotion: 528
     DamageMotion: 300
     Ai: 04
   - Id: 1758
@@ -28907,6 +30516,7 @@ Body:
     WalkSpeed: 100
     AttackDelay: 108
     AttackMotion: 576
+    ClientAttackMotion: 384
     DamageMotion: 432
     Ai: 04
   - Id: 1759
@@ -28933,6 +30543,7 @@ Body:
     WalkSpeed: 180
     AttackDelay: 168
     AttackMotion: 768
+    ClientAttackMotion: 528
     DamageMotion: 360
     Ai: 04
   - Id: 1760
@@ -28959,6 +30570,7 @@ Body:
     WalkSpeed: 120
     AttackDelay: 108
     AttackMotion: 576
+    ClientAttackMotion: 384
     DamageMotion: 432
     Ai: 04
   - Id: 1761
@@ -28985,6 +30597,7 @@ Body:
     WalkSpeed: 170
     AttackDelay: 720
     AttackMotion: 384
+    ClientAttackMotion: 360
     DamageMotion: 480
     Ai: 04
     Modes:
@@ -29016,6 +30629,7 @@ Body:
     WalkSpeed: 130
     AttackDelay: 480
     AttackMotion: 576
+    ClientAttackMotion: 192
     DamageMotion: 432
     Ai: 04
     Modes:
@@ -29048,6 +30662,7 @@ Body:
     WalkSpeed: 200
     AttackDelay: 672
     AttackMotion: 780
+    ClientAttackMotion: 360
     DamageMotion: 480
     Ai: 04
     Class: Boss
@@ -29079,6 +30694,7 @@ Body:
     WalkSpeed: 200
     AttackDelay: 672
     AttackMotion: 780
+    ClientAttackMotion: 360
     DamageMotion: 480
     Ai: 04
     Class: Boss
@@ -29112,6 +30728,7 @@ Body:
     WalkSpeed: 100
     AttackDelay: 576
     AttackMotion: 576
+    ClientAttackMotion: 504
     DamageMotion: 480
     Ai: 21
     Class: Boss
@@ -29146,10 +30763,12 @@ Body:
     WalkSpeed: 300
     AttackDelay: 1288
     AttackMotion: 288
+    ClientAttackMotion: 312
     DamageMotion: 384
     Ai: 17
     Class: Guardian
     Modes:
+      Mvp: true
       Aggressive: true
       ChangeChase: true
       KnockBackImmune: true
@@ -29184,10 +30803,12 @@ Body:
     WalkSpeed: 300
     AttackDelay: 1288
     AttackMotion: 288
+    ClientAttackMotion: 864
     DamageMotion: 384
     Ai: 17
     Class: Guardian
     Modes:
+      Mvp: true
       Aggressive: true
       ChangeChase: true
       KnockBackImmune: true
@@ -29226,6 +30847,7 @@ Body:
     WalkSpeed: 200
     AttackDelay: 1344
     AttackMotion: 2880
+    ClientAttackMotion: 288
     DamageMotion: 576
     Ai: 21
     Class: Boss
@@ -29280,6 +30902,7 @@ Body:
     WalkSpeed: 300
     AttackDelay: 768
     AttackMotion: 360
+    ClientAttackMotion: 300
     DamageMotion: 360
     Ai: 20
     Drops:
@@ -29325,6 +30948,7 @@ Body:
     WalkSpeed: 250
     AttackDelay: 768
     AttackMotion: 360
+    ClientAttackMotion: 300
     DamageMotion: 360
     Ai: 20
     Drops:
@@ -29372,6 +30996,7 @@ Body:
     WalkSpeed: 250
     AttackDelay: 768
     AttackMotion: 360
+    ClientAttackMotion: 300
     DamageMotion: 360
     Ai: 04
     Drops:
@@ -29416,6 +31041,7 @@ Body:
     WalkSpeed: 300
     AttackDelay: 768
     AttackMotion: 360
+    ClientAttackMotion: 360
     DamageMotion: 432
     Ai: 04
     Drops:
@@ -29461,6 +31087,7 @@ Body:
     WalkSpeed: 140
     AttackDelay: 960
     AttackMotion: 528
+    ClientAttackMotion: 384
     DamageMotion: 432
     Ai: 04
     Modes:
@@ -29510,6 +31137,7 @@ Body:
     WalkSpeed: 190
     AttackDelay: 576
     AttackMotion: 432
+    ClientAttackMotion: 336
     DamageMotion: 300
     Ai: 20
     Drops:
@@ -29555,6 +31183,7 @@ Body:
     WalkSpeed: 220
     AttackDelay: 936
     AttackMotion: 1020
+    ClientAttackMotion: 660
     DamageMotion: 420
     Ai: 04
     Drops:
@@ -29602,6 +31231,7 @@ Body:
     WalkSpeed: 180
     AttackDelay: 432
     AttackMotion: 648
+    ClientAttackMotion: 432
     DamageMotion: 240
     Ai: 02
     Drops:
@@ -29618,7 +31248,10 @@ Body:
         StealProtected: true
   - Id: 1777
     AegisName: ICE_TITAN
-    Name: Tit„ de Gelo
+    ClientAttackMotion: 600
+    ClientAttackMotion: 300
+    ClientAttackMotion: 660
+    Name: Tit√£ de Gelo
     Level: 60
     Hp: 38200
     BaseExp: 13872
@@ -29785,6 +31418,7 @@ Body:
     WalkSpeed: 1000
     AttackDelay: 672
     AttackMotion: 648
+    ClientAttackMotion: 504
     DamageMotion: 360
     Ai: 10
     Drops:
@@ -29829,6 +31463,7 @@ Body:
     WalkSpeed: 1000
     AttackDelay: 864
     AttackMotion: 576
+    ClientAttackMotion: 504
     DamageMotion: 336
     Ai: 10
     Drops:
@@ -29873,6 +31508,7 @@ Body:
     WalkSpeed: 200
     AttackDelay: 412
     AttackMotion: 840
+    ClientAttackMotion: 600
     DamageMotion: 300
     Ai: 07
     Drops:
@@ -29914,6 +31550,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 864
     AttackMotion: 624
+    ClientAttackMotion: 480
     DamageMotion: 360
     Ai: 07
     Class: Boss
@@ -29955,6 +31592,7 @@ Body:
     WalkSpeed: 300
     AttackDelay: 936
     AttackMotion: 792
+    ClientAttackMotion: 648
     DamageMotion: 432
     Ai: 02
     Drops:
@@ -30001,6 +31639,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 576
     AttackMotion: 600
+    ClientAttackMotion: 480
     DamageMotion: 240
     Ai: 21
     Class: Boss
@@ -30055,6 +31694,7 @@ Body:
     WalkSpeed: 300
     AttackDelay: 768
     AttackMotion: 360
+    ClientAttackMotion: 300
     DamageMotion: 360
     Ai: 20
     Drops:
@@ -30085,6 +31725,7 @@ Body:
     WalkSpeed: 250
     AttackDelay: 768
     AttackMotion: 360
+    ClientAttackMotion: 300
     DamageMotion: 360
     Ai: 20
     Drops:
@@ -30092,7 +31733,68 @@ Body:
         Rate: 1
   - Id: 1788
     AegisName: G_ICE_TITAN
-    Name: Tit„ de Gelo
+    ClientAttackMotion: 600
+    ClientAttackMotion: 1152
+    ClientAttackMotion: 432
+    ClientAttackMotion: 480
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    ClientAttackMotion: 936
+    ClientAttackMotion: 600
+    ClientAttackMotion: 288
+    ClientAttackMotion: 360
+    ClientAttackMotion: 576
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Luk: 0
+    Class: Boss
+    ClientAttackMotion: 288
+    ClientAttackMotion: 288
+    ClientAttackMotion: 240
+    ClientAttackMotion: 288
+    ClientAttackMotion: 288
+    ClientAttackMotion: 288
+    ClientAttackMotion: 288
+    ClientAttackMotion: 288
+    ClientAttackMotion: 240
+    ClientAttackMotion: 288
+    ClientAttackMotion: 288
+    ClientAttackMotion: 288
+    ClientAttackMotion: 480
+    ClientAttackMotion: 288
+    Class: Boss
+    ClientAttackMotion: 384
+    ClientAttackMotion: 120
+    ClientAttackMotion: 504
+    Class: Boss
+    Class: Boss
+    ClientAttackMotion: 240
+    ClientAttackMotion: 540
+    ClientAttackMotion: 288
+    ClientAttackMotion: 1092
+    ClientAttackMotion: 216
+    ClientAttackMotion: 288
+    ClientAttackMotion: 540
+    ClientAttackMotion: 288
+    ClientAttackMotion: 384
+    Int: 0
+    ClientAttackMotion: 336
+    ClientAttackMotion: 1092
+    Int: 0
+    ClientAttackMotion: 192
+    Class: Boss
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
+    Name: Tit√£ de Gelo
     Level: 60
     Hp: 32900
     Attack: 1090
@@ -30297,7 +31999,7 @@ Body:
     Ai: 20
   - Id: 1795
     AegisName: BLOODY_KNIGHT_
-    Name: Cavaleiro Sanguin·rio
+    Name: Cavaleiro Sanguin√°rio
     Level: 82
     Hp: 800000
     Attack: 10000
@@ -30427,7 +32129,7 @@ Body:
         Rate: 2500
   - Id: 1798
     AegisName: TREASURE_BOX_
-    Name: Ba˙ do Tesouro
+    Name: Ba√∫ do Tesouro
     Level: 99
     Dex: 999
     Size: Small
@@ -31148,7 +32850,7 @@ Body:
         Rate: 2000
   - Id: 1820
     AegisName: EVENT_BIGFOOT
-    Name: PÈ Grande
+    Name: P√© Grande
     Level: 25
     Hp: 1619
     Attack: 198
@@ -31326,7 +33028,7 @@ Body:
         Rate: 5000
   - Id: 1826
     AegisName: EVENT_MYST
-    Name: NÈvoa
+    Name: N√©voa
     Level: 38
     Hp: 3745
     Attack: 365
@@ -31414,8 +33116,8 @@ Body:
         Rate: 8000
   - Id: 1829
     AegisName: SWORD_GUARDIAN
-    Name: Espadachim Guardi„o
-    JapaneseName: Espadachim Guardi„o
+    Name: Espadachim Guardi√£o
+    JapaneseName: Espadachim Guardi√£o
     Level: 86
     Hp: 152533
     BaseExp: 155013
@@ -31461,8 +33163,8 @@ Body:
         StealProtected: true
   - Id: 1830
     AegisName: BOW_GUARDIAN
-    Name: Arqueiro Guardi„o
-    JapaneseName: Arqueiro Guardi„o
+    Name: Arqueiro Guardi√£o
+    JapaneseName: Arqueiro Guardi√£o
     Level: 80
     Hp: 80404
     BaseExp: 50149
@@ -31531,6 +33233,7 @@ Body:
     WalkSpeed: 160
     AttackDelay: 140
     AttackMotion: 384
+    ClientAttackMotion: 288
     DamageMotion: 288
     Ai: 21
     Class: Boss
@@ -31580,6 +33283,7 @@ Body:
     WalkSpeed: 130
     AttackDelay: 212
     AttackMotion: 384
+    ClientAttackMotion: 288
     DamageMotion: 360
     Ai: 21
     Class: Boss
@@ -31637,6 +33341,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 800
     AttackMotion: 600
+    ClientAttackMotion: 540
     DamageMotion: 288
     Ai: 21
     Class: Boss
@@ -31683,6 +33388,7 @@ Body:
     WalkSpeed: 160
     AttackDelay: 140
     AttackMotion: 384
+    ClientAttackMotion: 288
     DamageMotion: 288
     Ai: 21
     Class: Boss
@@ -31711,6 +33417,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 800
     AttackMotion: 600
+    ClientAttackMotion: 540
     DamageMotion: 288
     Ai: 21
     Class: Boss
@@ -31741,6 +33448,7 @@ Body:
     WalkSpeed: 300
     AttackDelay: 1472
     AttackMotion: 384
+    ClientAttackMotion: 336
     DamageMotion: 288
     Ai: 02
     Drops:
@@ -31779,6 +33487,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 824
     AttackMotion: 432
+    ClientAttackMotion: 360
     DamageMotion: 360
     Ai: 20
     Modes:
@@ -31826,6 +33535,7 @@ Body:
     WalkSpeed: 200
     AttackDelay: 1548
     AttackMotion: 384
+    ClientAttackMotion: 240
     DamageMotion: 288
     Ai: 17
     Modes:
@@ -31875,6 +33585,7 @@ Body:
     WalkSpeed: 170
     AttackDelay: 800
     AttackMotion: 600
+    ClientAttackMotion: 360
     DamageMotion: 360
     Ai: 21
     Class: Boss
@@ -31907,6 +33618,7 @@ Body:
     Attack2: 700
     Defense: 100
     MagicDefense: 99
+    Str: 0
     Int: 50
     Dex: 120
     AttackRange: 1
@@ -31919,6 +33631,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 1960
     AttackMotion: 480
+    ClientAttackMotion: 192
     DamageMotion: 384
     Ai: 17
     Class: Guardian
@@ -31972,8 +33685,15 @@ Body:
     WalkSpeed: 200
     AttackDelay: 1576
     AttackMotion: 576
+    ClientAttackMotion: 288
     DamageMotion: 576
     Ai: 01
+    Class: Boss
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
     Drops:
       - Item: Gold_Coin_US
         Rate: 2000
@@ -32007,8 +33727,15 @@ Body:
     WalkSpeed: 200
     AttackDelay: 1576
     AttackMotion: 576
+    ClientAttackMotion: 288
     DamageMotion: 576
     Ai: 17
+    Class: Boss
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
     Drops:
       - Item: Gold_Coin_US
         Rate: 3500
@@ -32043,8 +33770,15 @@ Body:
     WalkSpeed: 200
     AttackDelay: 1576
     AttackMotion: 576
+    ClientAttackMotion: 288
     DamageMotion: 576
     Ai: 09
+    Class: Boss
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
     Drops:
       - Item: Gold_Coin_US
         Rate: 7000
@@ -32079,9 +33813,15 @@ Body:
     WalkSpeed: 200
     AttackDelay: 1384
     AttackMotion: 768
+    ClientAttackMotion: 480
     DamageMotion: 336
     Ai: 09
+    Class: Boss
     Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
       Detector: true
     Drops:
       - Item: Gold_Coin_US
@@ -32092,7 +33832,12 @@ Body:
         Rate: 50
   - Id: 1845
     AegisName: G_TREASURE_BOX_
-    Name: Ba˙ do Tesouro
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Luk: 0
+    Name: Ba√∫ do Tesouro
     Level: 98
     Dex: 999
     Size: Small
@@ -32170,12 +33915,44 @@ Body:
     WalkSpeed: 100
     AttackDelay: 76
     AttackMotion: 672
+    ClientAttackMotion: 288
     DamageMotion: 480
     Ai: 21
     Class: Boss
   - Id: 1848
     AegisName: EVENT_BAPHOMET
-    Name: BafomÈ
+    ClientAttackMotion: 384
+    ClientAttackMotion: 192
+    ClientAttackMotion: 660
+    ClientAttackMotion: 576
+    Class: Boss
+    ClientAttackMotion: 312
+    ClientAttackMotion: 864
+    ClientAttackMotion: 480
+    Int: 0
+    Luk: 0
+    ClientAttackMotion: 576
+    Int: 0
+    ClientAttackMotion: 192
+    ClientAttackMotion: 288
+    Int: 0
+    Luk: 0
+    ClientAttackMotion: 576
+    Int: 0
+    ClientAttackMotion: 384
+    ClientAttackMotion: 504
+    ClientAttackMotion: 360
+    ClientAttackMotion: 192
+    ClientAttackMotion: 756
+    ClientAttackMotion: 432
+    ClientAttackMotion: 336
+    ClientAttackMotion: 336
+    ClientAttackMotion: 432
+    ClientAttackMotion: 432
+    ClientAttackMotion: 504
+    ClientAttackMotion: 780
+    ClientAttackMotion: 288
+    Name: Bafom√©
     Level: 50
     Hp: 45000
     BaseExp: 1000
@@ -32204,7 +33981,7 @@ Body:
     Class: Boss
   - Id: 1849
     AegisName: EVENT_OSIRIS
-    Name: OsÌris
+    Name: Os√≠ris
     Level: 60
     Hp: 125000
     BaseExp: 2000
@@ -32233,7 +34010,7 @@ Body:
     Class: Boss
   - Id: 1850
     AegisName: EVENT_ORCHERO
-    Name: Orc HerÛi
+    Name: Orc Her√≥i
     Level: 50
     Hp: 175000
     BaseExp: 3000
@@ -32434,7 +34211,7 @@ Body:
         StealProtected: true
   - Id: 1856
     AegisName: E_MAGNOLIA
-    Name: MagnÛlia
+    Name: Magn√≥lia
     Level: 26
     Hp: 3195
     BaseExp: 393
@@ -32569,7 +34346,7 @@ Body:
         StealProtected: true
   - Id: 1859
     AegisName: E_MANDRAGORA
-    Name: Mandr·gora
+    Name: Mandr√°gora
     Level: 12
     Hp: 405
     BaseExp: 45
@@ -32870,7 +34647,7 @@ Body:
         StealProtected: true
   - Id: 1866
     AegisName: HELL_POODLE
-    Name: C„o Infernal
+    Name: C√£o Infernal
     Level: 71
     Hp: 9000
     BaseExp: 4000
@@ -32991,7 +34768,7 @@ Body:
       Detector: true
   - Id: 1869
     AegisName: FLAME_SKULL
-    Name: Cr‚nio Flamejante
+    Name: Cr√¢nio Flamejante
     Level: 60
     Hp: 10080
     BaseExp: 3000
@@ -33157,6 +34934,7 @@ Body:
     WalkSpeed: 100
     AttackDelay: 676
     AttackMotion: 576
+    ClientAttackMotion: 252
     DamageMotion: 480
     Ai: 21
     Class: Boss
@@ -33185,6 +34963,7 @@ Body:
     WalkSpeed: 100
     AttackDelay: 100
     AttackMotion: 576
+    ClientAttackMotion: 252
     DamageMotion: 480
     Ai: 21
     Class: Boss
@@ -33216,6 +34995,7 @@ Body:
     WalkSpeed: 100
     AttackDelay: 212
     AttackMotion: 504
+    ClientAttackMotion: 252
     DamageMotion: 432
     Ai: 21
     Class: Boss
@@ -33273,6 +35053,7 @@ Body:
     WalkSpeed: 175
     AttackDelay: 1816
     AttackMotion: 1152
+    ClientAttackMotion: 480
     DamageMotion: 360
     Ai: 21
     Drops:
@@ -33307,6 +35088,7 @@ Body:
     WalkSpeed: 180
     AttackDelay: 1446
     AttackMotion: 1296
+    ClientAttackMotion: 768
     DamageMotion: 360
     Ai: 21
     Class: Boss
@@ -33323,6 +35105,7 @@ Body:
     Element: Neutral
     ElementLevel: 1
     WalkSpeed: 190
+    ClientAttackMotion: 960
     Ai: 25
     Class: Boss
     Modes:
@@ -33344,6 +35127,11 @@ Body:
     Attack2: 2
     Defense: 100
     MagicDefense: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
     Luk: 90
     AttackRange: 1
     SkillRange: 7
@@ -33355,6 +35143,7 @@ Body:
     WalkSpeed: 1000
     AttackDelay: 1
     AttackMotion: 1
+    ClientAttackMotion: 2016
     DamageMotion: 1
     Modes:
       IgnoreMagic: true
@@ -33385,6 +35174,7 @@ Body:
     MagicDefense: 40
     Agi: 36
     Vit: 6
+    Int: 0
     Dex: 11
     Luk: 80
     AttackRange: 1
@@ -33397,6 +35187,7 @@ Body:
     WalkSpeed: 200
     AttackDelay: 1456
     AttackMotion: 456
+    ClientAttackMotion: 264
     DamageMotion: 336
     Ai: 21
     Class: Boss
@@ -33426,6 +35217,7 @@ Body:
     WalkSpeed: 320
     AttackDelay: 2304
     AttackMotion: 840
+    ClientAttackMotion: 360
     DamageMotion: 360
     Ai: 01
     Drops:
@@ -33468,6 +35260,7 @@ Body:
     WalkSpeed: 230
     AttackDelay: 1728
     AttackMotion: 720
+    ClientAttackMotion: 420
     DamageMotion: 576
     Ai: 03
     Drops:
@@ -33511,6 +35304,7 @@ Body:
     WalkSpeed: 270
     AttackDelay: 1536
     AttackMotion: 600
+    ClientAttackMotion: 420
     DamageMotion: 420
     Ai: 04
     Drops:
@@ -33554,6 +35348,7 @@ Body:
     WalkSpeed: 200
     AttackDelay: 576
     AttackMotion: 672
+    ClientAttackMotion: 480
     DamageMotion: 384
     Ai: 04
     Drops:
@@ -33597,6 +35392,7 @@ Body:
     WalkSpeed: 170
     AttackDelay: 1536
     AttackMotion: 504
+    ClientAttackMotion: 384
     DamageMotion: 360
     Ai: 04
     Drops:
@@ -33642,6 +35438,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 1536
     AttackMotion: 864
+    ClientAttackMotion: 648
     DamageMotion: 432
     Ai: 21
     Class: Boss
@@ -33693,6 +35490,7 @@ Body:
     WalkSpeed: 170
     AttackDelay: 1536
     AttackMotion: 504
+    ClientAttackMotion: 384
     DamageMotion: 360
     Ai: 04
   - Id: 1887
@@ -33720,6 +35518,7 @@ Body:
     WalkSpeed: 250
     AttackDelay: 1452
     AttackMotion: 483
+    ClientAttackMotion: 540
     DamageMotion: 528
     Ai: 21
     Drops:
@@ -33755,6 +35554,7 @@ Body:
     WalkSpeed: 450
     AttackDelay: 879
     AttackMotion: 672
+    ClientAttackMotion: 288
     DamageMotion: 576
     Ai: 04
     Drops:
@@ -33787,6 +35587,7 @@ Body:
     WalkSpeed: 400
     AttackDelay: 608
     AttackMotion: 408
+    ClientAttackMotion: 312
     DamageMotion: 336
     Ai: 21
     Class: Boss
@@ -33822,6 +35623,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 1536
     AttackMotion: 864
+    ClientAttackMotion: 648
     DamageMotion: 432
     Ai: 20
   - Id: 1891
@@ -33849,6 +35651,7 @@ Body:
     WalkSpeed: 100
     AttackDelay: 576
     AttackMotion: 576
+    ClientAttackMotion: 504
     DamageMotion: 480
     Ai: 21
     Class: Boss
@@ -33861,6 +35664,7 @@ Body:
     Attack2: 2317
     Defense: 39
     MagicDefense: 44
+    Str: 0
     Agi: 66
     Vit: 54
     Int: 74
@@ -33876,6 +35680,7 @@ Body:
     WalkSpeed: 125
     AttackDelay: 747
     AttackMotion: 1632
+    ClientAttackMotion: 1440
     DamageMotion: 576
     Ai: 04
     Modes:
@@ -33906,6 +35711,7 @@ Body:
     WalkSpeed: 300
     AttackDelay: 1500
     AttackMotion: 500
+    ClientAttackMotion: 720
     DamageMotion: 1000
     Ai: 21
   - Id: 1894
@@ -33931,6 +35737,7 @@ Body:
     WalkSpeed: 300
     AttackDelay: 1672
     AttackMotion: 672
+    ClientAttackMotion: 288
     DamageMotion: 480
     Ai: 07
     Class: Boss
@@ -33963,6 +35770,7 @@ Body:
     WalkSpeed: 170
     AttackDelay: 76
     AttackMotion: 384
+    ClientAttackMotion: 288
     DamageMotion: 288
     Ai: 20
   - Id: 1896
@@ -33990,11 +35798,75 @@ Body:
     WalkSpeed: 150
     AttackDelay: 1152
     AttackMotion: 384
+    ClientAttackMotion: 288
     DamageMotion: 288
     Ai: 20
   - Id: 1897
     AegisName: EVENT_BAPHOMET_
-    Name: BafomÈ
+    ClientAttackMotion: 384
+    ClientAttackMotion: 816
+#  - Id: 1900
+#    AegisName: BOW_GUARDIAN_
+#    Name: Archer Guardian
+#    Level: 80
+#    Hp: 80404
+#    Attack: 1840
+#    Attack2: 2520
+#    Defense: 40
+#    MagicDefense: 62
+#    Str: 95
+#    Agi: 80
+#    Vit: 33
+#    Int: 90
+#    Dex: 165
+#    Luk: 55
+#    AttackRange: 12
+#    SkillRange: 14
+#    ChaseRange: 16
+#    Size: Large
+#    Race: Demihuman
+#    Element: Neutral
+#    ElementLevel: 4
+#    WalkSpeed: 170
+#    AttackDelay: 76
+#    AttackMotion: 384
+#    DamageMotion: 288
+#    Ai: 05
+#    Modes:
+#      NoRandomWalk: true
+    ClientAttackMotion: 504
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Luk: 0
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Luk: 0
+    Int: 0
+    ClientAttackMotion: 288
+    Class: Boss
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
+    ClientAttackMotion: 0
+    ClientAttackMotion: 0
+    ClientAttackMotion: 0
+    ClientAttackMotion: 0
+    ClientAttackMotion: 288
+    ClientAttackMotion: 288
+    ClientAttackMotion: 0
+    ClientAttackMotion: 0
+    ClientAttackMotion: 0
+    ClientAttackMotion: 0
+    ClientAttackMotion: 0
+    ClientAttackMotion: 336
+    ClientAttackMotion: 336
+    Name: Bafom√©
     Level: 81
     Hp: 668000
     Attack: 3220
@@ -34044,7 +35916,7 @@ Body:
         Rate: 10000
   - Id: 1899
     AegisName: SWORD_GUARDIAN_
-    Name: Espadachim Guardi„o
+    Name: Espadachim Guardi√£o
     Level: 86
     Hp: 152533
     Attack: 7590
@@ -34105,7 +35977,7 @@ Body:
         Rate: 5000
   - Id: 1902
     AegisName: E_TREASURE1
-    Name: Ba˙ do Tesouro
+    Name: Ba√∫ do Tesouro
     Level: 99
     Hp: 49
     Defense: 100
@@ -34120,7 +35992,7 @@ Body:
         Rate: 1000
   - Id: 1903
     AegisName: E_TREASURE2
-    Name: Ba˙ do Tesouro
+    Name: Ba√∫ do Tesouro
     Level: 99
     Hp: 49
     Defense: 100
@@ -34215,7 +36087,7 @@ Body:
       KnockBackImmune: true
   - Id: 1907
     AegisName: S_EMPEL_1
-    Name: Runa Guardi„
+    Name: Runa Guardi√£
     Level: 90
     Hp: 120000
     Attack: 1
@@ -34235,7 +36107,7 @@ Body:
     Class: Boss
   - Id: 1908
     AegisName: S_EMPEL_2
-    Name: Runa Guardi„
+    Name: Runa Guardi√£
     Level: 90
     Hp: 120000
     Attack: 1
@@ -34255,7 +36127,7 @@ Body:
     Class: Boss
   - Id: 1909
     AegisName: OBJ_A
-    Name: ArmazÈm de Comida
+    Name: Armaz√©m de Comida
     Level: 90
     Hp: 250
     Attack: 1
@@ -34280,7 +36152,7 @@ Body:
       KnockBackImmune: true
   - Id: 1910
     AegisName: OBJ_B
-    Name: DepÛsito de Comida
+    Name: Dep√≥sito de Comida
     Level: 90
     Hp: 250
     Attack: 1
@@ -34330,7 +36202,7 @@ Body:
       KnockBackImmune: true
   - Id: 1912
     AegisName: OBJ_FLAG_A
-    Name: Bandeira de Le„o
+    Name: Bandeira de Le√£o
     Level: 90
     Hp: 150
     Attack: 1
@@ -34355,7 +36227,7 @@ Body:
       KnockBackImmune: true
   - Id: 1913
     AegisName: OBJ_FLAG_B
-    Name: Bandeira de ¡guia
+    Name: Bandeira de √Åguia
     Level: 90
     Hp: 150
     Attack: 1
@@ -34538,6 +36410,7 @@ Body:
     WalkSpeed: 110
     AttackDelay: 576
     AttackMotion: 540
+    ClientAttackMotion: 432
     DamageMotion: 432
     Ai: 21
     Class: Boss
@@ -34583,6 +36456,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 576
     AttackMotion: 540
+    ClientAttackMotion: 360
     DamageMotion: 432
     Ai: 21
     Class: Boss
@@ -34626,6 +36500,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 212
     AttackMotion: 540
+    ClientAttackMotion: 216
     DamageMotion: 432
     Ai: 21
     Class: Boss
@@ -34671,6 +36546,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 1536
     AttackMotion: 540
+    ClientAttackMotion: 432
     DamageMotion: 432
     Ai: 21
     Class: Boss
@@ -34712,6 +36588,7 @@ Body:
     WalkSpeed: 110
     AttackDelay: 576
     AttackMotion: 540
+    ClientAttackMotion: 336
     DamageMotion: 432
     Ai: 21
     Class: Boss
@@ -34740,6 +36617,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 576
     AttackMotion: 540
+    ClientAttackMotion: 336
     DamageMotion: 432
     Ai: 21
     Class: Boss
@@ -34768,6 +36646,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 212
     AttackMotion: 540
+    ClientAttackMotion: 336
     DamageMotion: 432
     Ai: 21
     Class: Boss
@@ -34796,6 +36675,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 1536
     AttackMotion: 540
+    ClientAttackMotion: 336
     DamageMotion: 432
     Ai: 21
     Class: Boss
@@ -34823,6 +36703,7 @@ Body:
     WalkSpeed: 200
     AttackDelay: 1180
     AttackMotion: 480
+    ClientAttackMotion: 192
     DamageMotion: 648
     Ai: 21
     Drops:
@@ -34846,7 +36727,9 @@ Body:
     MagicDefense: 45
     Agi: 51
     Vit: 14
+    Int: 0
     Dex: 60
+    Luk: 0
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -34857,6 +36740,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 1960
     AttackMotion: 960
+    ClientAttackMotion: 720
     DamageMotion: 504
     Ai: 09
     Modes:
@@ -34890,6 +36774,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 980
     AttackMotion: 600
+    ClientAttackMotion: 288
     DamageMotion: 384
     Ai: 21
     Modes:
@@ -34901,7 +36786,113 @@ Body:
         Rate: 3000
   - Id: 1929
     AegisName: BAPHOMET_I
-    Name: BafomÈ
+    ClientAttackMotion: 384
+    ClientAttackMotion: 288
+    ClientAttackMotion: 288
+    ClientAttackMotion: 288
+    ClientAttackMotion: 360
+    ClientAttackMotion: 0
+    ClientAttackMotion: 0
+    ClientAttackMotion: 0
+    ClientAttackMotion: 216
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Luk: 0
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Luk: 0
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Luk: 0
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Luk: 0
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Luk: 0
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Luk: 0
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Luk: 0
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Luk: 0
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Luk: 0
+    ClientAttackMotion: 288
+    ClientAttackMotion: 288
+    Class: Boss
+    Class: Boss
+    ClientAttackMotion: 960
+    ClientAttackMotion: 960
+    ClientAttackMotion: 960
+    ClientAttackMotion: 960
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Luk: 0
+    Class: Boss
+    ClientAttackMotion: 336
+    ClientAttackMotion: 420
+    ClientAttackMotion: 420
+    ClientAttackMotion: 420
+    ClientAttackMotion: 420
+    ClientAttackMotion: 420
+    ClientAttackMotion: 432
+    ClientAttackMotion: 240
+    ClientAttackMotion: 720
+    Str: 0
+    ClientAttackMotion: 840
+    Str: 0
+    ClientAttackMotion: 192
+    Str: 0
+    ClientAttackMotion: 288
+    ClientAttackMotion: 108
+    ClientAttackMotion: 216
+    ClientAttackMotion: 384
+    ClientAttackMotion: 420
+    Int: 0
+    ClientAttackMotion: 288
+    Int: 0
+    ClientAttackMotion: 288
+    ClientAttackMotion: 432
+    ClientAttackMotion: 240
+    ClientAttackMotion: 360
+    ClientAttackMotion: 288
+    ClientAttackMotion: 528
+    ClientAttackMotion: 240
+    ClientAttackMotion: 360
+    ClientAttackMotion: 336
+    ClientAttackMotion: 864
+    ClientAttackMotion: 288
+    ClientAttackMotion: 540
+    Int: 0
+    ClientAttackMotion: 504
+    ClientAttackMotion: 480
+    ClientAttackMotion: 576
+    Name: Bafom√©
     Level: 98
     Hp: 4520000
     BaseExp: 4520000
@@ -35003,7 +36994,7 @@ Body:
     Class: Boss
   - Id: 1932
     AegisName: GARDEN_KEEPER
-    Name: SeguranÁa do Jardim
+    Name: Seguran√ßa do Jardim
     Level: 80
     Hp: 100
     Attack: 1
@@ -35167,7 +37158,7 @@ Body:
     Ai: 04
   - Id: 1938
     AegisName: TREASURE_BOX41
-    Name: Ba˙ do Tesouro
+    Name: Ba√∫ do Tesouro
     Level: 99
     Dex: 999
     Size: Small
@@ -35197,7 +37188,7 @@ Body:
         StealProtected: true
   - Id: 1939
     AegisName: TREASURE_BOX42
-    Name: Ba˙ do Tesouro
+    Name: Ba√∫ do Tesouro
     Level: 99
     Dex: 999
     Size: Small
@@ -35227,7 +37218,7 @@ Body:
         StealProtected: true
   - Id: 1940
     AegisName: TREASURE_BOX43
-    Name: Ba˙ do Tesouro
+    Name: Ba√∫ do Tesouro
     Level: 99
     Dex: 999
     Size: Small
@@ -35257,7 +37248,7 @@ Body:
         StealProtected: true
   - Id: 1941
     AegisName: TREASURE_BOX44
-    Name: Ba˙ do Tesouro
+    Name: Ba√∫ do Tesouro
     Level: 99
     Dex: 999
     Size: Small
@@ -35287,7 +37278,7 @@ Body:
         StealProtected: true
   - Id: 1942
     AegisName: TREASURE_BOX45
-    Name: Ba˙ do Tesouro
+    Name: Ba√∫ do Tesouro
     Level: 99
     Dex: 999
     Size: Small
@@ -35317,7 +37308,7 @@ Body:
         StealProtected: true
   - Id: 1943
     AegisName: TREASURE_BOX46
-    Name: Ba˙ do Tesouro
+    Name: Ba√∫ do Tesouro
     Level: 99
     Dex: 999
     Size: Small
@@ -35347,7 +37338,7 @@ Body:
         StealProtected: true
   - Id: 1944
     AegisName: TREASURE_BOX47
-    Name: Ba˙ do Tesouro
+    Name: Ba√∫ do Tesouro
     Level: 99
     Dex: 999
     Size: Small
@@ -35377,7 +37368,7 @@ Body:
         StealProtected: true
   - Id: 1945
     AegisName: TREASURE_BOX48
-    Name: Ba˙ do Tesouro
+    Name: Ba√∫ do Tesouro
     Level: 99
     Dex: 999
     Size: Small
@@ -35407,7 +37398,7 @@ Body:
         StealProtected: true
   - Id: 1946
     AegisName: TREASURE_BOX49
-    Name: Ba˙ do Tesouro
+    Name: Ba√∫ do Tesouro
     Level: 99
     Dex: 999
     Size: Small
@@ -35492,7 +37483,7 @@ Body:
     Ai: 04
   - Id: 1949
     AegisName: B_S_GUARDIAN
-    Name: Guardi„o do Campo
+    Name: Guardi√£o do Campo
     Level: 86
     Hp: 457599
     Attack: 7590
@@ -35519,7 +37510,7 @@ Body:
     Ai: 05
   - Id: 1950
     AegisName: B_B_GUARDIAN
-    Name: Guardi„o do Campo
+    Name: Guardi√£o do Campo
     Level: 80
     Hp: 241212
     Attack: 1840
@@ -35690,7 +37681,7 @@ Body:
         StealProtected: true
   - Id: 1955
     AegisName: TREASURE_BOX_I
-    Name: Ba˙ do Tesouro
+    Name: Ba√∫ do Tesouro
     Level: 99
     Dex: 999
     Size: Small
@@ -35899,7 +37890,7 @@ Body:
     Class: Boss
   - Id: 1962
     AegisName: ANTONIO_
-    Name: Ladr„o Natalino
+    Name: Ladr√£o Natalino
     Level: 10
     Hp: 15
     Attack: 13
@@ -36759,7 +38750,7 @@ Body:
     Ai: 21
   - Id: 1985
     AegisName: DANDELION
-    Name: Dente_de_Le„o
+    Name: Dente_de_Le√£o
     Level: 37
     Hp: 5176
     Attack: 305
@@ -36831,7 +38822,7 @@ Body:
         StealProtected: true
   - Id: 1987
     AegisName: CENTIPEDE
-    Name: CentopÈia
+    Name: Centop√©ia
     Level: 110
     Hp: 45662
     BaseExp: 27397
@@ -36909,6 +38900,7 @@ Body:
     WalkSpeed: 1000
     AttackDelay: 500
     AttackMotion: 576
+    ClientAttackMotion: 288
     DamageMotion: 504
     Ai: 10
     Drops:
@@ -36928,7 +38920,13 @@ Body:
         Rate: 9000
   - Id: 1989
     AegisName: HILLSRION
-    Name: Le„o da Montanha
+    ClientAttackMotion: 480
+    ClientAttackMotion: 300
+    ClientAttackMotion: 780
+    ClientAttackMotion: 192
+    ClientAttackMotion: 720
+    ClientAttackMotion: 720
+    Name: Le√£o da Montanha
     Level: 105
     Hp: 34600
     BaseExp: 20760
@@ -37023,8 +39021,8 @@ Body:
         Rate: 9000
   - Id: 1991
     AegisName: TENDRILRION
-    Name: Le„o de Vinhas
-    JapaneseName: Le„o de Vinhas
+    Name: Le√£o de Vinhas
+    JapaneseName: Le√£o de Vinhas
     Level: 113
     Hp: 3657330
     BaseExp: 731466
@@ -37243,6 +39241,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 700
     AttackMotion: 600
+    ClientAttackMotion: 300
     DamageMotion: 360
     Ai: 13
     Drops:
@@ -37260,6 +39259,41 @@ Body:
         Rate: 3000
       - Item: Flower
         Rate: 1000
+#  - Id: 1996
+#    AegisName: BACSOJIN_T
+#    Name: White Lady
+#    JapaneseName: Bacsojin
+#    Level: 85
+#    Hp: 253221
+#    BaseExp: 45250
+#    JobExp: 16445
+#    Attack: 1868
+#    Attack2: 6124
+#    Defense: 20
+#    MagicDefense: 55
+#    Str: 52
+#    Agi: 65
+#    Vit: 44
+#    Int: 112
+#    Dex: 152
+#    Luk: 35
+#    AttackRange: 3
+#    SkillRange: 10
+#    ChaseRange: 12
+#    Size: Large
+#    Race: Demihuman
+#    Element: Wind
+#    ElementLevel: 3
+#    WalkSpeed: 130
+#    AttackDelay: 576
+#    AttackMotion: 960
+#    DamageMotion: 480
+#    Ai: 21
+#    Modes:
+#      NoRandomWalk: true
+#    Drops:
+#      - Item: White_Snake_Hat
+#        Rate: 500
   - Id: 1997
     AegisName: G_TATACHO
     Name: Tatacho
@@ -37287,11 +39321,91 @@ Body:
     WalkSpeed: 150
     AttackDelay: 1000
     AttackMotion: 768
+    ClientAttackMotion: 480
     DamageMotion: 360
     Ai: 07
   - Id: 1998
     AegisName: G_HILLSRION
-    Name: Le„o da Montanha
+    ClientAttackMotion: 480
+    ClientAttackMotion: 576
+#  - Id: 2000
+#    AegisName: M_GAMEMASTER
+#    Name: Game Master
+#    JapaneseName: Male Game Master
+#    Level: 50
+#    Hp: 7000
+#    BaseExp: 3982
+#    JobExp: 1766
+#    Sp: 250
+#    Attack: 25
+#    Attack2: 25
+#    Defense: 10
+#    MagicDefense: 10
+#    Str: 44
+#    Agi: 121
+#    Vit: 5
+#    Int: 60
+#    Dex: 75
+#    Luk: 110
+#    AttackRange: 1
+#    SkillRange: 10
+#    ChaseRange: 12
+#    Size: Medium
+#    Race: Demihuman
+#    Element: Neutral
+#    ElementLevel: 1
+#    WalkSpeed: 200
+#    AttackDelay: 300
+#    AttackMotion: 384
+#    DamageMotion: 288
+#    Ai: 21
+#    Modes:
+#      NoRandomWalk: true
+#    Drops:
+#      - Item: Moon_Cake
+#        Rate: 1000
+    ClientAttackMotion: 288
+    ClientAttackMotion: 720
+    ClientAttackMotion: 1728
+#  - Id: 2011
+#    AegisName: E_GHOUL
+#    Name: Ghoul
+#    Level: 40
+#    Hp: 99999
+#    BaseExp: 1088
+#    JobExp: 622
+#    Attack: 2100
+#    Attack2: 2500
+#    Defense: 100
+#    MagicDefense: 20
+#    Agi: 20
+#    Vit: 29
+#    Dex: 180
+#    Luk: 20
+#    AttackRange: 1
+#    SkillRange: 10
+#    ChaseRange: 12
+#    Size: Medium
+#    Race: Undead
+#    Element: Undead
+#    ElementLevel: 2
+#    WalkSpeed: 100
+#    AttackDelay: 2456
+#    AttackMotion: 912
+#    DamageMotion: 504
+#    Modes:
+#      NoRandomWalk: true
+    ClientAttackMotion: 420
+    ClientAttackMotion: 0
+    ClientAttackMotion: 360
+    ClientAttackMotion: 480
+    ClientAttackMotion: 420
+    ClientAttackMotion: 300
+    ClientAttackMotion: 480
+    ClientAttackMotion: 300
+    ClientAttackMotion: 540
+    ClientAttackMotion: 576
+    Name: Le√£o da Montanha
     Level: 105
     Hp: 34600
     Attack: 5000
@@ -37320,7 +39434,7 @@ Body:
     Ai: 13
   - Id: 1999
     AegisName: CENTIPEDE_LARVA
-    Name: Larva de CentopÈia
+    Name: Larva de Centop√©ia
     Level: 80
     Hp: 12000
     BaseExp: 3600
@@ -37571,7 +39685,7 @@ Body:
         Rate: 1000
   - Id: 2016
     AegisName: AQUA_ELEMENTAL
-    Name: Elemental da ¡gua
+    Name: Elemental da √Ågua
     Level: 83
     Hp: 33220
     BaseExp: 5430
@@ -37687,7 +39801,7 @@ Body:
         Rate: 100
   - Id: 2019
     AegisName: ANCIENT_TREE
-    Name: ¡rvore Anci„
+    Name: √Årvore Anci√£
     Level: 102
     Hp: 30030
     BaseExp: 11020
@@ -37874,6 +39988,7 @@ Body:
     WalkSpeed: 220
     AttackDelay: 768
     AttackMotion: 1776
+    ClientAttackMotion: 912
     DamageMotion: 648
     Ai: 09
     Modes:
@@ -37905,6 +40020,7 @@ Body:
     Attack2: 13000
     Defense: 78
     MagicDefense: 22
+    Str: 0
     Agi: 10
     Vit: 82
     Int: 25
@@ -37922,6 +40038,7 @@ Body:
     WalkSpeed: 300
     AttackDelay: 1008
     AttackMotion: 1200
+    ClientAttackMotion: 480
     DamageMotion: 540
     Ai: 20
     Drops:
@@ -37933,6 +40050,38 @@ Body:
         Rate: 500
       - Item: Bradium_Shield
         Rate: 10
+#  - Id: 2025
+#    AegisName: MYSTCASE_EVENT
+#    Name: Mystcase
+#    Level: 10
+#    Hp: 15
+#    Attack: 160
+#    Attack2: 360
+#    Defense: 99
+#    MagicDefense: 99
+#    Str: 65
+#    Agi: 50
+#    Vit: 25
+#    Int: 5
+#    Dex: 48
+#    Luk: 75
+#    AttackRange: 1
+#    SkillRange: 10
+#    ChaseRange: 12
+#    Size: Medium
+#    Race: Formless
+#    Element: Neutral
+#    ElementLevel: 1
+#    WalkSpeed: 400
+#    AttackDelay: 1248
+#    AttackMotion: 1248
+#    DamageMotion: 432
+#    Modes:
+#      NoRandomWalk: true
+#    Drops:
+#      - Item: Fire_Cracker_Xmas
+#        Rate: 5000
+#        StealProtected: true
   - Id: 2026
     AegisName: DANDELION_
     Name: Dandelion Fugitivo
@@ -37959,6 +40108,7 @@ Body:
     WalkSpeed: 230
     AttackDelay: 1772
     AttackMotion: 72
+    ClientAttackMotion: 504
     DamageMotion: 384
     Ai: 21
     Drops:
@@ -38003,10 +40153,44 @@ Body:
     WalkSpeed: 220
     AttackDelay: 768
     AttackMotion: 1776
+    ClientAttackMotion: 912
     DamageMotion: 648
     Ai: 21
     Modes:
       Detector: true
+#  - Id: 2028
+#    AegisName: E_MINOROUS
+#    Name: Minorous
+#    Level: 1
+#    Hp: 741
+#    BaseExp: 10
+#    Attack: 30
+#    Attack2: 48
+#    Defense: 2
+#    MagicDefense: 5
+#    Str: 6
+#    Agi: 4
+#    Vit: 6
+#    Int: 6
+#    Dex: 5
+#    Luk: 3
+#    AttackRange: 1
+#    SkillRange: 10
+#    ChaseRange: 12
+#    Size: Large
+#    Race: Brute
+#    Element: Fire
+#    ElementLevel: 2
+#    WalkSpeed: 200
+#    AttackDelay: 1360
+#    AttackMotion: 960
+#    DamageMotion: 432
+#    Modes:
+#      NoRandomWalk: true
+#    Drops:
+#      - Item: Coin
+#        Rate: 5000
+#        StealProtected: true
   - Id: 2030
     AegisName: HIDEN_PRIEST
     Name: Hiden Priest
@@ -38030,6 +40214,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 432
     AttackMotion: 432
+    ClientAttackMotion: 288
     DamageMotion: 360
     Ai: 21
     Class: Boss
@@ -38046,6 +40231,7 @@ Body:
     MagicDefense: 10
     Agi: 19
     Vit: 32
+    Int: 0
     Dex: 63
     Luk: 20
     AttackRange: 1
@@ -38058,12 +40244,46 @@ Body:
     WalkSpeed: 250
     AttackDelay: 1772
     AttackMotion: 72
+    ClientAttackMotion: 504
     DamageMotion: 384
     Ai: 21
     Class: Boss
     Drops:
       - Item: Pope's_Cookie
         Rate: 5000
+#  - Id: 2032
+#    AegisName: GUARDIAN_FOREST
+#    Name: Forest Guardian
+#    JapaneseName: Tirfing
+#    Level: 50
+#    Hp: 8578
+#    Sp: 15
+#    Attack: 1000
+#    Attack2: 1103
+#    Defense: 15
+#    MagicDefense: 25
+#    Str: 64
+#    Agi: 75
+#    Vit: 55
+#    Int: 5
+#    Dex: 93
+#    Luk: 45
+#    AttackRange: 1
+#    SkillRange: 10
+#    ChaseRange: 12
+#    Size: Small
+#    Race: Demon
+#    Element: Dark
+#    ElementLevel: 1
+#    WalkSpeed: 100
+#    AttackDelay: 868
+#    AttackMotion: 480
+#    DamageMotion: 120
+#    Modes:
+#      NoRandomWalk: true
+#    Drops:
+#      - Item: Gold_Tulip
+#        Rate: 10000
   - Id: 2042
     AegisName: SILVERSNIPER
     Name: Silver Sniper
@@ -38089,6 +40309,7 @@ Body:
     WalkSpeed: 1000
     AttackDelay: 504
     AttackMotion: 1020
+    ClientAttackMotion: 960
     DamageMotion: 360
     Ai: 10
     Drops:
@@ -38119,6 +40340,7 @@ Body:
     WalkSpeed: 1000
     AttackDelay: 504
     AttackMotion: 1020
+    ClientAttackMotion: 288
     DamageMotion: 360
     Ai: 10
     Drops:
@@ -38149,6 +40371,7 @@ Body:
     WalkSpeed: 1000
     AttackDelay: 504
     AttackMotion: 1020
+    ClientAttackMotion: 288
     DamageMotion: 360
     Ai: 10
     Drops:
@@ -38179,6 +40402,7 @@ Body:
     WalkSpeed: 1000
     AttackDelay: 504
     AttackMotion: 1020
+    ClientAttackMotion: 288
     DamageMotion: 360
     Ai: 10
     Drops:
@@ -38209,6 +40433,7 @@ Body:
     WalkSpeed: 1000
     AttackDelay: 504
     AttackMotion: 1020
+    ClientAttackMotion: 288
     DamageMotion: 360
     Ai: 10
     Drops:
@@ -38239,11 +40464,35 @@ Body:
     WalkSpeed: 150
     AttackDelay: 400
     AttackMotion: 864
+    ClientAttackMotion: 720
     DamageMotion: 432
     Ai: 21
     Drops:
       - Item: Scale_Of_Snakes
         Rate: 5000
+#  - Id: 2048
+#    AegisName: W_PINGUICULA_D
+#    Name: Dark Pinguicula
+#    Level: 1
+#    Hp: 50
+#    Attack: 7
+#    Attack2: 10
+#    MagicDefense: 5
+#    Dex: 6
+#    Luk: 30
+#    AttackRange: 1
+#    SkillRange: 10
+#    ChaseRange: 12
+#    Size: Medium
+#    Race: Plant
+#    Element: Water
+#    ElementLevel: 1
+#    WalkSpeed: 400
+#    AttackDelay: 1872
+#    AttackMotion: 672
+#    DamageMotion: 480
+#    Modes:
+#      NoRandomWalk: true
   - Id: 2049
     AegisName: W_BRADIUM_GOLEM
     Name: Golem de Bradium
@@ -38253,6 +40502,7 @@ Body:
     Attack2: 886
     Defense: 125
     MagicDefense: 18
+    Str: 0
     Agi: 10
     Vit: 82
     Int: 2
@@ -38268,6 +40518,7 @@ Body:
     WalkSpeed: 300
     AttackDelay: 1008
     AttackMotion: 1200
+    ClientAttackMotion: 480
     DamageMotion: 540
     Ai: 04
     Modes:
@@ -38275,9 +40526,63 @@ Body:
     Drops:
       - Item: Purified_Bradium
         Rate: 500
+#  - Id: 2050
+#    AegisName: W_AQUA_ELEMENTAL
+#    Name: Aqua Elemental
+#    JapaneseName: Zherlthsh
+#    Level: 1
+#    Hp: 50
+#    Attack: 7
+#    Attack2: 10
+#    Defense: 1
+#    MagicDefense: 5
+#    Dex: 6
+#    Luk: 30
+#    AttackRange: 1
+#    SkillRange: 10
+#    ChaseRange: 12
+#    Size: Medium
+#    Race: Plant
+#    Element: Water
+#    ElementLevel: 1
+#    WalkSpeed: 400
+#    AttackDelay: 1872
+#    AttackMotion: 672
+#    DamageMotion: 480
+#    Modes:
+#      NoRandomWalk: true
+#    Drops:
+#      - Item: Fools_Day_Box
+#        Rate: 5000
   - Id: 2057
     AegisName: E_CRAMP
-    Name: C„ibra
+    ClientAttackMotion: 648
+#  - Id: 2058
+#    AegisName: M_MIMIC
+#    Name: Mimic
+#    JapaneseName: Poporing
+#    Level: 1
+#    Hp: 50
+#    Attack: 7
+#    Attack2: 10
+#    MagicDefense: 5
+#    Dex: 6
+#    Luk: 30
+#    AttackRange: 1
+#    SkillRange: 10
+#    ChaseRange: 12
+#    Size: Medium
+#    Race: Plant
+#    Element: Water
+#    ElementLevel: 1
+#    WalkSpeed: 400
+#    AttackDelay: 1872
+#    AttackMotion: 672
+#    DamageMotion: 480
+#    Modes:
+#      NoRandomWalk: true
+    ClientAttackMotion: 240
+    Name: C√£ibra
     Level: 1
     Hp: 50
     Attack: 7
@@ -38299,7 +40604,7 @@ Body:
     Class: Boss
   - Id: 2068
     AegisName: BOITATA
-    Name: Boitat·
+    Name: Boitat√°
     Level: 93
     Hp: 1283990
     BaseExp: 74288
@@ -38378,6 +40683,7 @@ Body:
     WalkSpeed: 200
     AttackDelay: 384
     AttackMotion: 672
+    ClientAttackMotion: 384
     DamageMotion: 288
     Ai: 17
     Drops:
@@ -38422,6 +40728,7 @@ Body:
     WalkSpeed: 200
     AttackDelay: 768
     AttackMotion: 480
+    ClientAttackMotion: 288
     DamageMotion: 864
     Ai: 04
     Drops:
@@ -38441,7 +40748,62 @@ Body:
         Rate: 5
   - Id: 2071
     AegisName: HEADLESS_MULE
-    Name: Mula sem CabeÁa
+    ClientAttackMotion: 288
+    ClientAttackMotion: 432
+    ClientAttackMotion: 300
+    ClientAttackMotion: 192
+#  - Id: 2075
+#    AegisName: E_VADON_X
+#    Name: Vadon
+#    Level: 1
+#    Hp: 50
+#    Attack: 7
+#    Attack2: 10
+#    MagicDefense: 5
+#    Dex: 6
+#    Luk: 30
+#    AttackRange: 1
+#    SkillRange: 10
+#    ChaseRange: 12
+#    Size: Medium
+#    Race: Plant
+#    Element: Water
+#    ElementLevel: 1
+#    WalkSpeed: 400
+#    AttackDelay: 1872
+#    AttackMotion: 672
+#    DamageMotion: 480
+#    Modes:
+#      NoRandomWalk: true
+    ClientAttackMotion: 720
+    ClientAttackMotion: 360
+    ClientAttackMotion: 576
+#  - Id: 2079
+#    AegisName: CRYSTAL_H
+#    Name: Crystal
+#    Level: 1
+#    Hp: 50
+#    Attack: 7
+#    Attack2: 10
+#    MagicDefense: 5
+#    Dex: 6
+#    Luk: 30
+#    AttackRange: 1
+#    SkillRange: 10
+#    ChaseRange: 12
+#    Size: Medium
+#    Race: Plant
+#    Element: Water
+#    ElementLevel: 1
+#    WalkSpeed: 400
+#    AttackDelay: 1872
+#    AttackMotion: 672
+#    DamageMotion: 480
+#    Modes:
+#      NoRandomWalk: true
+    ClientAttackMotion: 336
+    ClientAttackMotion: 288
+    Name: Mula sem Cabe√ßa
     Level: 80
     Hp: 20065
     BaseExp: 6666
@@ -38487,7 +40849,7 @@ Body:
         Rate: 2
   - Id: 2072
     AegisName: JAGUAR
-    Name: EspÌrito da Terra
+    Name: Esp√≠rito da Terra
     Level: 71
     Hp: 12590
     BaseExp: 1820
@@ -38527,7 +40889,7 @@ Body:
         Rate: 1
   - Id: 2073
     AegisName: TOUCAN
-    Name: EspÌrito do Ar
+    Name: Esp√≠rito do Ar
     Level: 70
     Hp: 10555
     BaseExp: 1002
@@ -38773,7 +41135,7 @@ Body:
     Ai: 02
   - Id: 2159
     AegisName: S_GIANT_HORNET
-    Name: Zang„o Gigante
+    Name: Zang√£o Gigante
     Level: 1
     Hp: 60
     BaseExp: 27
