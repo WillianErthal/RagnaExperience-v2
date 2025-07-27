@@ -1,6 +1,6 @@
 Header:
   Type: MOB_DB
-  Version: 5
+  Version: 4
 
 Body:
   - Id: 1001
