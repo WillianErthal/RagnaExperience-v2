@@ -14,7 +14,6 @@
 //= 1.3 Added warp npcs. Removed place holder warps. [Kisuka]
 //= 1.4 Fixed cords on milestone 1-3. [Kisuka]
 //= 2.0 Clean-up. [Capuche]
-//= 3.0 Added milestones 1-4, 4-1, 4-3, 3-4 [w0wZukuBg]
 //============================================================
 
 mosk_fild02,190,257,0	warp	moscoviawarp0401	1,1,mosk_dun01,189,45
@@ -125,7 +124,6 @@ mosk_dun01,207,276,3	script	Milestone#1-2	HIDDEN_NPC,{
 	close;
 }
 
-/*
 mosk_dun01,264,191,3	script	Milestone#1-3	HIDDEN_NPC,{
 	mes "- There is writing on a big rock. -";
 	next;
@@ -141,7 +139,6 @@ mosk_dun01,264,191,3	script	Milestone#1-3	HIDDEN_NPC,{
 	mes "- You decide to stay. -";
 	close;
 }
-*/
 
 mosk_dun02,168,28,3	script	Milestone#2-1	HIDDEN_NPC,{
 	mes "- There is writing on a big rock. -";
@@ -191,7 +188,6 @@ mosk_dun03,27,131,3	script	Milestone#3-2	HIDDEN_NPC,{
 	close;
 }
 
-/*
 mosk_dun03,119,46,3	script	Milestone#3-1	HIDDEN_NPC,{
 	mes "There is writing on a big rock.";
 	next;
@@ -207,7 +203,6 @@ mosk_dun03,119,46,3	script	Milestone#3-1	HIDDEN_NPC,{
 	mes "- You decided to stay. -";
 	close;
 }
-*/
 
 mosk_dun01,194,43,3	script	Milestone#1-1	HIDDEN_NPC,{
 	mes "- There is writing on a big rock. -";
@@ -226,73 +221,5 @@ mosk_fild02,198,53,3	script	Ship#mos_dun	HIDDEN_NPC,{
 		end;
 	}
 	mes "- That unknown area arouses your interest. -";
-	close;
-}
-
-// =====================================================
-// mosk_dun04 - Custom Warps
-// =====================================================
-
-mosk_dun04,105,264,3	script	Milestone#4-3	HIDDEN_NPC,{
-	mes "There is writing on a big rock.";
-	next;
-	mes "^3131FF- Those who advance may get hurt but are brave of heart and those who move back will remain safe.";
-	mes "If you are brave, then take a step forward. Otherwise, step back. -^000000";
-	next;
-	if(select("Step forward.:Stay.") == 1) {
-		mes "- You follow the way before you. -";
-		close2;
-		warp "mosk_dun03",117,36;
-		end;
-	}
-	mes "- You decided to stay. -";
-	close;
-}
-
-mosk_dun03,119,46,3	script	Milestone#3-4	HIDDEN_NPC,{
-	mes "There is writing on a big rock.";
-	next;
-	mes "^3131FF- Those who stay may die but will gain honor, those who go back may get hurt but will gain courage.";
-	mes "Those who are afraid of the death will go back, otherwise step forward and stay. -^000000";
-	next;
-	if(select("Go back.:Stay.") == 1) {
-		mes "- You sense danger and decide to go back -";
-		close2;
-		warp "mosk_dun04",100,259;
-		end;
-	}
-	mes "- You decided to stay. -";
-	close;
-}
-
-mosk_dun04,18,202,3	script	Milestone#4-1	HIDDEN_NPC,{
-	mes "- There is writing on a big rock. -";
-	next;
-	mes "^3131FF- Those who advance may get hurt but are valorous of heart and those who move back will remain safe.";
-	mes "If you valorous, then take a step forward. Otherwise, step back. -^000000";
-	next;
-	if(select("Go back.:Stay.") == 1) {
-		mes "- You sense danger and decide to go back -";
-		close2;
-		warp "mosk_dun01",257,190;
-		end;
-	}
-	mes "- You decided to stay. -";
-	close;
-}
-
-mosk_dun01,264,191,3	script	Milestone#1-4	HIDDEN_NPC,{
-	mes "- There is writing on a big rock. -";
-	next;
-	mes "^3131FF- Those who advance may get hurt but are brave of heart and those who move back will remain safe.";
-	mes "If you are brave, then take a step forward. Otherwise, step back. -^000000";
-	next;
-	if(select("Step forward.:Stay.") == 1) {
-		mes "- You follow the way before you. -";
-		close2;
-		warp "mosk_dun04",25,202;
-		end;
-	}
-	mes "- You decide to stay. -";
 	close;
 }

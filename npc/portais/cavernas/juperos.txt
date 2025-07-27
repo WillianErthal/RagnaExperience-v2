@@ -26,51 +26,8 @@ jupe_cave,148,52,0	warp	jupwrp02	1,1,yuno_fild07,212,175
 jupe_cave,26,52,0	warp	jupwrp03	1,1,juperos_01,53,247
 juperos_01,50,250,0	warp	jupwrp04	1,1,jupe_cave,29,52
 
-jupe_gate,28,145,0	warp	gate#left1	1,1,jupe_area1,100,222
-jupe_area1,103,222,0	warp	gate#left2	1,1,jupe_gate,31,145
-jupe_gate,71,145,0	warp	gate#right1	1,1,jupe_area2,63,222
-jupe_area2,60,222,0	warp	gate#right2	1,1,jupe_gate,68,145
-jupe_gate,49,55,0	warp	gate#ele	1,1,jupe_ele_r,49,30
-
-
-juperos_01,96,220,0	warp	gate#eles	1,1,juperos_01,154,183
-juperos_01,149,185,0	warp	gate#ezles	1,1,juperos_01,94,217
-
-juperos_01,223,239,0	warp	gate#ezles	1,1,juperos_01,176,182
-juperos_01,181,185,0	warp	gate#ezlesz	1,1,juperos_01,218,235
-
-juperos_01,162,127,0	warp	gate#ezlesz	1,1,juperos_01,166,163
-juperos_01,165,158,0	warp	gate#ezless	1,1,juperos_01,168,129
-
-jawaii,138,182,4	script	Stairs#ja1	111,{
-	mes "[Stairs]";
-	mes "Want to go up or go down?";
-	next;
-	switch(select("Up","Down")) {
-		case 1:
-			warp "jawaii",136,183;
-			close;
-		case 2:
-			warp "jawaii",140,180;
-			close;
-		}
-	close;
-}
-
-ein_fild03,245,55,0	script	Lift-E02	139,2,2,{
-	OnTouch:
-	mes "Lift up?";
-	next;
-	if(select("Yes","Stay")==1)
-		warp "ein_fild03",201,41;
-	close;
-}
-
-ein_fild03,204,43,0	script	Lift-E01	139,2,2,{
-	OnTouch:
-	mes "Lift down?";
-	next;
-	if(select("Yes","Stay")==1)
-		warp "ein_fild03",248,53;
-	close;
-}
+jupe_gate,28,145,0	warp	gate#left1	2,4,jupe_area1,100,222
+jupe_area1,103,222,0	warp	gate#left2	2,4,jupe_gate,31,145
+jupe_gate,71,145,0	warp	gate#right1	2,4,jupe_area2,63,222
+jupe_area2,60,222,0	warp	gate#right2	2,4,jupe_gate,68,145
+jupe_gate,49,55,0	warp	gate#ele	4,2,jupe_ele_r,49,30

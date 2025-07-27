@@ -29,6 +29,3 @@ um_fild03,243,26,0	warp	um_fild3-4	1,1,cmd_fild01,176,367
 um_fild04,182,13,0	warp	um_fild4-1	1,1,um_fild02,190,371
 um_fild04,215,339,0	warp	um_fild4-2	1,1,umbala,130,82
 umbala,130,79,0	warp	um_fild4-3	1,1,um_fild04,215,336
-
-um_fild04,27,189,0	warp	um_fild4-5	1,1,um_fild05,370,220
-um_fild05,373,218,0	warp	um_fild4-5	1,1,um_fild04,30,186

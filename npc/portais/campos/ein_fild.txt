@@ -51,23 +51,3 @@ lhz_fild02,164,37,0	warp	ein050	1,1,lhz_fild03,158,347
 lhz_fild03,158,349,0	warp	ein050a	1,1,lhz_fild02,164,39
 lhz_fild03,363,283,0	warp	ein051	1,1,ein_fild08,25,275
 ein_fild08,23,275,0	warp	ein051a	1,1,lhz_fild03,361,283
-
-
-//ein_fild04,384,182,0	warp	ein050	1,1,ein_fild05,36,185
-ein_fild05,33,185,0	warp	ein051	1,1,ein_fild04,381,182
-ein_fild05,34,167,0	warp	ein052	1,1,ein_fild04,381,182
-
-ein_fild04,384,182,0	script	EinRand050	45,1,1,{
-	end;                    // nada a fazer em cliques
-
-OnTouch:                  // aciona quando o player pisa
-	if (rand(2)) {         // rand(2) devolve 0 ou 1
-		warp "ein_fild05",36,185;
-	} else {
-		warp "ein_fild05",36,167;
-	}
-	end;
-}
-
-einbroch,18,189,0	warp	ein053	1,1,lhz_fild02,385,212
-lhz_fild02,389,212,0	warp	ein054	1,1,einbroch,21,189
