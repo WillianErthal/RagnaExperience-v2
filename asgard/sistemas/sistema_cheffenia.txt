@@ -1,0 +1,283 @@
+//-------------------------------------------------------------------------------------------||
+//   __  __                                  _                _____           _       _      ||
+//  |  \/  |                                (_)              / ____|         (_)     | |     ||
+//  | \  / | __ _  __ _ _ __ ___   __ _ _ __ _ _ __   __ _  | (___   ___ _ __ _ _ __ | |_    ||
+//  | |\/| |/ _` |/ _` | '_ ` _ \ / _` | '__| | '_ \ / _` |  \___ \ / __| '__| | '_ \| __|   ||
+//  | |  | | (_| | (_| | | | | | | (_| | |  | | | | | (_| |  ____) | (__| |  | | |_) | |_    ||
+//  |_|  |_|\__,_|\__, |_| |_| |_|\__,_|_|  |_|_| |_|\__, | |_____/ \___|_|  |_| .__/ \__|   ||
+//                 __/ |                              __/ |                    | |           ||
+//                |___/                              |___/                     |_|           ||
+//-------------------------------------------------------------------------------------------||
+//   VENDAS DE SERVIÇOS SERVIDORES DE RAGNAROK ONLINE/PERFECT WORLD/MU/AION/CABAL/MINECRAFT  ||
+//DISCORD:   https://discordapp.com/channels/@me/Magmaring#0352                              ||
+//INSTAGRAM: https://www.instagram.com/evandro_srk/                                          ||
+//FACEBOOK:  https://www.facebook.com/sorakamente/                                           ||
+//GITHUB:    https://github.com/magmaring                                                    ||
+//-------------------------------------------------------------------------------------------||
+// = Criação:                                                                                ||
+// - [ADM] Magmaring - Evandro Oliveira     												 ||
+//-------------------------------------------------------------------------------------------||
+// = Revisão:                                                                                ||
+// - Esse arquivo teve sua última revisão 07 de janeiro de 2024    				         	 ||
+//-------------------------------------------------------------------------------------------||
+prontera,144,190,4	script	Cheffenia#se	801,{
+	set .np$,"^00B2EE[-- Emissária Cheffênia --]^000000";
+    // Verifica se o jogador ainda tem tempo de acesso
+    if (gettimetick(2) < #bossnia_time) {
+	set .@remaining_time, #bossnia_time - gettimetick(2);
+	set .@minutes, .@remaining_time / 60;
+	mes .np$;
+	mes "-----------------------------------------";
+	mes "Olá ^FF4400"+strcharinfo(0)+"^000000:";
+	mes "Quer entrar novamente na cheffênia?";
+	mes "-----------------------------------------";
+	mes "Tempo restante: [" + .@minutes + " minutos]";
+	mes "-----------------------------------------";
+        next;
+        if (select("Entrar:Sair") == 2) {
+            close;
+        }
+        set .@difficulty, select("Facil:Medio:Dificil:Pesadelo");
+        switch (select("Warp 1:Warp 2:Warp 3:Warp 4")) {
+            case 1: set .@x, 31; set .@y, 208; break;
+            case 2: set .@x, 31; set .@y, 31; break;
+            case 3: set .@x, 208; set .@y, 31; break;
+            case 4: set .@x, 208; set .@y, 208; break;
+        }
+        specialeffect2 EF_MAXPOWER;
+        warp "bossnia_0" + .@difficulty, .@x, .@y;
+        close;
+    }
+
+    // Se o tempo de acesso expirou, verifica o item e cobra novamente
+    if (countitem(7227) > 0) {
+	mes .np$;
+	mes "-----------------------------------------";
+	mes "Olá ^FF4400"+strcharinfo(0)+"^000000:";
+	mes "Deseja entrar na cheffênia?";
+	mes "-----------------------------------------";
+	mes "Tempo restante: [" + .@minutes + " minutos]";
+	mes "-----------------------------------------";
+	next;
+	if (select("Entrar:Sair") == 2) {
+	close;
+        }
+        set .@difficulty, select("Facil:Medio:Dificil:Pesadelo");
+        switch (select("Warp 1:Warp 2:Warp 3:Warp 4")) {
+            case 1: set .@x, 31; set .@y, 208; break;
+            case 2: set .@x, 31; set .@y, 31; break;
+            case 3: set .@x, 208; set .@y, 31; break;
+            case 4: set .@x, 208; set .@y, 208; break;
+        }
+        delitem 7227, 1; // Remover o item Premium_Reset_Stone
+        specialeffect2 EF_MAXPOWER;
+        warp "bossnia_0" + .@difficulty, .@x, .@y;
+        set #bossnia_time, gettimetick(2) + 30; // Define o limite de 30 minutos (1800 segundos)
+        close;
+    } else {
+	mes .np$;
+	mes "-----------------------------------------";
+	mes "Olá ^FF4400"+strcharinfo(0)+"^000000:";
+	mes "Você não tem uma permissão para entrar na cheffênia no momento.";
+	mes "-----------------------------------------";
+	close;
+    }
+
+OnPCLoadMapEvent:
+    if (strcharinfo(3) == "bossnia_01" || strcharinfo(3) == "bossnia_02" || strcharinfo(3) == "bossnia_03" || strcharinfo(3) == "bossnia_04") {
+        if (gettimetick(2) > #bossnia_time) {
+            warp "prontera", 154, 164;
+            mes "[Riss]";
+            mes "Seu tempo acabou!";
+            close;
+        }
+    }
+    end;
+
+OnPCLogoutEvent:
+    if (strcharinfo(3) == "bossnia_01" || strcharinfo(3) == "bossnia_02" || strcharinfo(3) == "bossnia_03" || strcharinfo(3) == "bossnia_04") {
+        if (gettimetick(2) > #bossnia_time) {
+            warp "prontera", 154, 164;
+        }
+    }
+    end;
+
+OnTimer60000:
+    if (strcharinfo(3) == "bossnia_01" || strcharinfo(3) == "bossnia_02" || strcharinfo(3) == "bossnia_03" || strcharinfo(3) == "bossnia_04") {
+        if (gettimetick(2) > #bossnia_time) {
+            announce "Seu tempo acabou, voce sera teleportado para o centro de Prontera!", bc_self;
+            warp "prontera", 154, 164;
+            stopnpctimer;
+        } else {
+            set .@remaining_time, #bossnia_time - gettimetick(2);
+            set .@minutes, .@remaining_time / 60;
+            announce "Voce tem " + .@minutes + " minutos restantes.", bc_self;
+        }
+    }
+    initnpctimer;
+    end;
+
+OnMyMobDead:
+    if (strcharinfo(3) == "bossnia_01" || strcharinfo(3) == "bossnia_02" || strcharinfo(3) == "bossnia_03" || strcharinfo(3) == "bossnia_04") {
+        if (gettimetick(2) > #bossnia_time) {
+            warp "prontera", 154, 164;
+        }
+    }
+    end;
+}
+
+// Warp Portals
+//============================================================
+bossnia_01,204,204,0	warp	bossnia01	1,1,prontera,155,180
+bossnia_02,204,204,0	warp	bossnia02	1,1,prontera,155,180
+bossnia_03,204,204,0	warp	bossnia03	1,1,prontera,155,180
+bossnia_04,204,204,0	warp	bossnia04	1,1,prontera,155,180
+
+// Monster Spawns
+//============================================================
+
+//----------------------------------------------------------------------------
+// bossnia_01 - Bossnia
+//----------------------------------------------------------------------------
+bossnia_01,0,0	monster	Garm	1252,5,5000
+bossnia_01,0,0	monster	Dark Lord	1272,3,5000
+bossnia_01,0,0	monster	Doppelganger	1046,10,5000
+bossnia_01,0,0	monster	Dracula	1389,5,5000
+bossnia_01,0,0	monster	Drake	1112,10,5000
+bossnia_01,0,0	monster	Maya	1147,10,5000
+bossnia_01,0,0	monster	Mistress	1059,1,5000
+bossnia_01,0,0	monster	Amon Ra	1511,1,5000
+bossnia_01,0,0	monster	Atroce	1785,10,5000
+bossnia_01,0,0	monster	Vesper	1685,1,5000
+bossnia_01,0,0	monster	Eddga	1115,1,5000
+bossnia_01,0,0	monster	Osiris	1038,10,5000
+bossnia_01,0,0	monster	Orc Lord	1190,10,5000
+bossnia_01,0,0	monster	Orc Hero	1087,2,5000
+bossnia_01,0,0	monster	Samurai Specter	1492,1,5000
+bossnia_01,0,0	monster	Moonlight Flower	1150,1,5000
+bossnia_01,0,0	monster	Lord of the Dead	1373,1,5000
+bossnia_01,0,0	monster	Lady Tanee	1688,1,5000
+bossnia_01,0,0	monster	Turtle General	1312,5,5000
+bossnia_01,0,0	monster	Pharaoh	1157,2,5000
+bossnia_01,0,0	monster	Stormy Knight	1251,2,5000
+bossnia_01,0,0	monster	Phreeoni	1159,10,5000
+bossnia_01,0,0	monster	RSX-0806	1623,5,5000
+//----------------------------------------------------------------------------
+// bossnia_02 - Bossnia
+//----------------------------------------------------------------------------
+bossnia_02,0,0	monster	Garm	1252,5,5000
+bossnia_02,0,0	monster	Dark Lord	1272,3,5000
+bossnia_02,0,0	monster	Dracula	1389,5,5000
+bossnia_02,0,0	monster	Drake	1112,10,5000
+bossnia_02,0,0	monster	Detale	1719,2,5000
+bossnia_02,0,0	monster	Mistress	1059,1,5000
+bossnia_02,0,0	monster	Baphomet	1039,10,5000
+bossnia_02,0,0	monster	Egnigem Cenia	1658,10,5000
+bossnia_02,0,0	monster	Amon Ra	1511,1,5000
+bossnia_02,0,0	monster	Atroce	1785,10,5000
+bossnia_02,0,0	monster	Vesper	1685,2,5000
+bossnia_02,0,0	monster	Osiris	1038,10,5000
+bossnia_02,0,0	monster	Samurai Specter	1492,2,5000
+bossnia_02,0,0	monster	Lord of the Dead	1373,1,5000
+bossnia_02,0,0	monster	Ktullanux	1779,2,5000
+bossnia_02,0,0	monster	Thanatos Phantom	1708,1,5000
+bossnia_02,0,0	monster	Tao Gunka	1583,2,5000
+bossnia_02,0,0	monster	Turtle General	1312,5,5000
+bossnia_02,0,0	monster	Pharaoh	1157,2,5000
+bossnia_02,0,0	monster	Falling Bishop	1871,5,5000
+bossnia_02,0,0	monster	Evil Snake Lord	1418,10,5000
+bossnia_02,0,0	monster	RSX-0806	1623,5,5000
+//----------------------------------------------------------------------------
+// bossnia_03 - Bossnia
+//----------------------------------------------------------------------------
+bossnia_03,0,0	monster	Gloom Under Night	1768,2,5000
+bossnia_03,0,0	monster	Dark Lord	1272,3,5000
+bossnia_03,0,0	monster	Doppelganger	1046,10,5000
+bossnia_03,0,0	monster	Dracula	1389,5,5000
+bossnia_03,0,0	monster	Drake	1112,10,5000
+bossnia_03,0,0	monster	Detale	1719,2,5000
+bossnia_03,0,0	monster	Baphomet	1039,10,5000
+bossnia_03,0,0	monster	Egnigem Cenia	1658,10,5000
+bossnia_03,0,0	monster	Amon Ra	1511,1,5000
+bossnia_03,0,0	monster	Atroce	1785,10,5000
+bossnia_03,0,0	monster	Vesper	1685,2,5000
+bossnia_03,0,0	monster	Eddga	1115,1,5000
+bossnia_03,0,0	monster	Osiris	1038,10,5000
+bossnia_03,0,0	monster	Orc Lord	1190,10,5000
+bossnia_03,0,0	monster	Orc Hero	1087,2,5000
+bossnia_03,0,0	monster	Samurai Specter	1492,1,5000
+bossnia_03,0,0	monster	Lord of the Dead	1373,1,5000
+bossnia_03,0,0	monster	Ktullanux	1779,2,5000
+bossnia_03,0,0	monster	Kiel D-01	1734,1,75000
+bossnia_03,0,0	monster	Thanatos Phantom	1708,2,5000
+bossnia_03,0,0	monster	Tao Gunka	1583,1,5000
+bossnia_03,0,0	monster	Turtle General	1312,5,5000
+bossnia_03,0,0	monster	Pharaoh	1157,5,5000
+bossnia_03,0,0	monster	Stormy Knight	1251,2,5000
+bossnia_03,0,0	monster	Falling Bishop	1871,5,5000
+bossnia_03,0,0	monster	Evil Snake Lord	1418,10,5000
+bossnia_03,0,0	monster	RSX-0806	1623,5,5000
+bossnia_03,0,0,1,1	monster	Beelzebub	1873,2,5000
+bossnia_03,0,0,1,1	monster	Valkyrie Randgris	1751,2,5000
+bossnia_03,0,0,1,1	monster	Ifrit	1832,2,5000
+bossnia_03,0,0,1,1	monster	Nidhoggr's Shadow	2022,2,5000
+
+//----------------------------------------------------------------------------
+// bossnia_04 - Bossnia
+//----------------------------------------------------------------------------
+bossnia_04,0,0	monster	Gloom Under Night	1768,2,5000
+bossnia_04,0,0	monster	Dark Lord	1272,3,5000
+bossnia_04,0,0	monster	Doppelganger	1046,10,5000
+bossnia_04,0,0	monster	Dracula	1389,5,5000
+bossnia_04,0,0	monster	Drake	1112,10,5000
+bossnia_04,0,0	monster	Detale	1719,2,5000
+bossnia_04,0,0	monster	Maya	1147,10,5000
+bossnia_04,0,0	monster	Baphomet	1039,10,5000
+bossnia_04,0,0	monster	Egnigem Cenia	1658,10,5000
+bossnia_04,0,0	monster	Amon Ra	1511,1,5000
+bossnia_04,0,0	monster	Atroce	1785,10,5000
+bossnia_04,0,0	monster	Vesper	1685,2,5000
+bossnia_04,0,0	monster	Osiris	1038,10,5000
+bossnia_04,0,0	monster	Samurai Specter	1492,1,5000
+bossnia_04,0,0	monster	Lord of the Dead	1373,1,5000
+bossnia_04,0,0	monster	Ktullanux	1779,2,5000
+bossnia_04,0,0	monster	Kiel D-01	1734,1,75000
+bossnia_04,0,0	monster	Thanatos Phantom	1708,1,5000
+bossnia_04,0,0	monster	Tao Gunka	1583,1,5000
+bossnia_04,0,0	monster	Turtle General	1312,10,5000
+bossnia_04,0,0	monster	Pharaoh	1157,5,5000
+bossnia_04,0,0	monster	Falling Bishop	1871,5,5000
+bossnia_04,0,0	monster	Phreeoni	1159,10,5000
+bossnia_04,0,0	monster	Evil Snake Lord	1418,10,5000
+bossnia_04,0,0	monster	RSX-0806	1623,5,5000
+bossnia_04,0,0	monster	Assassin Cross Eremes	1647,1,5000
+bossnia_04,0,0,	monster	Whitesmith Howard	1648,1,5000
+bossnia_04,0,0,1,1	monster	Beelzebub	1873,1,5000
+bossnia_04,0,0,1,1	monster	Valkyrie Randgris	1751,3,5000
+bossnia_04,0,0,1,1	monster	Ifrit	1832,3,5000
+bossnia_03,0,0,1,1	monster	Nidhoggr's Shadow	2022,2,5000
+
+bossnia_01	mapflag	nowarpto
+bossnia_02	mapflag	nowarpto
+bossnia_03	mapflag	nowarpto
+bossnia_04	mapflag	nowarpto
+bossnia_01	mapflag	nowarp
+bossnia_02	mapflag	nowarp
+bossnia_03	mapflag	nowarp
+bossnia_04	mapflag	nowarp
+bossnia_01	mapflag	nomemo
+bossnia_02	mapflag	nomemo
+bossnia_03	mapflag	nomemo
+bossnia_04	mapflag	nomemo
+bossnia_01	mapflag	nobranch
+bossnia_02	mapflag	nobranch
+bossnia_03	mapflag	nobranch
+bossnia_04	mapflag	nobranch
+bossnia_01	mapflag	noreturn
+bossnia_02	mapflag	noreturn
+bossnia_03	mapflag	noreturn
+bossnia_04	mapflag	noreturn
+bossnia_01	mapflag	nosave	SavePoint
+bossnia_02	mapflag	nosave	SavePoint
+bossnia_03	mapflag	nosave	SavePoint
+bossnia_04	mapflag	nosave	SavePoint

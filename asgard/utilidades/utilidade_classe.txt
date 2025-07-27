@@ -1,0 +1,1992 @@
+//-------------------------------------------------------------------------------------------||
+//   __  __                                  _                _____           _       _      ||
+//  |  \/  |                                (_)              / ____|         (_)     | |     ||
+//  | \  / | __ _  __ _ _ __ ___   __ _ _ __ _ _ __   __ _  | (___   ___ _ __ _ _ __ | |_    ||
+//  | |\/| |/ _` |/ _` | '_ ` _ \ / _` | '__| | '_ \ / _` |  \___ \ / __| '__| | '_ \| __|   ||
+//  | |  | | (_| | (_| | | | | | | (_| | |  | | | | | (_| |  ____) | (__| |  | | |_) | |_    ||
+//  |_|  |_|\__,_|\__, |_| |_| |_|\__,_|_|  |_|_| |_|\__, | |_____/ \___|_|  |_| .__/ \__|   ||
+//                 __/ |                              __/ |                    | |           ||
+//                |___/                              |___/                     |_|           ||
+//-------------------------------------------------------------------------------------------||
+//   VENDAS DE SERVIÇOS SERVIDORES DE RAGNAROK ONLINE/PERFECT WORLD/MU/AION/CABAL/MINECRAFT  ||
+//DISCORD:   https://discordapp.com/channels/@me/Magmaring#0352                              ||
+//INSTAGRAM: https://www.instagram.com/evandro_srk/                                          ||
+//FACEBOOK:  https://www.facebook.com/sorakamente/                                           ||
+//GITHUB:    https://github.com/magmaring                                                    ||
+//-------------------------------------------------------------------------------------------||
+// = Criação:                                                                                ||
+// - [ADM] Magmaring - Evandro Oliveira     												 ||
+//-------------------------------------------------------------------------------------------||
+// = Revisão:                                                                                ||
+// - Esse arquivo teve sua última revisão 07 de janeiro de 2024    				         	 ||
+//-------------------------------------------------------------------------------------------||
+// SQL command:    alter table `char` add column up_modo tinyint(4) default 0 after delete_date, add index (up_modo);
+
+prontera,147,198,5	script	Mestra das Classes	11003,{
+	
+	query_sql( "SELECT `up_modo` FROM `char` WHERE `char_id` = "+getcharid(0)+"", .@modo );
+	if ( .@modo == 1 || .@modo == 2) {
+		switch( .@modo ) {
+			case 1: doevent	"Historia::OnJoinHist"; break;
+			case 2: doevent	"ModeFull::OnJoinFull"; break;
+		}
+	} else {
+		mes .nomeNpc$;
+		mes (gettime(3)>= 6&&gettime(3)<= 12?"Bom-dia":(gettime(3)>=13&&gettime(3)<=18?"Boa-tarde":"Boa-noite"))+", ^008aff"+strcharinfo(0)+"^000000 !";
+		mes "Bem-vind"+(Sex?"o":"a")+" ao nosso sistema de classes.";
+		mes "Escolha qual modo deseja para progredir com seu personagem.";
+		next;
+
+		switch(select("[>] ^0000FFModo Hist ria^000000","[>] ^FF0000Modo Full^000000","[>] ^0000FFInforma  es^000000","Cancelar")){
+			// Inicia Modo Hist ria
+			case 1:
+				// Verifica o Modo Historia
+				clear;
+				mes .nomeNpc$;
+				mes "Voc  esta prestes a escolher o ";
+				mes "[^0000FFModo Hist ria^000000] para este personagem.";
+				mes "^FF0000Voce nao pode voltar atras^000000. Confirma?";
+				if (select("^0000FFSim^000000:^FF0000N o^000000") == 2 ) {
+					clear;
+					mes .nomeNpc$;
+					mes "Tudo bem, retorno quando estiver pronto para escolher.";
+					close;
+				}
+				clear;
+				mes .nomeNpc$;
+				mes "Muito bem, voc  optou pelo";
+				mes "[^0000FFModo Hist ria^000000] neste personagem.";
+				query_sql( "UPDATE `char` SET `up_modo` = up_modo + 1 WHERE `char_id` = "+getcharid(0)+"" );
+				doevent	"Historia::OnJoinHist";
+				close2;
+
+			break;
+			
+			// Inicia Modo Full
+			case 2:
+				// Verifica o Modo Full
+				clear;
+				mes .nomeNpc$;
+				mes "Voc  est  prestes a escolher o ";
+				mes "[^0000FFModo Full^000000] para este personagem.";
+				mes "^FF0000Voc  n o pode voltar atr s^000000. Confirma?";
+				if (select("^0000FFSim^000000:^FF0000N o^000000") == 2 ) {
+					clear;
+					mes .nomeNpc$;
+					mes "Tudo bem, retorno quando estiver pronto para escolher.";
+					close;
+				}
+				clear;
+				mes .nomeNpc$;
+				mes "Muito bem, voc  optou pelo";
+				mes "[^0000FFModo Full^000000] neste personagem.";
+				query_sql( "UPDATE `char` SET `up_modo` = up_modo + 2 WHERE `char_id` = "+getcharid(0)+"" );
+				doevent	"ModeFull::OnJoinFull";
+				close2;
+			break;
+			
+			// Informacoes
+			case 3:
+				clear;
+				mes .nomeNpc$;
+				mes "Seja muito bem-vind"+(sex?"o":"a")+" ao nosso sistema de classes!";
+				mes "Temos dois estilos de jogo para voc , nobre jogad"+(sex?"or":"ora")+":";
+				mes "O ^0000FFModo Hist ria^000000 e o ^0000FFModo Full^000000.";
+				next;
+				mes .nomeNpc$;
+				mes "O ^0000FFModo Full^000000 trara as facilidades necess rias para o jogador que deseja come ar a jogar sem se";
+				mes "preocupar muito com a fase PvE para progredir o n vel de seu personagem.";
+				next;
+				mes .nomeNpc$;
+				mes "Basicamente, basta clicar e escolher sua classe desejada que o transformaremos nela em seu";
+				mes "maximo nivel. Sim, desta forma super descomplicada.";
+				next;
+				mes .nomeNpc$;
+				mes "Por outro lado, o ^0000FFModo Historia^000000 permite que voc  fa a a progressao normal de n veis com o";
+				mes "nosso sistema apenas realizando m nimas interfer ncias como a mudan a de classe e avisos importantes.";
+				next;
+				mes .nomeNpc$;
+				mes "Como o ^0000FFModo Hist ria^000000 necessita esfor o e dedica  o, apenas ele oferece recompensas";
+				mes "exclusivas para os jogadores que optam enfrentar este desafio.";
+				next;
+				.itemCashClass1 = getvariableofnpc(.itemCashClass1, "Historia");
+				.itemCashClass2 = getvariableofnpc(.itemCashClass2, "Historia");
+				.itemCashClassT = getvariableofnpc(.itemCashClassT, "Historia");
+				.itemCashTrans = getvariableofnpc(.itemCashTrans, "Historia");
+				.itemCashExpan = getvariableofnpc(.itemCashExpan, "Historia");
+				.@prizeClass1$ = (.itemCashClass1 == 0) ? ("Classes 1: ^0000FFItens exclusivos^000000") : ("Classes 1: ^0000FFROPs^000000");
+				.@prizeClass2$ = (.itemCashClass2 == 0) ? ("Classes 2: ^0000FFItens exclusivos^000000") : ("Classes 2: ^0000FFROPs^000000");
+				.@prizeClassT$ = (.itemCashClassT == 0) ? ("Classes T: ^0000FFItens exclusivos^000000") : ("Classes T: ^0000FFROPs^000000");
+				.@prizeTrans$ = (.itemCashTrans == 0) ? ("Transclasses: ^0000FFItens exclusivos^000000") : ("Transclasses: ^0000FFROPs^000000");
+				.@prizeExpan$ = (.itemCashExpan == 0) ? ("Expandidas: ^0000FFItens exclusivos^000000") : ("Expandidas: ^0000FFROPs^000000");
+				mes .nomeNpc$;
+				mes "[^FF0000Recompensas por Classe^000000]";
+				mes .@prizeClass1$;
+				mes .@prizeClass2$;
+				mes .@prizeClassT$;
+				mes .@prizeTrans$;
+				mes .@prizeExpan$;
+				close;
+				break;
+			
+			// Encerra conversa
+			case 4:
+				clear;
+				mes .nomeNpc$;
+				mes "At  mais.";
+				close;
+				break;
+		}
+	}
+	
+	end;
+
+
+	OnInit:
+		.nomeNpc$ = "[^0000FFMestre das Classes^000000]";
+	end;
+}
+
+//==========================================================
+//	Modo Historia
+//==========================================================
+
+-	script	Historia	-1,{
+	
+OnJoinHist:
+
+function Get_Job_Equip;
+// Verifica se o Player possui o n vel necess rio.
+// fecha se n o, retorna sim
+function	Require_Level	{
+	if (BaseLevel < getarg(0) || JobLevel < getarg(1)) {
+		.@blvl = getarg(0) - BaseLevel;
+		.@jlvl = getarg(1) - JobLevel;
+				if (#language == 0) {
+					mes "Requisito de n vel:";
+					mes ((getarg(0)>1)? 
+						"^bb0000"+getarg(0)+"^000000 (^bb0000Base^000000) / ":"")+"^00bb00"+
+			getarg(1)+"^000000 (^00bb00Job^000000)";
+		mes "Voc  precisa de +" +
+			((.@blvl > 0) ? "^bb0000"+.@blvl+"^000000 mais n veis b sicos " + 
+				((.@jlvl > 0) ? "job " : "") : "") +
+			((.@jlvl > 0) ? "^00bb00"+.@jlvl+"^000000 n veis para " : "") +
+			"continuar.";
+		} else {
+		mes "Level requirement:";
+		mes ((getarg(0)>1)? 
+			"^bb0000"+getarg(0)+"^000000 (^bb0000Base^000000) / ":"")+"^00bb00"+
+			getarg(1)+"^000000 (^00bb00Job^000000)";
+		mes "You need " +
+			((.@blvl > 0) ? "^bb0000"+.@blvl+"^000000 more base levels " + 
+				((.@jlvl > 0) ? "and " : "") : "") +
+			((.@jlvl > 0) ? "^00bb00"+.@jlvl+"^000000 more job levels " : "") +
+			"to continue.";
+		}
+
+		close;
+	}
+	return;
+}
+
+// Verifica se o eac fornecido   uma aula para Babys
+function Is_Baby	{
+	return ((getarg(0, eaclass())&EAJL_BABY)>0);
+}
+
+// Verifica se o jogador pode mudar para a terceira classe.
+// Nota: Isso n o inclui as verifica  es de n vel.
+function	Can_Change_Third	{
+// Para mudar para a terceira classe, voce precisa ser:
+// * Segunda classe
+// * Segunda classe transcendente
+// * Baby Second Class
+	if( !.ThirdClass )
+		return false; // Terceira mudan a de trabalho desativada
+	if( !(eaclass()&EAJL_2) )
+		return false; // N o   segunda classe
+	if( eaclass()&EAJL_THIRD )
+		return false; // J  Terceira Classe
+	if( roclass(eaclass()|EAJL_THIRD) < 0 )
+		return false; // classe n o tem terceira classe
+	if( (eaclass()&EAJ_UPPERMASK) == EAJ_SUPER_NOVICE )
+		return false; //Exp. Super Novato   igual ao 3  Cls, mas tem seu pr prio caso
+	if( Is_Baby() && (!.BabyClass || !.BabyThird) )
+		return false; // Nenhuma mudan a de Baby (terceira) permitida
+	return true;
+}
+
+function	Can_Rebirth	{
+	// Para renascer, voce precisa ser:
+	// * Segunda classe
+	if( !.RebirthClass )
+		return false; // Renascimento desativado
+	if( !(eaclass()&EAJL_2) )
+		return false; // N o   de segunda classe
+	if( eaclass()&(EAJL_UPPER|EAJL_THIRD) )
+		return false; // J  renasceu / terceira classe
+	if( roclass(eaclass()|EAJL_UPPER) < 0 )
+		return false; // J  n o tem classe transcendida
+	if( Is_Baby() && !.BabyClass )
+		return false; // N o s o permitidas mudan as de Baby
+	return true;
+}
+
+// Verifica se o eac fornecido   de primeira classe
+function	Is_First_Cls	{
+	return (getarg(0) <= EAJ_TAEKWON);
+}
+
+function	Check_Riding	{
+// Nota: Por que devemos sempre verificar a equita  o:
+// Montagens s o consideradas como outra classe, que
+// tornaria este NPC maior apenas para lidar com
+// esses casos especiais.
+	if (checkfalcon() || checkcart() || checkriding() || ismounting()) {
+			if (#language == 0) {
+		mes "Por favor remova o seu " +
+			((checkfalcon()) ? "falc o" : "") +
+			((checkcart()) ? "Carrinho" : "") +
+			((checkriding()) ? "Peco" : "") +
+			((ismounting()) ? "Montar" : "") +
+			" antes de proceder.";
+		close;
+		} else {
+		mes "Please remove your " +
+			((checkfalcon()) ? "falcon" : "") +
+			((checkcart()) ? "cart" : "") +
+			((checkriding()) ? "Peco" : "") +
+			((ismounting()) ? "mount" : "") +
+			" before proceeding.";
+		close;
+		}
+
+	}
+	return;
+}
+function	Check_SkillPoints	{
+	if (.SkillPointCheck && SkillPoint) {
+		if (#language == 0) {
+			mes "Use todos os seus pontos de habilidade antes de prosseguir.";
+		close;
+		} else {
+		mes "Please use all your skill points before proceeding.";
+		close;
+		}
+	}
+	return;
+}
+
+// addJobOptions   essencialmente igual
+// setarray. @ array [getarraysize (. @ array)], opt1, opt2, ...;
+//   apenas mais f cil de ler, j  que o usamos com frequ ncia
+function	Job_Options	{
+	.@argcount = getargcount();
+	.@arr_size = getarraysize(getarg(0));
+	for( .@i = 1; .@i < .@argcount; .@i++) {
+		setarray getelementofarray(getarg(0), .@arr_size++),getarg(.@i);
+	}
+}
+
+// In cio do NPC
+	mes .NPCName$;
+	Check_Riding();
+	Check_SkillPoints();
+
+	// inicializa  o
+	.@eac = eaclass();
+	.@third_possible = Can_Change_Third();
+	.@rebirth_possible = Can_Rebirth();
+	.@first_eac = .@eac&EAJ_BASEMASK;
+	.@second_eac = .@eac&EAJ_UPPERMASK;
+	// Nota: Estes ja estao configurados em pc.cpp
+	// BaseClass = roclass(.@eac&EAJ_BASEMASK) que s o os jogadores de primeira classe
+	// BaseJob = roclass(.@eac&EAJ_UPPERMASK) que s o os jogadores de segunda classe
+	//dispbottom "Debug: eac ("+.@eac+"), third ("+.@third_possible+"), rebirth("+.@rebirth_possible+"), BaseClass ("+BaseClass+"), BaseJob ("+BaseJob+")";
+		
+	// A partir daqui, o mestre de tarefas verifica a classe atual
+	// e preenche o array `. @ job_opt` com poss veis
+	// op  es de trabalho para o jogador.
+	
+	if( .@rebirth_possible ) {
+		// Op  o de renascimento (exibida no topo do menu)
+		Require_Level(.Req_Rebirth[0], .Req_Rebirth[1]);
+		Job_Options(.@job_opt, Job_Novice_High);
+	}
+	if( .@third_possible ) {
+		// Terceira mudan a de emprego (exibida abaixo do renascimento)
+		Require_Level(.Req_Third[0], .Req_Third[1]);
+		Job_Options(.@job_opt, roclass(.@eac|EAJL_THIRD));
+	}
+	 
+	if (.SecondExpanded && 
+	   (.@eac&EAJ_UPPERMASK) == EAJ_SUPER_NOVICE && //   super novato
+	   !(eaclass()&EAJL_THIRD) ) {				 	// ainda n o expandido SN
+		// (Baby) Super novato para expandido (Baby) super novato
+	   	if( !Is_Baby(.@eac) || (.BabyClass && .BabyExpanded) ) {
+			// .BabyClass & .BabyExpanded deve ser habilitado se for um Baby
+			Require_Level(.Req_Exp_SNOVI[0], .Req_Exp_SNOVI[1]);
+			Job_Options(.@job_opt,roclass(.@eac|EAJL_THIRD)); // SN expandido   "terceiro" cls
+		}
+	}
+	
+	if (.SecondExpanded && 
+		((.@eac&(~EAJL_BABY)) == EAJ_NINJA || 		//   (Baby) ninja
+		(.@eac&(~EAJL_BABY)) == EAJ_GUNSLINGER)) {	//   (Baby) pistoleiro
+	// (Baby) Ninja para (Baby) Kagerou / Oboro
+	// (Baby) Pistoleiro para (Baby) Rebeli o
+		if( !Is_Baby(.@eac) || (.BabyClass && .BabyExpanded) ) {
+			// .BabyClass & .BabyExpanded deve ser habilitado se for um Baby	
+			Require_Level(.Req_Exp_NJ_GS[0], .Req_Exp_NJ_GS[1]);
+			// Kagerou, Oboro, Rebellion s o considerados uma classe 2-1
+			Job_Options(.@job_opt, roclass(.@eac|EAJL_2_1));
+		}
+	}
+	
+	// O jogador   Job_Novice, Job_Novice_High ou Job_Baby
+	if (.@first_eac == EAJ_NOVICE && .@second_eac != EAJ_SUPER_NOVICE) {
+		// MAPID_NOVICE, MAPID_SUPER_NOVICE, MAPID_NOVICE_HIGH, MAPID_BABY
+		Require_Level(.Req_First[0], .Req_First[1]);
+		switch(Class) {
+			case Job_Novice:
+				// Primeira mudan a de emprego
+				Job_Options(.@job_opt,Job_Swordman,
+					Job_Mage, Job_Archer, Job_Acolyte, Job_Merchant, Job_Thief,
+					Job_Super_Novice, Job_Taekwon, Job_Gunslinger, Job_Ninja);
+				if( .BabyNovice )
+					Job_Options(.@job_opt, Job_Baby);
+				break;
+			case Job_Novice_High:
+				// Mudan a de emprego ap s renascimento
+				if( .LastJob && lastJob )
+					Job_Options(.@job_opt,
+						roclass((eaclass(lastJob)&EAJ_BASEMASK)|EAJL_UPPER));
+				else
+					Job_Options(.@job_opt, 
+						Job_Swordman_High, Job_Mage_High, Job_Archer_High,
+						Job_Acolyte_High, Job_Merchant_High, Job_Thief_High);
+				break;
+			case Job_Baby:
+				if( !.BabyClass )
+					break;
+				// Primeira mudan a de emprego como um Baby
+				Job_Options(.@job_opt, Job_Baby_Swordman, Job_Baby_Mage,
+					Job_Baby_Archer,Job_Baby_Acolyte, Job_Baby_Merchant,
+					Job_Baby_Thief);
+				if( .BabyExpanded )
+					Job_Options(.@job_opt, Job_Super_Baby, Job_Baby_Taekwon,
+						Job_Baby_Gunslinger, Job_Baby_Ninja);
+				if( .BabySummoner )
+					Job_Options(.@job_opt, Job_Baby_Summoner);
+				break;
+			default:
+		if (#language == 0) {
+				mes "Ocorreu um erro.";
+				close;
+		} else {
+				mes "An error has occurred.";
+				close;
+		}
+		}
+	} else if( Is_First_Cls(.@eac) || 				// Primeira classe
+			   Is_First_Cls(.@eac&(~EAJL_UPPER)) ||	// Trans. Primeiros Cls
+			   (.BabyClass && Is_First_Cls(.@eac&(~EAJL_BABY))) ) {	// Baby First Cls
+	// O jogador   de primeira classe (n o novato)
+	// a maioria das classes deve ter duas op  es aqui (2-1 e 2-2)
+		.@class1 = roclass(.@eac|EAJL_2_1); // 2-1
+		.@class2 = roclass(.@eac|EAJL_2_2); // 2-2
+		// dispbottom "Debug: Classes: class1 ("+.@class1+"), class2 ("+.@class2+")";
+		if(.LastJob && lastJob && (.@eac&EAJL_UPPER)) {
+			// O jogador renasce Cls e as mudan as lineares de classe s o aplicadas
+			Require_Level(.Req_Second[0], .Req_Second[1]);
+			Job_Options(.@job_opt, lastJob + Job_Novice_High);
+		} else {
+			// A classe n o   aplicada, o jogador pode decidir.
+			if( .@class1 > 0 ) { // 2-1
+				Require_Level(.Req_Second[0], .Req_Second[1]);
+				Job_Options(.@job_opt, .@class1);
+			}
+			if( .@class2 > 0 ) { // 2-2
+				Require_Level(.Req_Second[0], .Req_Second[1]);
+				Job_Options(.@job_opt, .@class2);
+			}
+		}
+	}
+	
+	// Exibindo o Menu de Tarefas definido por. @ Job_opt.
+	//. @ job_opt n o deve ser alterado abaixo desta linha.
+	function Job_Menu;
+	Job_Menu(.@job_opt);
+	close;
+
+// Exibe o menu de trabalho
+function	Job_Menu	{
+	// getarg (0)   o array. @ job_opt contendo todas as mudan as de trabalho dispon veis.
+	function Confirm_Change;
+	while(true) {
+		.@opt_cnt =  getarraysize(getarg(0));
+		if( .@opt_cnt <= 0 ) {
+				if (#language == 0) {
+					mes "N o h   mais classes dispon veis.";
+					close;
+		} else {
+			mes "No more jobs are available.";
+			close;
+		}
+		}
+
+		.@selected = 0; // Just a single job class given, no select needed
+		if (.@opt_cnt > 1) {
+	// V rias classes de trabalho fornecidas. Selecione um e salve em. @ Class
+	// Depois disso, confirme. @ Class
+			if (#language == 0) {
+				mes "Selecione uma classe.";
+			.@menu$ = "";
+			for (.@i = 0; .@i < .@opt_cnt; .@i++) {
+				if( getelementofarray(getarg(0), .@i) == Job_Novice_High)
+					.@jobname$ = "^0055FFRebirth^000000";
+				else
+					.@jobname$ = jobname(getelementofarray(getarg(0), .@i));
+				.@menu$ = .@menu$ + "[^339900 ^000000] " + .@jobname$ + ":";
+			}
+			.@menu$ = .@menu$+"[^990000 ^000000] ^777777Cancelar^000000";
+			.@selected = select(.@menu$) - 1;
+			if( .@selected < 0 || .@selected >= .@opt_cnt )
+				close;
+		} else {
+			mes "Select a job.";
+			.@menu$ = "";
+			for (.@i = 0; .@i < .@opt_cnt; .@i++) {
+				if( getelementofarray(getarg(0), .@i) == Job_Novice_High)
+					.@jobname$ = "^0055FFRebirth^000000";
+				else
+					.@jobname$ = jobname(getelementofarray(getarg(0), .@i));
+				.@menu$ = .@menu$ + " ~ " + .@jobname$ + ":";
+			}
+			.@menu$ = .@menu$+" ~ ^777777Cancel^000000";
+			.@selected = select(.@menu$) - 1;
+			if( .@selected < 0 || .@selected >= .@opt_cnt )
+				close;
+		}
+
+			next;
+			mes .NPCName$;
+		}
+		.@class = getelementofarray(getarg(0), .@selected);
+		if ((.@class == Job_Super_Novice || .@class == Job_Super_Baby) &&
+				BaseLevel < .SNovice) {
+		// Requisito de N vel Especial porque Super Novato e
+		// Super Baby podem ser selecionados em uma das primeiras aulas
+		// alterar.   por isso que o N vel de Requisito vem depois e n o antes
+		// a sele  o.
+		if (#language == 0) {
+			mes "Um n vel b sico de " + .SNovice +
+				"   necess rio para se transformar em um " + jobname(.@class) + ".";
+		} else {
+			mes "A base level of " + .SNovice +
+				" is required to turn into a " + jobname(.@class) + ".";
+		}
+			return;
+		}
+		// Confirme a classe
+		Confirm_Change(.@class, .@opt_cnt > 1);
+		next;
+		mes .NPCName$;
+	}
+	return;
+}
+
+
+// Executa a mudan a de tarefa real e fecha.
+function	Job_Change	{
+	.@previous_class = Class;
+	.@to_cls = getarg(0);
+	next;
+	mes .NPCName$;
+		if (#language == 0) {
+			mes "Voc  agora    " + callfunc("F_InsertArticle", jobname(.@to_cls)) + "!";
+		} else {
+			mes "You are now " + callfunc("F_InsertArticle", jobname(.@to_cls)) + "!";
+		}
+	if (.@to_cls == Job_Novice_High && .LastJob)
+		lastJob = Class; // Salva o ultimoJob para renascer
+	jobchange .@to_cls;
+	if (.@to_cls == Job_Novice_High)
+		resetlvl(1);
+	else if (.@to_cls == Job_Baby) {
+		resetstatus;
+		resetskill;
+		set SkillPoint,0;
+	}
+	specialeffect2 EF_ANGEL2;
+	specialeffect2 EF_ELECTRIC;
+	if (.@previous_class != Class) {
+		if (.Platinum)
+			callfunc "F_GetPlatinumSkills";
+		if (.GetJobEquip)
+			Get_Job_Equip();
+	}
+	close; // Sempre fecha ap s a mudan a
+}
+
+function	Confirm_Change	{
+	// Player confirms he want to change into .@class
+	.@class = getarg(0, -1);
+	.@back = getarg(1, false);
+	if( .@class < 0 || eaclass(.@class) == -1 ) {
+		if (#language == 0) {
+			mes "Erro de classe desconhecido.";
+		} else {
+			mes "Unknown Class Error.";
+		}
+		close;
+	}
+		if (#language == 0) {
+			mes "Voc  quer se transformar em ^0055FF"+jobname(.@class)+"^000000?";
+			.@job_option$ = " [^339900 ^000000] Mudar para ^0055FF"+jobname(.@class)+"^000000";
+	if( .@class == Job_Novice_High)
+		.@job_option$ = " [^339900 ^000000] ^0055FFResetar^000000";
+	
+	if (select(.@job_option$+": [^FF9933 ^000000] ^777777" + 
+			((.@back) ?"Voltar" : "Cancelar") + "^000000") == 1) {
+		Job_Change(.@class);
+	}
+	if (!.@back)
+		close; // "Cancelar" pressionado
+		} else {
+			mes .NPCName$;
+			mes "Voc  quer se transformar em ^0055FF"+jobname(.@class)+"^000000?";
+	.@job_option$ = " ~ Change into ^0055FF"+jobname(.@class)+"^000000 class";
+	if( .@class == Job_Novice_High)
+		.@job_option$ = " ~ ^0055FFRebirth^000000";
+	
+	if (select(.@job_option$+": ~ ^777777" + 
+			((.@back) ?"Go back" : "Cancel") + "^000000") == 1) {
+		Job_Change(.@class);
+	}
+	if (!.@back)
+		close; // "Cancel" pressed
+		}
+
+	return;
+}
+
+	// Fun  o que fornece ao jogador um item relacionado ao trabalho
+	// os itens s o as recompensas das miss es de mudan a de emprego originais
+function	Get_Job_Equip	{
+	// Nota: O item esta caindo, quando o jogador nao consegue segura-lo.
+	// Mas isso e melhor do que n o dar o item.
+	.@eac = eaclass();
+	// Transclasses T & Transclasses 2-1/2-2
+	if(.@eac&EAJL_UPPER) {
+		switch(BaseJob) {
+			// ----- Primeiras Transcedentais -----
+			case Job_Swordman:
+				switch( .itemCashClassT ) {
+					case 0: getitem .itemEspadachimT[0],1; message strcharinfo(0),"Voc  ganhou ["+getitemname(.itemEspadachimT[0])+"] por ser um Espadachim T."; break;
+					case 1: #CASHPOINTS += .itemEspadachimT[0]; message strcharinfo(0),"Voc  ganhou ["+.itemEspadachimT[0]+" ROPs] por ser um Espadachim T."; break;
+				}
+			break;
+			case Job_Mage:
+				switch( .itemCashClassT ) {
+					case 0: getitem .itemMagoT[0],1; message strcharinfo(0),"Voc  ganhou ["+getitemname(.itemMagoT[0])+"] por ser um Mago T."; break;
+					case 1: #CASHPOINTS += .itemMagoT[0]; message strcharinfo(0),"Voc  ganhou ["+.itemMagoT[0]+" ROPs] por ser um Mago T."; break;
+				}
+			break;
+			case Job_Archer:
+				switch( .itemCashClassT ) {
+					case 0: getitem .itemArqueiroT[0],1; message strcharinfo(0),"Voc  ganhou ["+getitemname(.itemArqueiroT[0])+"] por ser um Arqueiro T."; break;
+					case 1: #CASHPOINTS += .itemArqueiroT[0]; message strcharinfo(0),"Voc  ganhou ["+.itemArqueiroT[0]+" ROPs] por ser um Arqueiro T."; break;
+				}
+			break;
+			case Job_Acolyte:
+				switch( .itemCashClassT ) {
+					case 0: getitem .itemNovicoT[0],1; message strcharinfo(0),"Voc  ganhou ["+getitemname(.itemNovicoT[0])+"] por ser um Novi o T."; break;
+					case 1: #CASHPOINTS += .itemNovicoT[0]; message strcharinfo(0),"Voc  ganhou ["+.itemNovicoT[0]+" ROPs] por ser um Novi o T."; break;
+				}
+			break;
+			case Job_Merchant:
+				switch( .itemCashClassT ) {
+					case 0: getitem .itemMercadorT[0],1; message strcharinfo(0),"Voc  ganhou ["+getitemname(.itemMercadorT[0])+"] por ser um Mercador T."; break;
+					case 1: #CASHPOINTS += .itemMercadorT[0]; message strcharinfo(0),"Voc  ganhou ["+.itemMercadorT[0]+" ROPs] por ser um Mercador T."; break;
+				}
+			break;
+			case Job_Thief:
+				switch( .itemCashClassT ) {
+					case 0: getitem .itemGatunoT[0],1; message strcharinfo(0),"Voc  ganhou ["+getitemname(.itemGatunoT[0])+"] por ser um Gatuno T."; break;
+					case 1: #CASHPOINTS += .itemGatunoT[0]; message strcharinfo(0),"Voc  ganhou ["+.itemGatunoT[0]+" ROPs] por ser um Gatuno T."; break;
+				}
+			break;
+			// ----- Segundas Transcedentais -----
+			case Job_Knight:
+				switch( .itemCashTrans ) {
+					case 0: getitem .itemLorde[0],1; message strcharinfo(0),"Voc  ganhou ["+getitemname(.itemLorde[0])+"] por ser um Lorde."; break;
+					case 1: #CASHPOINTS += .itemLorde[0]; message strcharinfo(0),"Voc  ganhou ["+.itemLorde[0]+" ROPs] por ser um Lorde."; break;
+				}
+			break;
+			case Job_Wizard:
+				switch( .itemCashTrans ) {
+					case 0: getitem .itemArquimago[0],1; message strcharinfo(0),"Voc  ganhou ["+getitemname(.itemArquimago[0])+"] por ser um Arquimago."; break;
+					case 1: #CASHPOINTS += .itemArquimago[0]; message strcharinfo(0),"Voc  ganhou ["+.itemArquimago[0]+" ROPs] por ser um Arquimago."; break;
+				}
+			break;
+			case Job_Hunter:
+				switch( .itemCashTrans ) {
+					case 0: getitem .itemAtirador[0],1; message strcharinfo(0),"Voc  ganhou ["+getitemname(.itemAtirador[0])+"] por ser um Atirador de Elite."; break;
+					case 1: #CASHPOINTS += .itemAtirador[0]; message strcharinfo(0),"Voc  ganhou ["+.itemAtirador[0]+" ROPs] por ser um Atirador de Elite."; break;
+				}
+			break;
+			case Job_Priest:
+				switch( .itemCashTrans ) {
+					case 0: getitem .itemSumo[0],1; message strcharinfo(0),"Voc  ganhou ["+getitemname(.itemSumo[0])+"] por ser um Sumo Sacerdote."; break;
+					case 1: #CASHPOINTS += .itemSumo[0]; message strcharinfo(0),"Voc  ganhou ["+.itemSumo[0]+" ROPs] por ser um Sumo Sacerdote."; break;
+				}
+			break;
+			case Job_Blacksmith:
+				switch( .itemCashTrans ) {
+					case 0: getitem .itemMestreFerreiro[0],1; message strcharinfo(0),"Voc  ganhou ["+getitemname(.itemMestreFerreiro[0])+"] por ser um Mestre-Ferreiro."; break;
+					case 1: #CASHPOINTS += .itemMestreFerreiro[0]; message strcharinfo(0),"Voc  ganhou ["+.itemMestreFerreiro[0]+" ROPs] por ser um Mestre-Ferreiro."; break;
+				}
+			break;
+			case Job_Assassin:
+				switch( .itemCashTrans ) {
+					case 0: getitem .itemAlgoz[0],1; message strcharinfo(0),"Voc  ganhou ["+getitemname(.itemAlgoz[0])+"] por ser um Algoz."; break;
+					case 1: #CASHPOINTS += .itemAlgoz[0]; message strcharinfo(0),"Voc  ganhou ["+.itemAlgoz[0]+" ROPs] por ser um Algoz."; break;
+				}
+			break;
+			case Job_Crusader:
+				switch( .itemCashTrans ) {
+					case 0: getitem .itemPaladino[0],1; message strcharinfo(0),"Voc  ganhou ["+getitemname(.itemPaladino[0])+"] por ser um Paladino."; break;
+					case 1: #CASHPOINTS += .itemPaladino[0]; message strcharinfo(0),"Voc  ganhou ["+.itemPaladino[0]+" ROPs] por ser um Paladino."; break;
+				}
+			break;
+			case Job_Sage:
+				switch( .itemCashTrans ) {
+					case 0: getitem .itemProfessor[0],1; message strcharinfo(0),"Voc  ganhou ["+getitemname(.itemProfessor[0])+"] por ser um Professor."; break;
+					case 1: #CASHPOINTS += .itemProfessor[0]; message strcharinfo(0),"Voc  ganhou ["+.itemProfessor[0]+" ROPs] por ser um Professor."; break;
+				}
+			break;
+			case Job_Bard:
+				switch( .itemCashTrans ) {
+					case 0: getitem .itemMenestrel[0],1; message strcharinfo(0),"Voc  ganhou ["+getitemname(.itemMenestrel[0])+"] por ser um Menestrel."; break;
+					case 1: #CASHPOINTS += .itemMenestrel[0]; message strcharinfo(0),"Voc  ganhou ["+.itemMenestrel[0]+" ROPs] por ser um Menestrel."; break;
+				}
+			break;
+			case Job_Dancer:
+				switch( .itemCashTrans ) {
+					case 0: getitem .itemCigana[0],1; message strcharinfo(0),"Voc  ganhou ["+getitemname(.itemCigana[0])+"] por ser uma Cigana."; break;
+					case 1: #CASHPOINTS += .itemCigana[0]; message strcharinfo(0),"Voc  ganhou ["+.itemCigana[0]+" ROPs] por ser uma Cigana."; break;
+				}
+			break;
+			case Job_Monk:
+				switch( .itemCashTrans ) {
+					case 0: getitem .itemMestre[0],1; message strcharinfo(0),"Voc  ganhou ["+getitemname(.itemMestre[0])+"] por ser um Mestre."; break;
+					case 1: #CASHPOINTS += .itemMestre[0]; message strcharinfo(0),"Voc  ganhou ["+.itemMestre[0]+" ROPs] por ser um Mestre."; break;
+				}
+			break;
+			case Job_Alchemist:
+				switch( .itemCashTrans ) {
+					case 0: getitem .itemCriador[0],1; message strcharinfo(0),"Voc  ganhou ["+getitemname(.itemCriador[0])+"] por ser um Criador."; break;
+					case 1: #CASHPOINTS += .itemCriador[0]; message strcharinfo(0),"Voc  ganhou ["+.itemCriador[0]+" ROPs] por ser um Criador."; break;
+				}
+			break;
+			case Job_Rogue:
+				switch( .itemCashTrans ) {
+					case 0: getitem .itemDesordeiro[0],1; message strcharinfo(0),"Voc  ganhou ["+getitemname(.itemDesordeiro[0])+"] por ser um Desordeiro."; break;
+					case 1: #CASHPOINTS += .itemDesordeiro[0]; message strcharinfo(0),"Voc  ganhou ["+.itemDesordeiro[0]+" ROPs] por ser um Desordeiro."; break;
+				}
+			break;
+		}	
+	} else if (.@eac&EAJL_2) {
+		// Segundas classe (2-2/2-2)
+		switch(BaseJob) {
+			// Segunda classe
+			case Job_Knight:
+				switch( .itemCashClass2 ) {
+					case 0: getitem .itemCavaleiro[0],1; message strcharinfo(0),"Voc  ganhou ["+getitemname(.itemCavaleiro[0])+"] por ser um Cavaleiro."; break;
+					case 1: #CASHPOINTS += .itemCavaleiro[0]; message strcharinfo(0),"Voc  ganhou ["+.itemCavaleiro[0]+" ROPs] por ser um Cavaleiro."; break;
+				}
+			break;
+			case Job_Priest:
+				switch( .itemCashClass2 ) {
+					case 0: getitem .itemSacer[0],1; message strcharinfo(0),"Voc  ganhou ["+getitemname(.itemSacer[0])+"] por ser um Sacerdote."; break;
+					case 1: #CASHPOINTS += .itemSacer[0]; message strcharinfo(0),"Voc  ganhou ["+.itemSacer[0]+" ROPs] por ser um Sacerdote."; break;
+				}
+			break;
+			case Job_Wizard:
+				switch( .itemCashClass2 ) {
+					case 0: getitem .itemBruxo[0],1; message strcharinfo(0),"Voc  ganhou ["+getitemname(.itemBruxo[0])+"] por ser um Bruxo."; break;
+					case 1: #CASHPOINTS += .itemBruxo[0]; message strcharinfo(0),"Voc  ganhou ["+.itemBruxo[0]+" ROPs] por ser um Bruxo."; break;
+				}
+			break;
+			case Job_Blacksmith:
+				switch( .itemCashClass2 ) {
+					case 0: getitem .itemFerreiro[0],1; message strcharinfo(0),"Voc  ganhou ["+getitemname(.itemFerreiro[0])+"] por ser um Ferreiro."; break;
+					case 1: #CASHPOINTS += .itemFerreiro[0]; message strcharinfo(0),"Voc  ganhou ["+.itemFerreiro[0]+" ROPs] por ser um Ferreiro."; break;
+				}
+			break;
+			case Job_Hunter:
+				switch( .itemCashClass2 ) {
+					case 0: getitem .itemCacador[0],1; message strcharinfo(0),"Voc  ganhou ["+getitemname(.itemCacador[0])+"] por ser um Ca ador."; break;
+					case 1: #CASHPOINTS += .itemCacador[0]; message strcharinfo(0),"Voc  ganhou ["+.itemCacador[0]+" ROPs] por ser um Ca ador."; break;
+				}
+			break;
+			case Job_Assassin:
+				switch( .itemCashClass2 ) {
+					case 0: getitem .itemMercenario[0],1; message strcharinfo(0),"Voc  ganhou ["+getitemname(.itemMercenario[0])+"] por ser um Mercen rio."; break;
+					case 1: #CASHPOINTS += .itemMercenario[0]; message strcharinfo(0),"Voc  ganhou ["+.itemMercenario[0]+" ROPs] por ser um Mercen rio."; break;
+				}
+			break;
+			case Job_Crusader:
+				switch( .itemCashClass2 ) {
+					case 0: getitem .itemTemplario[0],1; message strcharinfo(0),"Voc  ganhou ["+getitemname(.itemTemplario[0])+"] por ser um Templ rio."; break;
+					case 1: #CASHPOINTS += .itemTemplario[0]; message strcharinfo(0),"Voc  ganhou ["+.itemTemplario[0]+" ROPs] por ser um Templ rio."; break;
+				}
+			break;
+			case Job_Monk:
+				switch( .itemCashClass2 ) {
+					case 0: getitem .itemMonge[0],1; message strcharinfo(0),"Voc  ganhou ["+getitemname(.itemMonge[0])+"] por ser um Monge."; break;
+					case 1: #CASHPOINTS += .itemMonge[0]; message strcharinfo(0),"Voc  ganhou ["+.itemMonge[0]+" ROPs] por ser um Monge."; break;
+				}
+			break;
+			case Job_Sage:
+				switch( .itemCashClass2 ) {
+					case 0: getitem .itemSabio[0],1; message strcharinfo(0),"Voc  ganhou ["+getitemname(.itemMonge[0])+"] por ser um S bio."; break;
+					case 1: #CASHPOINTS += .itemSabio[0]; message strcharinfo(0),"Voc  ganhou ["+.itemMonge[0]+" ROPs] por ser um S bio."; break;
+				}
+			break;
+			case Job_Rogue:
+				switch( .itemCashClass2 ) {
+					case 0: getitem .itemArruaceiro[0],1; message strcharinfo(0),"Voc  ganhou ["+getitemname(.itemArruaceiro[0])+"] por ser um Arruaceiro."; break;
+					case 1: #CASHPOINTS += .itemArruaceiro[0]; message strcharinfo(0),"Voc  ganhou ["+.itemArruaceiro[0]+" ROPs] por ser um Arruaceiro."; break;
+				}
+			break;
+			case Job_Alchemist:
+				switch( .itemCashClass2 ) {
+					case 0: getitem .itemAlquimista[0],1; message strcharinfo(0),"Voc  ganhou ["+getitemname(.itemAlquimista[0])+"] por ser um Alquimista."; break;
+					case 1: #CASHPOINTS += .itemAlquimista[0]; message strcharinfo(0),"Voc  ganhou ["+.itemAlquimista[0]+" ROPs] por ser um Alquimista."; break;
+				}
+			break;
+			case Job_Bard:
+				switch( .itemCashClass2 ) {
+					case 0: getitem .itemBardo[0],1; message strcharinfo(0),"Voc  ganhou ["+getitemname(.itemBardo[0])+"] por ser um Bardo."; break;
+					case 1: #CASHPOINTS += .itemBardo[0]; message strcharinfo(0),"Voc  ganhou ["+.itemBardo[0]+" ROPs] por ser um Bardo."; break;
+				}
+			break;
+			case Job_Dancer:
+				switch( .itemCashClass2 ) {
+					case 0: getitem .itemOdalisca[0],1; message strcharinfo(0),"Voc  ganhou ["+getitemname(.itemOdalisca[0])+"] por ser uma Odalisca."; break;
+					case 1: #CASHPOINTS += .itemOdalisca[0]; message strcharinfo(0),"Voc  ganhou ["+.itemOdalisca[0]+" ROPs] por ser uma Odalisca."; break;
+				}
+			break;
+			// Segundas Expandidas
+			case Job_Super_Novice:
+				switch( .itemCashExpan ) {
+					case 0: getitem .itemSuperAprendiz[0],1; message strcharinfo(0),"Voc  ganhou ["+getitemname(.itemSuperAprendiz[0])+"] por ser um Super Aprendiz."; break;
+					case 1: #CASHPOINTS += .itemSuperAprendiz[0]; message strcharinfo(0),"Voc  ganhou ["+.itemSuperAprendiz[0]+" ROPs] por ser um Super Aprendiz."; break;
+				}
+			break;
+			case Job_Star_Gladiator:
+				switch( .itemCashExpan ) {
+					case 0: getitem .itemMestreTaekwon[0],1; message strcharinfo(0),"Voc  ganhou ["+getitemname(.itemMestreTaekwon[0])+"] por ser um Mestre Taekwon."; break;
+					case 1: #CASHPOINTS += .itemMestreTaekwon[0]; message strcharinfo(0),"Voc  ganhou ["+.itemMestreTaekwon[0]+" ROPs] por ser um Mestre Taekwon."; break;
+				}
+			break;
+			case Job_Soul_Linker:
+				switch( .itemCashExpan ) {
+					case 0: getitem .itemSoulLinker[0],1; message strcharinfo(0),"Voc  ganhou ["+getitemname(.itemSoulLinker[0])+"] por ser um Soul Linker."; break;
+					case 1: #CASHPOINTS += .itemSoulLinker[0]; message strcharinfo(0),"Voc  ganhou ["+.itemSoulLinker[0]+" ROPs] por ser um Soul Linker."; break;
+				}
+			break;
+		}
+	} else {
+		// Classes 1 && Expandidas
+		switch(BaseClass) {
+			// First Class
+			case Job_Swordman:
+				switch( .itemCashClass1 ) {
+					case 0: getitem .itemEspadachim[0],1; message strcharinfo(0),"Voce ganhou ["+getitemname(.itemEspadachim[0])+"] por ser um Espadachim."; break;
+					case 1: #CASHPOINTS += .itemEspadachim[0]; message strcharinfo(0),"Voce ganhou ["+.itemEspadachim[0]+" ROPs] por ser um Espadachim."; break;
+				}
+			break;
+			case Job_Mage:
+				switch( .itemCashClass1 ) {
+					case 0: getitem .itemMago[0],1; message strcharinfo(0),"Voc  ganhou ["+getitemname(.itemMago[0])+"] por ser um Mago."; break;
+					case 1: #CASHPOINTS += .itemMago[0]; message strcharinfo(0),"Voc  ganhou ["+.itemMago[0]+" ROPs] por ser um Mago."; break;
+				}
+			break;
+			case Job_Archer:
+				switch( .itemCashClass1 ) {
+					case 0: getitem .itemArqueiro[0],1; message strcharinfo(0),"Voc  ganhou ["+getitemname(.itemArqueiro[0])+"] por ser um Arqueiro."; break;
+					case 1: #CASHPOINTS += .itemArqueiro[0]; message strcharinfo(0),"Voc  ganhou ["+.itemArqueiro[0]+" ROPs] por ser um Arqueiro."; break;
+				}
+			break;
+			case Job_Acolyte:
+				switch( .itemCashClass1 ) {
+					case 0: getitem .itemNovico[0],1; message strcharinfo(0),"Voc  ganhou ["+getitemname(.itemNovico[0])+"] por ser um Novi o."; break;
+					case 1: #CASHPOINTS += .itemNovico[0]; message strcharinfo(0),"Voc  ganhou ["+.itemNovico[0]+" ROPs] por ser um Novi o."; break;
+				}
+			break;
+			case Job_Merchant:
+				switch( .itemCashClass1 ) {
+					case 0: getitem .itemMercador[0],1; message strcharinfo(0),"Voc  ganhou ["+getitemname(.itemMercador[0])+"] por ser um Mercador."; break;
+					case 1: #CASHPOINTS += .itemMercador[0]; message strcharinfo(0),"Voc  ganhou ["+.itemMercador[0]+" ROPs] por ser um Mercador."; break;
+				}
+			break;
+			case Job_Thief:
+				switch( .itemCashClass1 ) {
+					case 0: getitem .itemGatuno[0],1; message strcharinfo(0),"Voc  ganhou ["+getitemname(.itemGatuno[0])+"] por ser um Gatuno."; break;
+					case 1: #CASHPOINTS += .itemGatuno[0]; message strcharinfo(0),"Voc  ganhou ["+.itemGatuno[0]+" ROPs] por ser um Gatuno."; break;
+				}
+			break;
+			// Expandidas
+			case Job_Gunslinger:
+				switch( .itemCashExpan ) {
+					case 0: getitem .itemJusticeiro[0],1; message strcharinfo(0),"Voc  ganhou ["+getitemname(.itemJusticeiro[0])+"] por ser um Justiceiro."; break;
+					case 1: #CASHPOINTS += .itemJusticeiro[0]; message strcharinfo(0),"Voc  ganhou ["+.itemJusticeiro[0]+" ROPs] por ser um Justiceiro."; break;
+				}
+			break;
+			case Job_Ninja:
+				switch( .itemCashExpan ) {
+					case 0: getitem .itemNinja[0],1; message strcharinfo(0),"Voc  ganhou ["+getitemname(.itemNinja[0])+"] por ser um Ninja."; break;
+					case 1: #CASHPOINTS += .itemNinja[0]; message strcharinfo(0),"Voc  ganhou ["+.itemNinja[0]+" ROPs] por ser um Ninja."; break;
+				}
+			break;
+			case Job_Taekwon:
+				switch( .itemCashExpan ) {
+					case 0: getitem .itemNinja[0],1; message strcharinfo(0),"Voc  ganhou ["+getitemname(.itemNinja[0])+"] por ser um Taekwon."; break;
+					case 1: #CASHPOINTS += .itemNinja[0]; message strcharinfo(0),"Voc  ganhou ["+.itemNinja[0]+" ROPs] por ser um Taekwon."; break;
+				}
+			break;
+		}
+	}
+	return;
+}
+
+OnInit:
+	// Inicializa  o, n o os edite
+	set .NPCName$, "[^FF0000Mestra das Classes^000000]";
+	
+	// Controle de Premia  es (0 = itens, 1 = cash)
+	set .itemCashClass1, 0;
+	set .itemCashClass2, 0;
+	set .itemCashClassT, 0;
+	set .itemCashTrans, 0;
+	set .itemCashExpan, 1;
+	
+	// Premia  es evolutivas - Classes 1
+	switch( .itemCashClass1 ) {
+		// Classes 1 - Lista de itens
+		case 0: 
+			setarray .itemEspadachim[0], 2435;
+			setarray .itemMago[0], 2436;
+			setarray .itemNovico[0], 2436;
+			setarray .itemGatuno[0], 2435;
+			setarray .itemMercador[0], 2435;
+			setarray .itemArqueiro[0], 2436;
+			break;
+		// Classes 1 - Lista de ROPs
+		case 1:
+			setarray .itemEspadachim[0], 1000;
+			setarray .itemMago[0], 1000;
+			setarray .itemNovico[0], 1000;
+			setarray .itemGatuno[0], 1000;
+			setarray .itemMercador[0], 1000;
+			setarray .itemArqueiro[0], 1000;
+			break;
+	}
+	
+	// Premia  es evolutivas - Classes 2
+	switch( .itemCashClass2 ) {
+		// Classe 2 - Itens
+		// Ex: 502 (Cavaleiro)
+		case 0:
+			setarray .itemCavaleiro[0], 2538;
+			setarray .itemTemplario[0], 2538;
+			setarray .itemBruxo[0], 2539;
+			setarray .itemSabio[0], 2539;
+			setarray .itemSacer[0], 2539;
+			setarray .itemMonge[0], 2539;
+			setarray .itemMercenario[0], 2538;
+			setarray .itemArruaceiro[0], 2538;
+			setarray .itemFerreiro[0], 2538;
+			setarray .itemAlquimista[0], 2538;
+			setarray .itemCacador[0], 2539;
+			setarray .itemOdalisca[0], 2539;
+			setarray .itemBardo[0], 2539;
+			break;
+		// Classe 2 - ROPs
+		// Ex: 2.000 (Cavaleiro)
+		case 1:
+			setarray .itemCavaleiro[0], 2000;
+			setarray .itemTemplario[0], 2000;
+			setarray .itemBruxo[0], 2000;
+			setarray .itemSabio[0], 2000;
+			setarray .itemSacer[0], 2000;
+			setarray .itemMonge[0], 2000;
+			setarray .itemMercenario[0], 2000;
+			setarray .itemArruaceiro[0], 2000;
+			setarray .itemFerreiro[0], 2000;
+			setarray .itemAlquimista[0], 2000;
+			setarray .itemCacador[0], 2000;
+			setarray .itemOdalisca[0], 2000;
+			setarray .itemBardo[0], 2000;
+			break;
+	}
+	
+	// Premia  es evolutivas - Classes T.
+	switch( .itemCashClassT ) {
+		// Classe 2 - Itens
+		case 0:
+			setarray .itemEspadachimT[0], 2376;
+			setarray .itemMagoT[0], 2379;
+			setarray .itemNovicoT[0], 2380;
+			setarray .itemGatunoT[0], 2378;
+			setarray .itemMercadorT[0], 2377;
+			setarray .itemArqueiroT[0], 2381;
+			break;
+		// Classe 2 - ROPs
+		case 1:
+			setarray .itemEspadachimT[0], 2000;
+			setarray .itemMagoT[0], 2000;
+			setarray .itemNovicoT[0], 2000;
+			setarray .itemGatunoT[0], 2000;
+			setarray .itemMercadorT[0], 2000;
+			setarray .itemArqueiroT[0], 2000;
+			break;
+	}
+	
+	// Premia  es evolutivas - Transclasses
+	switch( .itemCashTrans ) {
+		// Classe 2 - Itens
+		case 0:
+			setarray .itemLorde[0], 1183;
+			setarray .itemPaladino[0], 1425;
+			setarray .itemArquimago[0], 1633;
+			setarray .itemProfessor[0], 1632;
+			setarray .itemSumo[0], 1635;
+			setarray .itemMestre[0], 1542;
+			setarray .itemAlgoz[0], 1279;
+			setarray .itemDesordeiro[0], 13036;
+			setarray .itemMestreFerreiro[0], 1379;
+			setarray .itemCriador[0], 1543;
+			setarray .itemAtirador[0], 1738;
+			setarray .itemCigana[0], 1978;
+			setarray .itemMenestrel[0], 1924;
+			break;
+		// Classe 2 - ROPs
+		case 1:
+			setarray .itemLorde[0], 5000;
+			setarray .itemPaladino[0], 5000;
+			setarray .itemArquimago[0], 5000;
+			setarray .itemProfessor[0], 5000;
+			setarray .itemSumo[0], 5000;
+			setarray .itemMestre[0], 5000;
+			setarray .itemAlgoz[0], 5000;
+			setarray .itemDesordeiro[0], 5000;
+			setarray .itemMestreFerreiro[0], 5000;
+			setarray .itemCriador[0], 5000;
+			setarray .itemAtirador[0], 5000;
+			setarray .itemCigana[0], 5000;
+			setarray .itemMenestrel[0], 5000;
+			break;
+	}
+		
+		
+		
+	// Premia  es evolutivas - Expandidas
+	switch( .itemCashExpan ) {
+		// Expandidas - Itens
+		case 0:
+			setarray .itemSuperAprendiz[0], 501;
+			setarray .itemJusticeiro[0], 501;
+			setarray .itemNinja[0], 501;
+			setarray .itemTaekwon[0], 501;
+			setarray .itemMestreTaekwon[0], 501;
+			setarray .itemSoulLinker[0], 501;
+		break;
+		// Expandidas - ROPs
+		case 1:
+			setarray .itemSuperAprendiz[0], 1000;
+			setarray .itemJusticeiro[0], 1000;
+			setarray .itemNinja[0], 1000;
+			setarray .itemTaekwon[0], 1000;
+			setarray .itemMestreTaekwon[0], 2000;
+			setarray .itemSoulLinker[0], 2000;
+		break;
+	}
+	
+	// Settings
+	.ThirdClass = false;			// Habilitar terceiras classes?
+	.RebirthClass = true;			// Ativar classes de renascimento?
+	.SecondExpanded = false;		// Habilitar novas segundas classes expandidas: Ex. Super Novato, Kagerou / Oboro, Rebeli o?
+	.BabyNovice = true;	//Ativar classes de Babys para iniciantes? Desative-o se quiser que o jogador deve ter um pai para conseguir o classe, baby.
+	.BabyClass = true;				// Ativar classes para Babys?
+	.BabyThird = false;				// Ativar terceira classe para Babys?
+	.BabyExpanded = true;			// Habilitar classes expandidas para Babys: Ex. Baby Ninja, Baby Taekwon, etc.
+	.BabySummoner = true;			// Ativar InVoceador de Babys?
+	.LastJob = true;				// Aplicar mudan as lineares de classe?
+	.SkillPointCheck = true;		// For ar o jogador a usar todos os pontos de habilidade?
+	.Platinum = false;				// Obter habilidades de platina automaticamente?
+	.GetJobEquip = true;			// Obter equipamento da classe (principalmente armas) na mudan a de classe?
+
+	// Level Requirements
+	setarray .Req_First[0],1,10; 		// N vel b sico m nimo, n vel de classe para se transformar na 1  classe
+	setarray .Req_Second[0],1,40; 		// N vel b sico m nimo, n vel de classe para se transformar em 2  classe
+	setarray .Req_Rebirth[0],99,50;		// N vel b sico m nimo, n vel de classe para renascer
+	setarray .Req_Third[0],99,50;		// N vel b sico m nimo, n vel de classe para mudar para a terceira classe
+	setarray .Req_Exp_NJ_GS[0],99,70; 	// N vel b sico m nimo, n vel de classe para se transformar em Ninja Expandido e Pistoleiro
+	setarray .Req_Exp_SNOVI[0],99,99; 	// N vel m nimo de base, n vel de classe para se tornar Super Aprendiz Expandido
+	.SNovice = 45;						// N vel m nimo de base para se tornar Super Aprendiz
+	
+    setunittitle (getnpcid(0), "____Job Master____");
+    end;
+	
+	// Definindo ajustes por PACKETVER
+	if( PACKETVER < 20161207 ) {
+		if( .BabyExpanded )
+			debugmes "jobmaster: BabyExpanded esta desativado devido a PACKETVER desatualizado.";
+		if( .BabySummoner )
+			debugmes "jobmaster: BabySummoner esta desativado devido a PACKETVER desatualizado.";
+		.BabyExpanded = false;
+		.BabySummoner = false;
+	}
+	
+}
+
+//==========================================================
+//	Modo Full
+//==========================================================
+
+-	script	ModeFull	-1,{
+	
+OnJoinFull:
+
+//set "[^FF0000Mestre das Classes^000000]","[^FF0000Mestre das Classes^000000]"; // Nome do NPC.
+set .@level$,"300"; // Level Base recebido ao escolher profiss o.
+set .@job$,"300"; // Level Classe recebido ao escolher uma profiss o.
+set .@job2$,"300"; // Level Classe recebido ao escolher uma profiss o.
+set .@job3$,"300"; // Level Classe recebido ao escolher uma profiss o.
+set .@job4$,"300"; // Level Classe recebido ao escolher uma profiss o.
+set .@job5$,"300"; // Level Classe recebido ao escolher profiss  o
+
+mes .nomeNpc$;
+if(Class > 4007 && Class < 4023 || Class > 4046 && Class < 4050 || Class > 4029 && Class < 4046 || Class == 4045 || Class == 4046){
+mes "Oi, ^0000ff"+strcharinfo(0)+".^000000";
+mes "Voc  j  escolheu sua classe, prepare-se para batalha!!!";
+if (ismounting()) {
+		end;
+	} else if (((eaclass()&EAJ_THIRDMASK)==EAJ_RANGER) && !countitem(6124)) {
+		if (!checkfalcon() && getskilllv("HT_FALCON") && !checkwug()) {
+			if(select(" ~ Falcon: ~ Warg")==1) setfalcon;
+			else getitem 6124,1; //Wolf's_Flute
+		} else getitem 6124,1; //Wolf's_Flute
+	} else if (((eaclass()&EAJ_THIRDMASK)==EAJ_MECHANIC) && !checkcart() && getskilllv("MC_PUSHCART")) {
+		if (!checkmadogear() && getskilllv("NC_MADOLICENCE")) {
+			if(select(" ~ Cart: ~ Mado")==1) setcart;
+			else setmadogear;
+		} else setcart;
+	} else if (!checkcart() && getskilllv("MC_PUSHCART")) setcart;
+	else if (!checkfalcon() && getskilllv("HT_FALCON") && !checkwug()) setfalcon;
+	else if (!checkriding() && !checkdragon() && getskilllv("KN_RIDING")) {
+		if ((eaclass()&EAJ_THIRDMASK)==EAJ_RUNE_KNIGHT) setdragon;
+		else setriding;
+	} else if (!checkmadogear() && getskilllv("NC_MADOLICENCE")) setmadogear;
+	else {
+		end;
+	}
+	specialeffect2 EF_TEIHIT3;
+	end;
+}
+
+    mes "Ol , ^0000ff"+strcharinfo(0)+"^000000!";
+    mes "Escolha qual classe Voc   deseja se tornar!";
+    next;
+    switch(select("^FF0000-^000000 Classes ^0000ffTranscedentais^000000","^FF0000-^000000 Classes ^0000ffExpansivas^000000","^FF0000-^000000 Classes ^0000ffBaby^000000","^FF0000Encerrar Conversa^000000")) {
+
+		case 1:
+		mes "[^FF0000Mestre das Classes^000000]";
+		mes "Certo, selecione qual das ^FF0000Classes Transcedentais^000000 Voc  deseja se tornar:";
+		next;
+		switch(select("^FF0000-^000000 Algoz","^FF0000-^000000 Desordeiro","^FF0000-^000000 "+ (Sex?"Menestrel":"Cigana")+"","^FF0000-^000000 Mestre","^FF0000-^000000 Mestre-ferreiro","^FF0000-^000000 Atirador de Elite","^FF0000-^000000 Criador","^FF0000-^000000 Arquimago","^FF0000-^000000 Lorde","^FF0000-^000000 Paladino","^FF0000-^000000 Sumo Sacerdote","^FF0000-^000000 Professor","^FF0000Encerrar Conversa^000000")) {
+
+			case 1:
+			jobchange 4013;
+			specialeffect2 339;
+			atcommand "@allskill";
+			atcommand "@blvl "+.@level$;
+			atcommand "@jlvl "+.@job$;
+			mes .nomeNpc$;
+			mes "Parab ns, Voc  agora   u"+ (Sex?"m":"ma")+" Algoz!";
+			mes "Agora voc  est  pront"+ (Sex?"o":"a")+" para se preparar para batalha!!!";
+			skill 149,1,0; // Sand Attack
+			skill 150,1,0; // Back Slide
+			skill 151,1,0; // Find Stone
+			skill 152,1,0; // Stone Fling
+			skill 1003,1,0; // Sonic Acceleration
+			skill 1004,1,0; // Throw Venom Knife
+			savepoint .map$,.x,.y;
+			resetstatus;
+			atcommand "@skpoint -100";
+			close; break;
+
+			case 2:
+			jobchange 4018;
+			specialeffect2 339;
+			atcommand "@allskill";
+			atcommand "@blvl "+.@level$;
+			atcommand "@jlvl "+.@job$;
+			mes .nomeNpc$;
+			mes "Parab ns, Voc  agora   u"+ (Sex?"m":"ma")+" Desordeir"+ (Sex?"o":"a")+"!";
+			mes "Agora voc  est  pront"+ (Sex?"o":"a")+" para se preparar para batalha!!!";
+			skill 149,1,0; // Sand Attack
+			skill 150,1,0; // Back Slide
+			skill 151,1,0; // Find Stone
+			skill 152,1,0; // Stone Fling
+			skill 1005,1,0; // Close Confine
+			atcommand "@skpoint -100";
+			resetstatus;
+			savepoint .map$,.x,.y;
+			close; break;
+			
+			case 3:
+			jobchange 4021;
+			specialeffect2 339;
+			atcommand "@allskill";
+			atcommand "@blvl "+.@level$;
+			atcommand "@jlvl "+.@job$;
+			mes .nomeNpc$;
+			mes "Parab ns, voc  agora   u"+ (Sex?"m":"ma")+" "+ (Sex?"Menestrel":"Cigana")+"!";
+			mes "Agora voc  est  pront"+ (Sex?"o":"a")+" para se preparar para batalha!!!";
+			skill 147,1,0; // Arrow Crafting
+			skill 148,1,0; // Arrow Repel
+			skill 1010,1,0; // Pang Voice
+			skill 1011,1,0; // Charming Wink
+			atcommand "@skpoint -100";
+			resetstatus;
+			savepoint .map$,.x,.y;
+			close; break;
+			
+			case 4:
+			jobchange 4016;
+			specialeffect2 339;
+			atcommand "@allskill";
+			atcommand "@blvl "+.@level$;
+			atcommand "@jlvl "+.@job$;
+			mes .nomeNpc$;
+			mes "Parab ns, voc  agora   u"+ (Sex?"m":"ma")+" Mestr"+ (Sex?"e":"a")+"!";
+			mes "Agora voc  est  pront"+ (Sex?"o":"a")+" para se preparar para batalha!!!";
+			skill 156,1,0; // Holy Light
+			skill 1015,1,0; // Ki Translation
+			skill 1016,1,0; // Ki Explosion
+			atcommand "@skpoint -100";
+			resetstatus;
+			savepoint .map$,.x,.y;
+			close; break;
+			
+			case 5:
+			jobchange 4011;
+			specialeffect2 339;
+			atcommand "@allskill";
+			atcommand "@blvl "+.@level$;
+			atcommand "@jlvl "+.@job$;
+			mes .nomeNpc$;
+			mes "Parab ns, voc  agora   u"+ (Sex?"m":"ma")+" Mestre-Ferreir"+ (Sex?"o":"a")+"!";
+			mes "Agora voc  est  pront"+ (Sex?"o":"a")+" para se preparar para batalha!!!";
+			skill 1012,1,0; // Venda duvidosa
+			skill 1013,1,0; // Gan ncia
+			skill 153,1,0; // Cavalo de pau
+			skill 154,1,0; // Personalizar carrinho
+			skill 2544,1,0; // Decorar Carrinho
+			skill 155,1,0; // Grito de Guerra
+			atcommand "@skpoint -100";
+			resetstatus;
+			savepoint .map$,.x,.y;
+			if (ismounting()) {
+			end;
+		} else if (((eaclass()&EAJ_THIRDMASK)==EAJ_RANGER) && !countitem(6124)) {
+			if (!checkfalcon() && getskilllv("HT_FALCON") && !checkwug()) {
+				if(select(" ~ Falcon: ~ Warg")==1) setfalcon;
+				else getitem 6124,1; //Wolf's_Flute
+			} else getitem 6124,1; //Wolf's_Flute
+		} else if (((eaclass()&EAJ_THIRDMASK)==EAJ_MECHANIC) && !checkcart() && getskilllv("MC_PUSHCART")) {
+			if (!checkmadogear() && getskilllv("NC_MADOLICENCE")) {
+				if(select(" ~ Cart: ~ Mado")==1) setcart;
+				else setmadogear;
+			} else setcart;
+		} else if (!checkcart() && getskilllv("MC_PUSHCART")) setcart;
+		else if (!checkfalcon() && getskilllv("HT_FALCON") && !checkwug()) setfalcon;
+		else if (!checkriding() && !checkdragon() && getskilllv("KN_RIDING")) {
+			if ((eaclass()&EAJ_THIRDMASK)==EAJ_RUNE_KNIGHT) setdragon;
+			else setriding;
+		} else if (!checkmadogear() && getskilllv("NC_MADOLICENCE")) setmadogear;
+		else {
+			end;
+		}
+		specialeffect2 EF_TEIHIT3;
+		end;
+			close; break;
+			
+			case 6:
+			jobchange 4012;
+			specialeffect2 339;
+			atcommand "@allskill";
+			atcommand "@blvl "+.@level$;
+			atcommand "@jlvl "+.@job$;
+			mes .nomeNpc$;
+			mes "Parab ns, voc  agora   u"+ (Sex?"m":"ma")+" Atirad"+ (Sex?"or":"ora")+" de Elite!";
+			mes "Agora voc  est  pront"+ (Sex?"o":"a")+" para se preparar para batalha!!!";
+			skill 147,1,0; // Arrow Crafting
+			skill 148,1,0; // Arrow Repel
+			skill 1009,1,0; // Phantasmic Arrow
+			atcommand "@skpoint -100";
+			resetstatus;
+			savepoint .map$,.x,.y;
+			if (ismounting()) {
+			end;
+		} else if (((eaclass()&EAJ_THIRDMASK)==EAJ_RANGER) && !countitem(6124)) {
+			if (!checkfalcon() && getskilllv("HT_FALCON") && !checkwug()) {
+				if(select(" ~ Falcon: ~ Warg")==1) setfalcon;
+				else getitem 6124,1; //Wolf's_Flute
+			} else getitem 6124,1; //Wolf's_Flute
+		} else if (((eaclass()&EAJ_THIRDMASK)==EAJ_MECHANIC) && !checkcart() && getskilllv("MC_PUSHCART")) {
+			if (!checkmadogear() && getskilllv("NC_MADOLICENCE")) {
+				if(select(" ~ Cart: ~ Mado")==1) setcart;
+				else setmadogear;
+			} else setcart;
+		} else if (!checkcart() && getskilllv("MC_PUSHCART")) setcart;
+		else if (!checkfalcon() && getskilllv("HT_FALCON") && !checkwug()) setfalcon;
+		else if (!checkriding() && !checkdragon() && getskilllv("KN_RIDING")) {
+			if ((eaclass()&EAJ_THIRDMASK)==EAJ_RUNE_KNIGHT) setdragon;
+			else setriding;
+		} else if (!checkmadogear() && getskilllv("NC_MADOLICENCE")) setmadogear;
+		else {
+			end;
+		}
+		specialeffect2 EF_TEIHIT3;
+		end;
+			close; break;
+			
+			case 7:
+			jobchange 4019;
+			specialeffect2 339;
+			atcommand "@allskill";
+			atcommand "@blvl "+.@level$;
+			atcommand "@jlvl "+.@job$;
+			mes .nomeNpc$;
+			mes "Parab ns, voc  agora   u"+ (Sex?"m":"ma")+" Criado"+ (Sex?"r":"ra")+"!";
+			mes "Agora voc  est  pront"+ (Sex?"o":"a")+" para se preparar para batalha!!!";
+			skill 153,1,0; // Cart Revolution
+			skill 154,1,0; // Change Cart
+			skill 155,1,0; // Crazy Uproar
+			skill 238,1,0; // Bioethics
+			atcommand "@skpoint -100";
+			resetstatus;
+			savepoint .map$,.x,.y;
+			if (ismounting()) {
+			end;
+		} else if (((eaclass()&EAJ_THIRDMASK)==EAJ_RANGER) && !countitem(6124)) {
+			if (!checkfalcon() && getskilllv("HT_FALCON") && !checkwug()) {
+				if(select(" ~ Falcon: ~ Warg")==1) setfalcon;
+				else getitem 6124,1; //Wolf's_Flute
+			} else getitem 6124,1; //Wolf's_Flute
+		} else if (((eaclass()&EAJ_THIRDMASK)==EAJ_MECHANIC) && !checkcart() && getskilllv("MC_PUSHCART")) {
+			if (!checkmadogear() && getskilllv("NC_MADOLICENCE")) {
+				if(select(" ~ Cart: ~ Mado")==1) setcart;
+				else setmadogear;
+			} else setcart;
+		} else if (!checkcart() && getskilllv("MC_PUSHCART")) setcart;
+		else if (!checkfalcon() && getskilllv("HT_FALCON") && !checkwug()) setfalcon;
+		else if (!checkriding() && !checkdragon() && getskilllv("KN_RIDING")) {
+			if ((eaclass()&EAJ_THIRDMASK)==EAJ_RUNE_KNIGHT) setdragon;
+			else setriding;
+		} else if (!checkmadogear() && getskilllv("NC_MADOLICENCE")) setmadogear;
+		else {
+			end;
+		}
+		specialeffect2 EF_TEIHIT3;
+		end;
+			close; break;
+			
+			case 8:
+			jobchange 4010;
+			specialeffect2 339;
+			atcommand "@allskill";
+			atcommand "@blvl "+.@level$;
+			atcommand "@jlvl "+.@job$;
+			mes .nomeNpc$;
+			mes "Parab ns, voc  agora   u"+ (Sex?"m":"ma")+" Arquimag"+ (Sex?"o":"a")+"!";
+			mes "Agora voc  est  pront"+ (Sex?"o":"a")+" para se preparar para batalha!!!";
+			skill 157,1,0; // Energy Coat
+			skill 1006,1,0; // Sight Blaster
+			atcommand "@skpoint -100";
+			resetstatus;
+			savepoint .map$,.x,.y;
+			close; break;
+			
+			case 9:
+			jobchange 4008;
+			specialeffect2 339;
+			atcommand "@allskill";
+			atcommand "@blvl "+.@level$;
+			atcommand "@jlvl "+.@job$;
+			mes .nomeNpc$;
+			mes "Parab ns, voc  agora   u"+ (Sex?"m":"ma")+" "+ (Sex?"Lorde":"Lady")+"!";
+			mes "Agora voc  est  pront"+ (Sex?"o":"a")+" para se preparar para batalha!!!";
+			skill 144,1,0; // Moving HP-Recovery
+			skill 145,1,0; // Fatal Blow
+			skill 146,1,0; // Auto Berserk
+			skill 1001,1,0; // Charge Attack
+			atcommand "@skpoint -100";
+			resetstatus;
+			savepoint .map$,.x,.y;
+			if (ismounting()) {
+			end;
+		} else if (((eaclass()&EAJ_THIRDMASK)==EAJ_RANGER) && !countitem(6124)) {
+			if (!checkfalcon() && getskilllv("HT_FALCON") && !checkwug()) {
+				if(select(" ~ Falcon: ~ Warg")==1) setfalcon;
+				else getitem 6124,1; //Wolf's_Flute
+			} else getitem 6124,1; //Wolf's_Flute
+		} else if (((eaclass()&EAJ_THIRDMASK)==EAJ_MECHANIC) && !checkcart() && getskilllv("MC_PUSHCART")) {
+			if (!checkmadogear() && getskilllv("NC_MADOLICENCE")) {
+				if(select(" ~ Cart: ~ Mado")==1) setcart;
+				else setmadogear;
+			} else setcart;
+		} else if (!checkcart() && getskilllv("MC_PUSHCART")) setcart;
+		else if (!checkfalcon() && getskilllv("HT_FALCON") && !checkwug()) setfalcon;
+		else if (!checkriding() && !checkdragon() && getskilllv("KN_RIDING")) {
+			if ((eaclass()&EAJ_THIRDMASK)==EAJ_RUNE_KNIGHT) setdragon;
+			else setriding;
+		} else if (!checkmadogear() && getskilllv("NC_MADOLICENCE")) setmadogear;
+		else {
+			end;
+		}
+		specialeffect2 EF_TEIHIT3;
+		end;
+			close; break;
+			
+			case 10:
+			jobchange 4015;
+			specialeffect2 339;
+			atcommand "@allskill";
+			atcommand "@blvl "+.@level$;
+			atcommand "@jlvl "+.@job$;
+			mes .nomeNpc$;
+			mes "Parab ns, voc  agora   u"+ (Sex?"m":"ma")+" Paladin"+ (Sex?"o":"a")+"!";
+			mes "Agora voc  est  pront"+ (Sex?"o":"a")+" para se preparar para batalha!!!";
+			skill 144,1,0; // Moving HP-Recovery
+			skill 145,1,0; // Fatal Blow
+			skill 146,1,0; // Auto Berserk
+			skill 1002,1,0; // Shrink
+			atcommand "@skpoint -100";
+			resetstatus;
+			savepoint .map$,.x,.y;
+			if (ismounting()) {
+			end;
+		} else if (((eaclass()&EAJ_THIRDMASK)==EAJ_RANGER) && !countitem(6124)) {
+			if (!checkfalcon() && getskilllv("HT_FALCON") && !checkwug()) {
+				if(select(" ~ Falcon: ~ Warg")==1) setfalcon;
+				else getitem 6124,1; //Wolf's_Flute
+			} else getitem 6124,1; //Wolf's_Flute
+		} else if (((eaclass()&EAJ_THIRDMASK)==EAJ_MECHANIC) && !checkcart() && getskilllv("MC_PUSHCART")) {
+			if (!checkmadogear() && getskilllv("NC_MADOLICENCE")) {
+				if(select(" ~ Cart: ~ Mado")==1) setcart;
+				else setmadogear;
+			} else setcart;
+		} else if (!checkcart() && getskilllv("MC_PUSHCART")) setcart;
+		else if (!checkfalcon() && getskilllv("HT_FALCON") && !checkwug()) setfalcon;
+		else if (!checkriding() && !checkdragon() && getskilllv("KN_RIDING")) {
+			if ((eaclass()&EAJ_THIRDMASK)==EAJ_RUNE_KNIGHT) setdragon;
+			else setriding;
+		} else if (!checkmadogear() && getskilllv("NC_MADOLICENCE")) setmadogear;
+		else {
+			end;
+		}
+		specialeffect2 EF_TEIHIT3;
+		end;
+			close; break;
+			
+			case 11:
+			jobchange 4009;
+			specialeffect2 339;
+			atcommand "@allskill";
+			atcommand "@blvl "+.@level$;
+			atcommand "@jlvl "+.@job$;
+			mes .nomeNpc$;
+			mes "Parab ns, voc  agora   u"+ (Sex?"m":"ma")+" Sumo-Sacerdot"+ (Sex?"e":"isa")+"!";
+			mes "Agora voc  est  pront"+ (Sex?"o":"a")+" para se preparar para batalha!!!";
+			skill 156,1,0; // Holy Light
+			skill 1014,1,0; // Redemptio
+			atcommand "@skpoint -100";
+			resetstatus;
+			savepoint .map$,.x,.y;
+			close; break;
+			
+			case 12:
+			jobchange 4017;
+			specialeffect2 339;
+			atcommand "@allskill";
+			atcommand "@blvl "+.@level$;
+			atcommand "@jlvl "+.@job$;
+			mes .nomeNpc$;
+			mes "Parabens, voc  agora   u"+ (Sex?"m":"ma")+" Professo"+ (Sex?"r":"ra")+"!";
+			mes "Agora voc  est  pront"+ (Sex?"o":"a")+" para se preparar para batalha!!!";
+			skill 157,1,0; // Energy Coat
+			skill 1007,1,0; // Create Elemental Converter
+			skill 1008,1,0; // Elemental Change Water
+			skill 1017,1,0; // Elemental Change Earth
+			skill 1018,1,0; // Elemental Change Fire
+			skill 1019,1,0; // Elemental Change Wind
+			atcommand "@skpoint -100";
+			resetstatus;
+			savepoint .map$,.x,.y;
+			close; break;
+			
+			case 13:
+				mes .nomeNpc$;
+				mes "Sem problemas. Retorne quando desejar avancar em sua progressao.";
+			close; break;
+
+		}
+		
+		case 2:
+		mes .nomeNpc$;;
+		mes "Certo, selecione qual ^FF0000Classe Expansiva^000000 voc  deseja se tornar:";
+		next;
+		switch(select("^FF0000-^000000 Taekwon","^FF0000-^000000 Mestre Taekwon","^FF0000-^000000 Espiritualista","^FF0000-^000000 Justiceiro","^FF0000-^000000 Ninja","^FF0000-^000000 Super Aprendiz","^FF0000Encerrar Conversa^000000")) {
+		
+			case 1:
+			jobchange 4046;
+			specialeffect2 339;
+			atcommand "@allskill";
+			atcommand "@blvl "+.@level$;
+			atcommand "@jlvl "+.@job$;
+			mes .nomeNpc$;
+			mes "Parab ns, voc  agora   u"+ (Sex?"m":"ma")+" Taekwon!";
+			mes "Agora voc  est  pront"+ (Sex?"o":"a")+" para se preparar para batalha!!!";
+			atcommand "@skpoint -100";
+			resetstatus;
+			savepoint .map$,.x,.y;
+			close; break;
+		
+			case 2:
+			jobchange 4047;
+			specialeffect2 339;
+			atcommand "@allskill";
+			atcommand "@blvl "+.@level$;
+			atcommand "@jlvl "+.@job$;
+			mes .nomeNpc$;
+			mes "Parab ns, voc  agora e u"+ (Sex?"m":"ma")+" Mestr"+ (Sex?"e":"a")+" Taekwon!";
+			mes "Agora voc  est  pront"+ (Sex?"o":"a")+" para se preparar para batalha!!!";
+			atcommand "@skpoint -100";
+			resetstatus;
+			savepoint .map$,.x,.y;
+			close; break;
+			
+			case 3:
+			jobchange 4049;
+			specialeffect2 339;
+			atcommand "@allskill";
+			atcommand "@blvl "+.@level$;
+			atcommand "@jlvl "+.@job$;
+			mes .nomeNpc$;
+			mes "Parab ns, voc  agora   u"+ (Sex?"m":"ma")+" Espiritualista!";
+			mes "Agora voc  est  pront"+ (Sex?"o":"a")+" para se preparar para batalha!!!";
+			atcommand "@skpoint -100";
+			resetstatus;
+			savepoint .map$,.x,.y;
+			close; break;
+			
+			case 4:
+			jobchange 24;
+			specialeffect2 339;
+			specialeffect2 339;
+			atcommand "@allskill";
+			atcommand "@blvl "+.@level$;
+			atcommand "@jlvl "+.@job$;
+			mes .nomeNpc$;
+			mes "Parab ns, voc  agora   u"+ (Sex?"m":"ma")+" Justiceir"+ (Sex?"o":"a")+"!";
+			mes "Agora voc  est  pront"+ (Sex?"o":"a")+" para se preparar para batalha!!!";
+			atcommand "@skpoint -100";
+			resetstatus;
+			savepoint .map$,.x,.y;
+			close; break;
+			
+			case 5:
+			jobchange 25;
+			specialeffect2 339;
+			atcommand "@allskill";
+			atcommand "@blvl "+.@level$;
+			atcommand "@jlvl "+.@job$;
+			mes .nomeNpc$;
+			mes "Parab ns, voc  agora   u"+ (Sex?"m":"ma")+" Ninja!";
+			mes "Agora voc  est  pront"+ (Sex?"o":"a")+" para se preparar para batalha!!!";
+			atcommand "@skpoint -100";
+			resetstatus;
+			savepoint .map$,.x,.y;
+			close; break;
+			
+			case 6:
+			jobchange 23;
+			specialeffect2 339;
+			atcommand "@allskill";
+			atcommand "@blvl "+.@level$;
+			atcommand "@jlvl "+.@job$;
+			mes .nomeNpc$;
+			mes "Parab ns, voc  agora   u"+ (Sex?"m":"ma")+" Super Aprendiz!";
+			mes "Agora voc  est  pront"+ (Sex?"o":"a")+" para se preparar para batalha!!!";
+			atcommand "@skpoint -100";
+			resetstatus;
+			savepoint .map$,.x,.y;
+			close; break;
+			
+			case 7:
+				mes .nomeNpc$;
+				mes "Sem problemas. Retorne quando desejar avancar em sua progressao.";
+			close; break;
+
+		}
+		
+		case 3:
+			mes "[^FF0000Mestre das Classes^000000]";
+			mes "Certo, selecione qual ^FF0000Classe Baby^000000 voc  deseja se tornar:";
+			next;
+			switch(select("^FF0000-^000000 Baby Alquimista","^FF0000-^000000 Baby Bardo/Odalisca","^FF0000-^000000 Baby Arruaceiro","^FF0000-^000000 Baby S bio","^FF0000-^000000 Baby Templ rio","^FF0000-^000000 Baby Ferreiro","^FF0000-^000000 Baby Ca ador","^FF0000-^000000 Baby Bruxo","^FF0000-^000000 Baby Monge","^FF0000-^000000 Baby Cavaleiro","^FF0000-^000000 Baby Mercen rio","^FF0000-^000000 Baby Sacerdote","^FF0000-^000000 Baby Super-Aprendiz","^FF0000Encerrar Conversa^000000")) {
+			
+				case 1:
+				
+					mes .nomeNpc$;
+					mes "Certifique-se de primeiro distribuir os pontos da classe de Mini Mercador para depois distribuir os de Transclasse";
+					next;
+					mes .nomeNpc$;
+					mes "Fique atento ao n mero de pontos de habilidade restante!!";
+					next;
+					atcommand "@blvl "+.@level$;
+					jobchange 4028;
+					atcommand "@jlvl "+.@job2$;
+					mes .nomeNpc$;
+					if(sex == 0)mes "Parab ns, voc  agora   uma Baby Alquimista!";
+					if(sex == 1)mes "Parab ns, voc  agora   um Baby Alquimista!";
+					mes "Agora voc  est  pront"+ (Sex?"o":"a")+" para se preparar para batalha!!!";
+					jobchange 4041;
+					specialeffect2 339;
+					atcommand "@allskill";
+					atcommand "@blvl "+.@level$;
+					atcommand "@jlvl "+.@job$;
+					resetstatus;
+					savepoint .map$,.x,.y;
+					close; break;
+				
+				case 2:
+				
+					mes .nomeNpc$;
+					mes "Certifique-se de primeiro distribuir os pontos da classe de Mini Arqueiro para depois distribuir os de Transclasse";
+					next;
+					mes .nomeNpc$;
+					mes "Fique atento ao n mero de pontos de habilidade restante!!";
+					next;
+					atcommand "@blvl "+.@level$;
+					jobchange 4026;
+					atcommand "@jlvl "+.@job2$;
+					mes .nomeNpc$;
+					if(sex == 0)mes "Parab ns, voc  agora   uma Baby Odalisca!";
+					if(sex == 1)mes "Parab ns, voc  agora   um Baby Bardo!";
+					mes "Agora voc  est  pront"+ (Sex?"o":"a")+" para se preparar para batalha!!!";
+					jobchange 4042;
+					specialeffect2 339;
+					atcommand "@allskill";
+					atcommand "@blvl "+.@level$;
+					atcommand "@jlvl "+.@job$;
+					resetstatus;
+					savepoint .map$,.x,.y;
+					close; break;
+				
+				case 3:
+				
+					mes .nomeNpc$;
+					mes "Certifique-se de primeiro distribuir os pontos da classe de Mini Gatuno para depois distribuir os de Transclasse";
+					next;
+					mes .nomeNpc$;
+					mes "Fique atento ao numero de pontos de habilidade restante!!";
+					next;
+					atcommand "@blvl "+.@level$;
+					jobchange 4029;
+					atcommand "@jlvl "+.@job2$;
+					mes .nomeNpc$;
+					if(sex == 0)mes "Parab ns, voc  agora   uma Baby Arruaceira!";
+					if(sex == 1)mes "Parab ns, voc  agora   um Baby Arruaceiro!";
+					mes "Agora voc  est  pront"+ (Sex?"o":"a")+" para se preparar para batalha!!!";
+					jobchange 4040;
+					specialeffect2 339;
+					atcommand "@allskill";
+					atcommand "@blvl "+.@level$;
+					atcommand "@jlvl "+.@job$;
+					resetstatus;
+					savepoint .map$,.x,.y;
+					close; break;
+				
+				case 4:
+				
+					mes .nomeNpc$;
+					mes "Certifique-se de primeiro distribuir os pontos da classe de Mini Mago para depois distribuir os de Transclasse";
+					next;
+					mes .nomeNpc$;
+					mes "Fique atento ao n mero de pontos de habilidade restante!!";
+					next;
+					atcommand "@blvl "+.@level$;
+					jobchange 4025;
+					atcommand "@jlvl "+.@job2$;
+					mes .nomeNpc$;
+					if(sex == 0)mes "Parab ns, voc  agora   uma Baby Sabia!";
+					if(sex == 1)mes "Parab ns, voc  agora   um Baby Sabio!";
+					mes "Agora voc  est  pront"+ (Sex?"o":"a")+" para se preparar para batalha!!!";
+					jobchange 4039;
+					specialeffect2 339;
+					atcommand "@allskill";
+					atcommand "@blvl "+.@level$;
+					atcommand "@jlvl "+.@job$;
+					resetstatus;
+					savepoint .map$,.x,.y;
+					close; break;
+				
+				case 5:
+				
+					mes .nomeNpc$;
+					mes "Certifique-se de primeiro distribuir os pontos da classe de Mini Espadachim para depois distribuir os de Transclasse";
+					next;
+					mes .nomeNpc$;
+					mes "Fique atento ao n mero de pontos de habilidade restante!!";
+					next;
+					atcommand "@blvl "+.@level$;
+					jobchange 4024;
+					atcommand "@jlvl "+.@job2$;
+					mes .nomeNpc$;
+					if(sex == 0)mes "Parab ns, voc  agora   uma Baby Templ ria!";
+					if(sex == 1)mes "Parab ns, voc  agora   um Baby Templ rio!";
+					mes "Agora voc  esta pront"+ (Sex?"o":"a")+" para se preparar para batalha!!!";
+					jobchange 4037;
+					specialeffect2 339;
+					atcommand "@allskill";
+					atcommand "@blvl "+.@level$;
+					atcommand "@jlvl "+.@job$;
+					resetstatus;
+					savepoint .map$,.x,.y;
+					close; break;
+				
+				case 6:
+				
+					mes .nomeNpc$;
+					mes "Certifique-se de primeiro distribuir os pontos da classe de Mini Mercador para depois distribuir os de Transclasse";
+					next;
+					mes .nomeNpc$;
+					mes "Fique atento ao n mero de pontos de habilidade restante!!";
+					next;
+					atcommand "@blvl "+.@level$;
+					jobchange 4028;
+					atcommand "@jlvl "+.@job2$;
+					mes .nomeNpc$;
+					if(sex == 0)mes "Parab ns, voc  agora   uma Baby Ferreira!";
+					if(sex == 1)mes "Parab ns, voc  agora   um Baby Ferreiro!";
+					mes "Agora voc  est  pront"+ (Sex?"o":"a")+" para se preparar para batalha!!!";
+					jobchange 4033;
+					specialeffect2 339;
+					atcommand "@allskill";
+					atcommand "@blvl "+.@level$;
+					atcommand "@jlvl "+.@job$;
+					resetstatus;
+					savepoint .map$,.x,.y;
+					close; break;
+				
+				case 7:
+				
+					mes .nomeNpc$;
+					mes "Certifique-se de primeiro distribuir os pontos da classe de Mini Arqueiro para depois distribuir os de Transclasse";
+					next;
+					mes .nomeNpc$;
+					mes "Fique atento ao n mero de pontos de habilidade restante!!";
+					next;
+					atcommand "@blvl "+.@level$;
+					jobchange 4026;
+					atcommand "@jlvl "+.@job2$;
+					mes .nomeNpc$;
+					if(sex == 0)mes "Parab ns, voc  agora   uma Baby Cacadora!";
+					if(sex == 1)mes "Parab ns, voc  agora   um Baby Cacador!";
+					mes "Agora voc  est  pront"+ (Sex?"o":"a")+" para se preparar para batalha!!!";
+					jobchange 4034;
+					specialeffect2 339;
+					atcommand "@allskill";
+					atcommand "@blvl "+.@level$;
+					atcommand "@jlvl "+.@job$;
+					resetstatus;
+					savepoint .map$,.x,.y;
+					close; break;
+				
+				case 8:
+				
+					mes .nomeNpc$;
+					mes "Certifique-se de primeiro distribuir os pontos da classe de Mini Mago para depois distribuir os de Transclasse";
+					next;
+					mes .nomeNpc$;
+					mes "Fique atento ao n mero de pontos de habilidade restante!!";
+					next;
+					atcommand "@blvl "+.@level$;
+					jobchange 4025;
+					atcommand "@jlvl "+.@job2$;
+					mes .nomeNpc$;
+					if(sex == 0)mes "Parab ns, voc  agora   uma Baby Bruxa!";
+					if(sex == 1)mes "Parab ns, voc  agora   um Baby Bruxo!";
+					mes "Agora voc  est  pront"+ (Sex?"o":"a")+" para se preparar para batalha!!!";
+					jobchange 4032;
+					specialeffect2 339;
+					atcommand "@allskill";
+					atcommand "@blvl "+.@level$;
+					atcommand "@jlvl "+.@job$;
+					resetstatus;
+					savepoint .map$,.x,.y;
+					close; break;
+				
+				case 9:
+				
+					mes .nomeNpc$;
+					mes "Certifique-se de primeiro distribuir os pontos da classe de Mini Novi o para depois distribuir os de Transclasse";
+					next;
+					mes .nomeNpc$;
+					mes "Fique atento ao n mero de pontos de habilidade restante!!";
+					next;
+					atcommand "@blvl "+.@level$;
+					jobchange 4027;
+					atcommand "@jlvl "+.@job2$;
+					mes .nomeNpc$;
+					if(sex == 0)mes "Parabens, voc  agora   uma Baby Monja!";
+					if(sex == 1)mes "Parabens, voc  agora   um  Baby Monge!";
+					mes "Agora voc  est  pront"+ (Sex?"o":"a")+" para se preparar para batalha!!!";
+					jobchange 4038;
+					specialeffect2 339;
+					atcommand "@allskill";
+					atcommand "@blvl "+.@level$;
+					atcommand "@jlvl "+.@job$;
+					resetstatus;
+					savepoint .map$,.x,.y;
+					close; break;
+				
+				case 10:
+				
+					mes .nomeNpc$;
+					mes "Certifique-se de primeiro distribuir os pontos da classe de Mini Espadachim para depois distribuir os de Transclasse";
+					next;
+					mes .nomeNpc$;
+					mes "Fique atento ao n mero de pontos de habilidade restante!!";
+					next;
+					atcommand "@blvl "+.@level$;
+					jobchange 4024;
+					atcommand "@jlvl "+.@job2$;
+					mes .nomeNpc$;
+					if(sex == 0)mes "Parab ns, voc  agora   uma Baby Cavaleira!";
+					if(sex == 1)mes "Parab ns, voc  agora   um Baby Cavaleiro!";
+					mes "Agora voc  est  pront"+ (Sex?"o":"a")+" para se preparar para batalha!!!";
+					jobchange 4030;
+					specialeffect2 339;
+					atcommand "@allskill";
+					atcommand "@blvl "+.@level$;
+					atcommand "@jlvl "+.@job$;
+					resetstatus;
+					savepoint .map$,.x,.y;
+					close; break;
+				
+				case 11:
+				
+					mes .nomeNpc$;
+					mes "Certifique-se de primeiro distribuir os pontos da classe de Mini Gatuno para depois distribuir os de Transclasse";
+					next;
+					mes .nomeNpc$;
+					mes "Fique atento ao n mero de pontos de habilidade restante!!";
+					next;
+					atcommand "@blvl "+.@level$;
+					jobchange 4029;
+					atcommand "@jlvl "+.@job2$;
+					mes .nomeNpc$;
+					if(sex == 0)mes "Parab ns, voc  agora   uma Baby Mercen ria!";
+					if(sex == 1)mes "Parab ns, voc  agora   um Baby Mercen rio!";
+					mes "Agora voc  est  pront"+ (Sex?"o":"a")+" para se preparar para batalha!!!";
+					jobchange 4035;
+					specialeffect2 339;
+					atcommand "@allskill";
+					atcommand "@blvl "+.@level$;
+					atcommand "@jlvl "+.@job$;
+					resetstatus;
+					savepoint .map$,.x,.y;
+					close; break;
+				
+				case 12:
+				
+					mes .nomeNpc$;
+					mes "Certifique-se de primeiro distribuir os pontos da classe de Mini Novi o para depois distribuir os de Transclasse";
+					next;
+					mes .nomeNpc$;
+					mes "Fique atento ao n mero de pontos de habilidade restante!!";
+					next;
+					atcommand "@blvl "+.@level$;
+					jobchange 4027;
+					atcommand "@jlvl "+.@job2$;
+					mes .nomeNpc$;
+					if(sex == 0)mes "Parab ns, voc  agora   uma Baby Sacerdotisa!";
+					if(sex == 1)mes "Parab ns, voce agora   um Baby Sacerdote!";
+					mes "Agora voc  est  pront"+ (Sex?"o":"a")+" para se preparar para batalha!!!";
+					jobchange 4031;
+					specialeffect2 339;
+					atcommand "@allskill";
+					atcommand "@blvl "+.@level$;
+					atcommand "@jlvl "+.@job$;
+					resetstatus;
+					savepoint .map$,.x,.y;
+					close; break;
+				
+				case 13:
+				
+					mes .nomeNpc$;
+					mes "Certifique-se de primeiro distribuir os pontos da classe de Mini Aprendiz para depois distribuir os de Transclasse";
+					next;
+					mes .nomeNpc$;
+					mes "Fique atento ao n mero de pontos de habilidade restante!!";
+					next;
+					atcommand "@blvl "+.@level$;
+					jobchange 4023;
+					atcommand "@jlvl "+.@job2$;
+					mes .nomeNpc$;
+					if(sex == 0)mes "Parab ns, voc  agora   uma Baby Super Aprendiz!";
+					if(sex == 1)mes "Parab ns, voc  agora   um Baby Super Aprendiz!";
+					mes "Agora voc  est  pront"+ (Sex?"o":"a")+" para se preparar para batalha!!!";
+					jobchange 4045;
+					specialeffect2 339;
+					atcommand "@allskill";
+					atcommand "@blvl "+.@level$;
+					atcommand "@jlvl "+.@job3$;
+					resetstatus;
+					savepoint .map$,.x,.y;
+					close; break;
+				
+				case 14:
+					clear;
+					mes .nomeNpc$;
+					mes "Sem problemas. Retorne quando desejar avancar em sua progress o.";
+					savepoint .map$,.x,.y;
+					close; break;
+			}
+	
+		case 4:
+			mes .nomeNpc$;
+			mes "Sem problemas. Retorne quando desejar avan ar em sua progress o.";
+			savepoint .map$,.x,.y;
+			close;
+	}
+	end;
+	
+	OnInit:
+	
+		set .nomeNpc$, "[^FF0000Mestre das Classes^000000]";
+		
+		set .map$, "prontera";
+		set .x, 156;
+		set .y, 185;
+	end;
+	
+}
+
+//==========================================================
+//	Pr mios e Globais para 99
+//==========================================================
+
+-	script	#PremiaNv99	-1,{
+	
+	OnPCBaseLvUpEvent:
+	
+		if ( BaseLevel == 99 ) {
+			query_sql( "SELECT `up_modo` FROM `char` WHERE `char_id` = "+getcharid(0)+"", .@modo );
+			if ( .@modo == 1 ) {
+				.@eac = eaclass();
+				// ----- Classes Trans, Classes T. -----
+				if ( .@eac&EAJL_UPPER ) {
+					switch( BaseJob ) {
+						case Job_Knight:
+						case Job_Crusader:
+						case Job_Wizard:
+						case Job_Sage:
+						case Job_Hunter:
+						case Job_Bard:
+						case Job_Dancer:
+						case Job_Blacksmith:
+						case Job_Alchemist:
+						case Job_Assassin:
+						case Job_Rogue:
+						case Job_Monk:
+						case Job_Priest:
+							announce "Parab ns ao jogador ["+strcharinfo(0)+"] que conquistou o n vel 99 no [Modo Hist ria] e ganhou ["+.premioTransString$[.itemCashTrans]+"] como pr mio!!",bc_yellow;
+							for( .@i = 0; .@i < getarraysize( .premiosTrans ); .@i++ ) {
+								switch( .itemCashTrans ) {
+									case 0: getitem .premiosTrans[.@i],1; dispbottom "Voc  conquistou o n vel 99 no [Modo Hist ria] e ganhou ["+getitemname(.premiosTrans[.@i])+"] como pr mio!!"; break;
+									case 1: #CASHPOINTS += .premiosTrans[.@i]; dispbottom "Voc  conquistou o n vel 99 no [Modo Hist ria] e ganhou ["+.premiosTrans[.@i]+" ROPs - Total: "+#CASHPOINTS+"] como pr mio!!"; break;
+								}
+							}
+							break;
+						default: announce "Parab ns ao jogador ["+strcharinfo(0)+"] que conquistou o n vel 99 de base!!",bc_yellow; break;
+					}
+				// ----- Classes Expandidas, Classes 1, Classes 2 -----
+				} else {
+					switch( BaseJob ) {
+						case Job_Ninja:
+						case Job_Gunslinger:
+						case Job_Star_Gladiator:
+						case Job_Super_Novice:
+						case Job_Soul_Linker:
+							announce "Parab ns ao jogador ["+strcharinfo(0)+"] que conquistou o n vel 99 no [Modo Hist ria] e ganhou ["+.premioExpanString$[.itemCashExpan]+"] como pr mio!!",bc_yellow;
+							for( .@i = 0; .@i < getarraysize( .premiosExpan ); .@i++ ) {
+								switch( .itemCashExpan ) {
+									case 0: getitem .premiosExpan[.@i],1; dispbottom "Voc  conquistou o n vel 99 no [Modo Hist ria] e ganhou ["+getitemname(.premiosExpan[.@i])+"] como pr mio!!"; break;
+									case 1: #CASHPOINTS += .premiosExpan[.@i]; dispbottom "Voc  conquistou o n vel 99 no [Modo Hist ria] e ganhou ["+.premiosExpan[.@i]+" ROPs - Total: "+#CASHPOINTS+"] como pr mio!!"; break;
+								}
+							}
+							break;
+						default: announce "Parab ns ao jogador ["+strcharinfo(0)+"] que conquistou o n vel 99 de base!!",bc_yellow; break;
+					}
+				}
+			}
+		}
+	
+	end;
+	
+	OnInit:
+	
+		// Controle Transclasses
+		set .itemCashTrans, 1; // 0 = item, 1 = ROPs
+		
+		// Controle Expandidas
+		set .itemCashExpan, 1; // 0 = item, 1 = ROPs
+		
+		switch( .itemCashTrans ) {
+			
+			// Items (Ex: 501 = Po  o Vermelha)
+			case 0:
+				setarray .premiosTrans[0], 503; break;
+
+			// Cash (Ex: 5000 = 5.000 ROPs)
+			case 1:
+				setarray .premiosTrans[0], 2000; break;
+		}
+		
+		switch( .itemCashExpan ) {
+			
+			// Items (Ex: 501 = Po  o Vermelha)
+			case 0:
+				setarray .premiosExpan[0], 501; break;
+
+			// Cash (Ex: 5000 = 5.000 ROPs)
+			case 1:
+				setarray .premiosExpan[0], 1000; break;
+		}
+		
+		// Premios em String
+		setarray .premioTransString$[0],""+getitemname(.premiosTrans[0])+"", "ROPs";
+		setarray .premioExpanString$[0],""+getitemname(.premiosExpan[0])+"", "ROPs";
+	
+	end;
+}

@@ -1,0 +1,122 @@
+//-------------------------------------------------------------------------------------------||
+//   __  __                                  _                _____           _       _      ||
+//  |  \/  |                                (_)              / ____|         (_)     | |     ||
+//  | \  / | __ _  __ _ _ __ ___   __ _ _ __ _ _ __   __ _  | (___   ___ _ __ _ _ __ | |_    ||
+//  | |\/| |/ _` |/ _` | '_ ` _ \ / _` | '__| | '_ \ / _` |  \___ \ / __| '__| | '_ \| __|   ||
+//  | |  | | (_| | (_| | | | | | | (_| | |  | | | | | (_| |  ____) | (__| |  | | |_) | |_    ||
+//  |_|  |_|\__,_|\__, |_| |_| |_|\__,_|_|  |_|_| |_|\__, | |_____/ \___|_|  |_| .__/ \__|   ||
+//                 __/ |                              __/ |                    | |           ||
+//                |___/                              |___/                     |_|           ||
+//-------------------------------------------------------------------------------------------||
+//   VENDAS DE SERVIÇOS SERVIDORES DE RAGNAROK ONLINE/PERFECT WORLD/MU/AION/CABAL/MINECRAFT  ||
+//DISCORD:   https://discordapp.com/channels/@me/Magmaring#0352                              ||
+//INSTAGRAM: https://www.instagram.com/evandro_srk/                                          ||
+//FACEBOOK:  https://www.facebook.com/sorakamente/                                           ||
+//GITHUB:    https://github.com/magmaring                                                    ||
+//-------------------------------------------------------------------------------------------||
+// = Criação:                                                                                ||
+// - [ADM] Magmaring - Evandro Oliveira     												 ||
+//-------------------------------------------------------------------------------------------||
+// = Revisão:                                                                                ||
+// - Esse arquivo teve sua última revisão 07 de janeiro de 2024    				         	 ||
+//-------------------------------------------------------------------------------------------||
+prontera,153,197,4	script	Serviços Gerais	11004,{
+
+	mes "[ ^00B2EE--- Serviços Gerais ---^000000 ]";
+	mes "^6495ED------------------------------------------^000000";
+	mes "Olá ^FF4400"+ strcharinfo(0) +"^000000, Eu sou responsável pelos serviços básicos do servidor!";
+	mes "^6495ED------------------------------------------^000000";
+
+	switch( select("^0000FF[>>]^000000 Abrir armazém", "^0000FF[>>]^000000 Resetar atributos", "^0000FF[>>]^000000 Negociante", "^0000FF[>>]^000000 Habilidades de Platina", "^0000FF[>>]^000000 Remover cartas")) {
+		case 1:
+			clear;
+			mes "^ff0066[Funcionária Kafra]^000000";
+			mes (gettime(3)>= 6 && gettime(3)<= 12 ? "Bom dia" : (gettime(3)>=13 && gettime(3)<=18 ? "Boa tarde" : "Boa noite")) +", ^FFA500"+strcharinfo(0)+"^000000.";
+			mes "Vejo que você esta querendo acessar o armazém...";
+			mes "Embora esta facilidade seja exclusiva, vou abrir para você.";
+			close2;
+			openstorage;
+			break;
+
+		case 2:
+			clear;
+			mes "^ff0066[Resetadora]^000000";
+			mes "Eu posso ajudá-lo a resetar os seus atributos gratuitamente.";
+			next;
+			if(select("^0000FF[>>]^000000 Resetar Atributos:^FF0000[>>]^000000 Cancelar.") == 2) close;
+			resetstatus;
+			mes "Pronto! Seus atributos foram resetados com sucesso.";
+			mes "Volte sempre que precisar deste serviço.";
+			close;
+
+		case 3:
+			clear;
+			mes "^ff0066[Garota Negociante]^000000";
+			mes "Aqui você pode alugar um carrinho, pecopeco ou falcão dependendo de sua classe.";
+			next;
+			if ((BaseClass == 5 || Class == 23) && !checkcart() && getskilllv(39)) setcart;
+			else if (BaseClass == 1 && !checkriding() && getskilllv(63)) setriding;
+			else if (BaseClass == 3 && !checkfalcon() && getskilllv(127)) setfalcon;
+			else {
+				mes "Desculpe, mas não posso ajudar você.";
+				close;
+			}
+			mes "Pronto, aproveite.";
+			close;
+
+		case 4:
+			clear;
+			mes "^ff0066[Habilidades de Platina]^000000";
+			mes "Eu posso ajudá-lo a aprender as habilidades de platina disponíveis para sua classe.";
+			next;
+			callfunc "F_GetPlatinumSkills"; // Funcao que ensina habilidades de platina
+			mes "Pronto! Todas as habilidades de platina disponíveis para sua classe foram aprendidas.";
+			mes "Volte sempre que precisar.";
+			close;
+
+		case 5:
+			clear;
+			mes "^ff0066[Mulher Sabia e Idosa]^000000";
+			mes "Bom dia, jovem. Tenho o poder de remover cartas que você colocou em seus equipamentos. Isso te agrada?";
+			next;
+			switch(select("Sim, me agrada.:Não, obrigado.")) {
+				case 1:
+					mes "^ff0066[Mulher Sabia e Idosa]^000000";
+					mes "Muito bem. Qual item devo examinar para você?";
+					next;
+
+					setarray .@indices[1], EQI_HEAD_TOP, EQI_ARMOR, EQI_HAND_L, EQI_HAND_R, EQI_GARMENT, EQI_SHOES, EQI_ACC_L, EQI_ACC_R, EQI_HEAD_MID, EQI_HEAD_LOW;
+					for( set .@i,1; .@i <= 10; set .@i,.@i+1 ) {
+						if( getequipisequiped(.@indices[.@i]) )
+							set .@menu$, .@menu$ + F_getpositionname(.@indices[.@i]) + "-[" + getequipname(.@indices[.@i]) + "]";
+						set .@menu$, .@menu$ + ":";
+					}
+					set .@part, .@indices[ select(.@menu$) ];
+					if(!getequipisequiped(.@part)) {
+						mes "^ff0066[Mulher Sabia e Idosa]^000000";
+						mes "Jovem... Você não está usando nada nessa posição que eu possa remover cartas.";
+						close;
+					}
+					if(getequipcardcnt(.@part) == 0) {
+						mes "^ff0066[Mulher Sabia e Idosa]^000000";
+						mes "Jovem... Não há cartas nesse item. Não posso fazer nada com ele.";
+						close;
+					}
+					mes "^ff0066[Mulher Sabia e Idosa]^000000";
+					mes "Este item tem " + getequipcardcnt(.@part) + " cartas aplicadas. Vou removê-las para você agora.";
+					next;
+					successremovecards .@part;
+					mes "^ff0066[Mulher Sabia e Idosa]^000000";
+					mes "O processo foi um sucesso. Aqui estão suas cartas e seu item. Até logo.";
+					close;
+
+				case 2:
+					mes "^ff0066[Mulher Sabia e Idosa]^000000";
+					mes "Muito bem. Volte se precisar dos meus servicos.";
+					close;
+				}
+				break;
+							
+		end;
+	}
+}

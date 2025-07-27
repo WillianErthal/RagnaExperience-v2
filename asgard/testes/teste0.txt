@@ -1,0 +1,13 @@
+prontera,151,173,3	script	Curandeira	419,{
+OnBuff:
+	specialeffect2 EF_HEAL2;
+	percentheal 100,100;
+	specialeffect2 EF_INCAGILITY;
+	sc_start SC_BLEEDING,600000,10;
+	specialeffect2 EF_BLESSING;
+	sc_start SC_CRITICALWOUND,600000,10;
+	}
+OnInit:
+	bindatcmd "buff",strnpcinfo(3)+"::OnBuff";
+	end;
+}

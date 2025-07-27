@@ -1,0 +1,87 @@
+// ===================================================================
+// ===================================================================
+// 	NPC compatível com rAthena
+// ===================================================================
+//	Autor: Desconhecido / Revisado por: Dudu
+// ===================================================================
+//	NPC: NPC em cargo de plagiar habilidades para personagem com a
+//	habilidade Plágio.
+// ===================================================================
+// NPC IDs: https://nn.ai4rei.net/dev/npclist/
+// ===================================================================
+
+sec_in02,140,167,3	script	Plagiador	779,{
+    set .@skill_level,getskilllv( "RG_PLAGIARISM" );
+    mes .npcName$;
+    mes "^008aff"+strcharinfo(0)+"^000000, eu sou capaz de ensinar várias habilidades por ^FF0000Plágio.^000000";
+    if( !.@skill_level ){
+		clear;
+		mes .npcName$;
+        mes "Infelizmente, só personagens com a habilidade ^FF0000Plágio^000000 são capazes de utilizar os meus serviços.";
+        close;
+    }
+	next;
+	mes .npcName$;
+	mes "Como posso te ajudar hoje?";
+    if(select( ( CLONE_SKILL && CLONE_SKILL_LV )?"^008aff[»]^000000 Remover Habilidade plagiada":"^008aff[»]^000000 Copiar Habilidade","Deixa pra lá..." ) == 1 ){
+        if( CLONE_SKILL && CLONE_SKILL_LV ){
+            mes "A habilidade plagiada foi removida!";
+            set CLONE_SKILL_LV,0;
+            skill CLONE_SKILL,CLONE_SKILL_LV,0;
+            set CLONE_SKILL,0;
+        }else{
+            mes "Selecione a habilidade para plagiar.";
+            next;
+            set .@i,select( .menu$ ) - 1;
+            if( .@skill_level > .skill_max_level[.@i] )
+                set .@skill_level,.skill_max_level[.@i];
+            mes "Habilidade : ^0055FF"+.skill_name$[.@i]+"^000000";
+            mes "Nível : ^0055FF"+.@skill_level+"^000000";
+            mes "Custo : ^0055FF"+( ( .skill_cost[.@i] )? .skill_cost[.@i]+" Zenies":"Grátis" )+"^000000";
+            mes " ";
+            mes "Você será desconectado durante o processo.";
+            next;
+            if( select( "^008aff[»]^000000Copiar!","Cancelar" ) == 1 ){
+                if( .skill_cost[.@i] ){
+                    if( Zeny >= .skill_cost[.@i] ){
+                        set Zeny,Zeny - .skill_cost[.@i];
+                    }else{
+                        mes "Zenies insuficientes.";
+                        close;
+                    }
+                }
+                set CLONE_SKILL,.skill_id[.@i];
+                set CLONE_SKILL_LV,.@skill_level;
+                mes "Habilidade a ser plagiada: ^0055FFLv"+CLONE_SKILL_LV+" "+.skill_name$[.@i]+"^000000";
+         
+                skill CLONE_SKILL,CLONE_SKILL_LV,0;
+                atcommand "@kick "+strcharinfo(0);
+
+            }
+        }
+    }
+    close;
+
+    OnInit:
+	
+	// Nome do NPC
+	set .npcName$, "[^0000FFPlagiador^000000]";
+    // Nomes das Habilidades
+    setarray .skill_name$,"Impacto de Tyr","Combo Triplo","Crux Divinum","Mamonita", "Nevasca", "Chuva de Meteoros", "Ira de Thor", "Lança Congelante", "Trovão de Jupter", "Brisa Cortante", "Chute Aéreo";
+    // IDs das Habilidades
+    setarray .skill_id,62,263,253,42, 89, 83, 85, 537, 84, 542, 421;;
+    // Nível Máximo a ser aprendido (Habilidades)
+    setarray .skill_max_level,10,10,10,10,10,10,10,10,10,5,7;
+    // Custo de habilidades em Zenies
+    setarray .skill_cost,4000,4000,4000,4000,4000,4000,4000,4000,4000,4000,4000;
+
+    set .skill_size,getarraysize( .skill_name$ );
+    while( .@i < .skill_size ){
+        set .menu$,.menu$ + "[ ^0055FFLv "+.skill_max_level[.@i]+"^000000 ] "+ .skill_name$[.@i] +":";
+        set .@i,.@i + 1;
+    }
+	
+	//waitingroom " Plagiador",0;
+
+    end;
+}

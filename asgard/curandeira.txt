@@ -1,0 +1,32 @@
+// ---------------------------------------------------------------- -- 
+//     __  __                                  _                    -- 
+//    |  \/  |                                (_)                   -- 
+//    | \  / | __ _  __ _ _ __ ___   __ _ _ __ _ _ __   __ _        -- 
+//    | |\/| |/ _` |/ _` | '_ ` _ \ / _` | '__| | '_ \ / _` |       -- 
+//    | |  | | (_| | (_| | | | | | | (_| | |  | | | | | (_| |       -- 
+//    |_|  |_|\__,_|\__, |_| |_| |_|\__,_|_|  |_|_| |_|\__, |       -- 
+//                   __/ |                              __/ |       -- 
+//                  |___/                              |___/        -- 
+// ---------------------------------------------------------------- -- 
+// DISCORD:   https://discord.gg/zkMEFEbpgJ                         -- 
+// INSTAGRAM: https://www.instagram.com/evandro_srk/                -- 
+// GITHUB:    https://github.com/magmaring                          -- 
+// ---------------------------------------------------------------- -- 
+//  = Revisão: 													    -- 
+//  - Esse arquivo teve sua última revisão 21 de março de 2025      -- 
+// ---------------------------------------------------------------- -- 
+// Cabeçalho de script
+// ---------------------------------------------------------------- -- 
+prontera,159,193,3	script	Curandeira	419,{
+OnBuff:
+	specialeffect2 EF_HEAL2;
+	percentheal 100,100;
+	specialeffect2 EF_INCAGILITY;
+	sc_start SC_BLEEDING,600000,10;
+	specialeffect2 EF_BLESSING;
+	sc_start SC_CRITICALWOUND,600000,10;
+	}
+OnInit:
+	bindatcmd "buff",strnpcinfo(3)+"::OnBuff";
+	end;
+}

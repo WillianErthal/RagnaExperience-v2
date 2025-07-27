@@ -1,0 +1,3468 @@
+//-------------------------------------------------------------------------------------------||
+//   __  __                                  _                _____           _       _      ||
+//  |  \/  |                                (_)              / ____|         (_)     | |     ||
+//  | \  / | __ _  __ _ _ __ ___   __ _ _ __ _ _ __   __ _  | (___   ___ _ __ _ _ __ | |_    ||
+//  | |\/| |/ _` |/ _` | '_ ` _ \ / _` | '__| | '_ \ / _` |  \___ \ / __| '__| | '_ \| __|   ||
+//  | |  | | (_| | (_| | | | | | | (_| | |  | | | | | (_| |  ____) | (__| |  | | |_) | |_    ||
+//  |_|  |_|\__,_|\__, |_| |_| |_|\__,_|_|  |_|_| |_|\__, | |_____/ \___|_|  |_| .__/ \__|   ||
+//                 __/ |                              __/ |                    | |           ||
+//                |___/                              |___/                     |_|           ||
+//-------------------------------------------------------------------------------------------||
+//   VENDAS DE SERVIÇOS SERVIDORES DE RAGNAROK ONLINE/PERFECT WORLD/MU/AION/CABAL/MINECRAFT  ||
+//DISCORD:   https://discordapp.com/channels/@me/Magmaring#0352                              ||
+//INSTAGRAM: https://www.instagram.com/evandro_srk/                                          ||
+//FACEBOOK:  https://www.facebook.com/sorakamente/                                           ||
+//GITHUB:    https://github.com/magmaring                                                    ||
+//-------------------------------------------------------------------------------------------||
+// = Criação:                                                                                ||
+// - [ADM] Magmaring - Evandro Oliveira     												 ||
+//-------------------------------------------------------------------------------------------||
+// = Revisão:                                                                                ||
+// - Esse arquivo teve sua última revisão 07 de janeiro de 2024    				         	 ||
+//-------------------------------------------------------------------------------------------||
+/*
+alter table `char` add column arena1_pvp int(11) default 0 after delete_date, add index (arena1_pvp);
+alter table `char` add column arena2_pvp int(11) default 0 after arena1_pvp, add index (arena2_pvp);
+alter table `char` add column arena3_pvp int(11) default 0 after arena2_pvp, add index (arena3_pvp);
+
+alter table `char` add column mvp_rank int(11) default 0 after arena3_pvp, add index (mvp_rank);
+
+alter table `char` add column woe_killer_rank int(11) default 0 after mvp_rank, add index (woe_killer_rank);
+alter table `char` add column woe_breaker_rank int(11) default 0 after woe_killer_rank, add index (woe_breaker_rank);
+alter table `guild` add column guild_rank int(11) default 0 after guild_lv, add index (guild_rank);
+alter table `guild` add column guild_points int(11) default 0 after guild_rank, add index (guild_points);
+ 
+create table pvp_rank_archive (
+	`rotacao` int(11) unsigned,
+	timeStart date,
+	timeLimit int(11) unsigned,
+	arena1Top1 int(11) unsigned,
+	arena1Top2 int(11) unsigned,
+	arena1Top3 int(11) unsigned,
+	arena2Top1 int(11) unsigned,
+	arena2Top2 int(11) unsigned,
+	arena2Top3 int(11) unsigned,
+	arena3Top1 int(11) unsigned,
+	arena3Top2 int(11) unsigned,
+	arena3Top3 int(11) unsigned,
+	qntArena1Top1 int(11) unsigned,
+	qntArena1Top2 int(11) unsigned,
+	qntArena1Top3 int(11) unsigned,
+	qntArena2Top1 int(11) unsigned,
+	qntArena2Top2 int(11) unsigned,
+	qntArena2Top3 int(11) unsigned,
+	qntArena3Top1 int(11) unsigned,
+	qntArena3Top2 int(11) unsigned,
+	qntArena3Top3 int(11) unsigned,
+	nextArena1Top1 int(11) unsigned,
+	nextArena1Top2 int(11) unsigned,
+	nextArena1Top3 int(11) unsigned,
+	nextArena2Top1 int(11) unsigned,
+	nextArena2Top2 int(11) unsigned,
+	nextArena2Top3 int(11) unsigned,
+	nextArena3Top1 int(11) unsigned,
+	nextArena3Top2 int(11) unsigned,
+	nextArena3Top3 int(11) unsigned,
+	nextQntArena1Top1 int(11) unsigned,
+	nextQntArena1Top2 int(11) unsigned,
+	nextQntArena1Top3 int(11) unsigned,
+	nextQntArena2Top1 int(11) unsigned,
+	nextQntArena2Top2 int(11) unsigned,
+	nextQntArena2Top3 int(11) unsigned,
+	nextQntArena3Top1 int(11) unsigned,
+	nextQntArena3Top2 int(11) unsigned,
+	nextQntArena3Top3 int(11) unsigned,
+	charArena1Top1 int(11) unsigned,
+	charArena1Top2 int(11) unsigned,
+	charArena1Top3 int(11) unsigned,
+	charArena2Top1 int(11) unsigned,
+	charArena2Top2 int(11) unsigned,
+	charArena2Top3 int(11) unsigned,
+	charArena3Top1 int(11) unsigned,
+	charArena3Top2 int(11) unsigned,
+	charArena3Top3 int(11) unsigned,
+	controleRewards tinyint(4),
+	primary key (`rotacao`)
+) engine innodb;
+
+create table mvp_rank_archive (
+	`rotacao` int(11) unsigned,
+	timeStart date,
+	timeLimit int(11) unsigned,
+	mvpTop1 int(11) unsigned,
+	mvpTop2 int(11) unsigned,
+	mvpTop3 int(11) unsigned,
+	qntMvpTop1 int(11) unsigned,
+	qntMvpTop2 int(11) unsigned,
+	qntMvpTop3 int(11) unsigned,
+	nextMvpTop1 int(11) unsigned,
+	nextMvpTop2 int(11) unsigned,
+	nextMvpTop3 int(11) unsigned,
+	nextQntMvpTop1 int(11) unsigned,
+	nextQntMvpTop2 int(11) unsigned,
+	nextQntMvpTop3 int(11) unsigned,
+	charMvpTop1 int(11) unsigned,
+	charMvpTop2 int(11) unsigned,
+	charMvpTop3 int(11) unsigned,
+	controleRewards tinyint(4),
+	primary key (`rotacao`)
+) engine innodb;
+
+create table woe_rank_archive (
+	`rotacao` int(11) unsigned,
+	timeStart date,
+	timeLimit int(11) unsigned,
+	killerTop1 int(11) unsigned,
+	killerTop2 int(11) unsigned,
+	killerTop3 int(11) unsigned,
+	breakerTop1 int(11) unsigned,
+	breakerTop2 int(11) unsigned,
+	breakerTop3 int(11) unsigned,	
+	qntKillerTop1 int(11) unsigned,
+	qntKillerTop2 int(11) unsigned,
+	qntKillerTop3 int(11) unsigned,
+	qntBreakerTop1 int(11) unsigned,
+	qntBreakerTop2 int(11) unsigned,
+	qntBreakerTop3 int(11) unsigned,
+	guildWinner int(11) unsigned,
+	qntGuildWinner int(11) unsigned,
+	nextKillerTop1 int(11) unsigned,
+	nextKillerTop2 int(11) unsigned,
+	nextKillerTop3 int(11) unsigned,
+	nextBreakerTop1 int(11) unsigned,
+	nextBreakerTop2 int(11) unsigned,
+	nextBreakerTop3 int(11) unsigned,	
+	nextQntKillerTop1 int(11) unsigned,
+	nextQntKillerTop2 int(11) unsigned,
+	nextQntKillerTop3 int(11) unsigned,
+	nextQntBreakerTop1 int(11) unsigned,
+	nextQntBreakerTop2 int(11) unsigned,
+	nextQntBreakerTop3 int(11) unsigned,
+	nextGuildWinner int(11) unsigned,
+	nextQntGuildWinner int(11) unsigned,
+	controleRewards tinyint(4),
+	primary key (`rotacao`)
+) engine innodb;
+
+*/
+
+
+prontera,152,194,3	script	Rankings do Servidor	837,{
+	
+	L_GMmenu:
+	if (getgroupid() >= 90) {
+		query_sql( "SELECT DATEDIFF(CURDATE(), `timeStart`), `timeLimit` FROM `pvp_rank_archive` WHERE `controleRewards` = 0", .@timePassedPvp, .tempoDuracaoPvp);
+		query_sql( "SELECT DATEDIFF(CURDATE(), `timeStart`), `timeLimit` FROM `mvp_rank_archive` WHERE `controleRewards` = 0", .@timePassedMvp, .tempoDuracaoMvp);
+		query_sql( "SELECT DATEDIFF(CURDATE(), `timeStart`), `timeLimit` FROM `woe_rank_archive` WHERE `controleRewards` = 0", .@timePassedWoe, .tempoDuracaoWoe);
+		set .tempoRestantePvp, (.tempoDuracaoPvp - .@timePassedPvp);
+		set .tempoRestanteMvp, (.tempoDuracaoMvp - .@timePassedMvp);
+		set .tempoRestanteWoe, (.tempoDuracaoWoe - .@timePassedWoe);
+		.@gmNpc$ = "[^FF0000 --- GM Menu --- ^000000]";
+		mes .@gmNpc$;
+		mes "Oi, Game Master. O que você gostaria de fazer?";
+			
+		switch (select("[>]^0000FF Ver Pontuações^000000:[>]^0000FF Ver/Mudar Duração do Ranking^000000:[>]^0000FF Ver/Mudar Premiações Atuais^000000:[>]^0000FF Ver/Mudar Agendamentos^000000:Cancelar")) {
+				
+			// Pontuações
+			case 1:
+				clear; goto L_NpcRankings; break;
+			// Duração do Ranking
+			case 2:
+				clear;
+				mes .@gmNpc$;
+				mes "Informações dos Rankings:";
+				mes " ";
+				mes "[^0000FFRanking PvP^000000]:";
+				mes "Ranking Atual Nº: ^0000FF"+.rotacao+"^000000";
+				mes "Total de Dias: ^0000FF"+.tempoDuracaoPvp+"^000000";
+				mes "Dias Restantes: ^0000FF"+.tempoRestantePvp+"^000000";
+				mes " ";
+				mes "[^0000FFRanking MvP^000000]:";
+				mes "Ranking Atual Nº: ^0000FF"+.rotacaoMvp+"^000000";
+				mes "Total de Dias: ^0000FF"+.tempoDuracaoMvp+"^000000";
+				mes "Dias Restantes: ^0000FF"+.tempoRestanteMvp+"^000000";
+				mes " ";
+				mes "[^0000FFRanking WoE^000000]:";
+				mes "Ranking Atual Nº: ^0000FF"+.rotacaoWoe+"^000000";
+				mes "Total de Dias: ^0000FF"+.tempoDuracaoWoe+"^000000";
+				mes "Dias Restantes: ^0000FF"+.tempoRestanteWoe+"^000000";
+				if (select("^0000FFAlterar^000000:Voltar") == 2) {
+					callsub L_GMmenu;
+				}
+				callsub OnDuracaoRanking;
+				break;
+			// Premiações Atuais
+			case 3:
+				callsub L_Premiacoes; break;
+				
+			// Agendamentos
+			case 4:
+				if (.agendamento == 0) {
+					clear;
+					mes .@gmNpc$;
+					mes "No momento os agendamentos estão inativos. Deseja ativá-los?";
+					if (select("Sim:Não") == 1) {
+						.agendamento = 1;
+						clear;
+						mes .@gmNpc$;
+						mes "Agendamentos ativos.";
+						sleep2 1000;
+						callsub L_GMmenu;
+					} else {
+						close;
+					}
+				}
+				clear;
+				mes .@gmNpc$;
+				mes "Que agendamentos você gostaria de visualizar?";
+					
+				switch (select("~ ^0000FFAgendamentos PvP^000000:~ ^0000FFAgendamentos MvP^000000:~ ^0000FFAgendamentos WoE^000000")) {
+						
+					case 1: callsub L_AgendamentosPvP; break;
+						
+					case 2: callsub L_AgendamentosMvP; break;
+						
+					case 3: callsub L_AgendamentosWoE; break;
+				}
+				
+			case 5: close; break;
+					
+		}
+	} else {
+		goto L_NpcRankings;
+	}
+	end;
+	
+L_NpcRankings:
+	mes " "; clear;
+	mes .nomeNpc$;
+	mes "Olá, eu estou encarregado de contabilizar os rankings do servidor!";
+	mes "Qual você estaria interessado em saber mais?";
+	
+		switch (select("[>]^0000FF Ranking PvP^000000:[>]^0000FF Ranking MvP^000000:[>]^0000FF Ranking WoE^000000:Informações") ) {
+			
+			// Interage com o Ranking PvP
+			case 1: callsub OnRankingPvP; break;
+			
+			// Interage como Ranking MvP
+			case 2: callsub OnRankingMvP; break;
+			
+			// Interage com o Ranking WoE
+			case 3: callsub OnRankingWoE; break;
+			
+			// Informações de cada Ranking
+			case 4: clear; callsub OnInformation; break;
+			
+		}
+
+	end;
+
+// ===================================================================
+//	Ranking PvP - Interação com o NPC
+// ===================================================================
+
+	OnRankingPvP:
+		.@char_arena1 = query_sql( "select name, arena1_pvp from `char` where arena1_pvp > 0 order by arena1_pvp desc limit 10", .@nameArena1$, .@count1 );
+		.@char_arena2 = query_sql( "select name, arena2_pvp from `char` where arena2_pvp > 0 order by arena2_pvp desc limit 10", .@nameArena2$, .@count2 );
+		.@char_arena3 = query_sql( "select name, arena3_pvp from `char` where arena3_pvp > 0 order by arena3_pvp desc limit 10", .@nameArena3$, .@count3 );
+		if ( !.@char_arena1 && !.@char_arena2 && !.@char_arena3 ) {
+			clear;
+			mes .nomeNpc$;
+			mes "Ainda não há pontuação no ranking atual.";
+			close;
+		}
+		
+		switch (select("[>]^0000FF Arena Livre^000000:[>]^0000FF Arena sem Mob^000000:[>]^0000FF Arena sem Donate^000000:")) {
+			
+			// ------------- Arena Livre 1 ---------------
+			case 1:
+				if ( !.@char_arena1 ) {
+					clear;
+					mes .nomeNpc$;
+					mes "Ainda não há pontuação no ranking atual (nº "+.rotacao+").";
+					close;
+				}
+				
+				if (select("[>]^0000FF Top 10^000000:[>]^0000FF Sua pontuação^000000") == 2) {
+					query_sql "select arena1_pvp from `char` where char_id = "+ getcharid(0), .@matou;
+					clear;
+					mes .nomeNpc$;
+					mes "Seu personagem possui ^0000FF"+ .@matou +"^000000 pontos PVP na ^0000FFArena Livre^000000.";
+					close;
+				}
+				clear;
+				mes .nomeNpc$;
+				mes "Colocações da [^0000FFArena Livre^000000] Ranking nº ^0000FF"+.rotacao+":^000000";
+				for ( .@i = 0; .@i < .@char_arena1; .@i++ )
+					mes ( .@i +1 )+". ^0000FF"+ .@nameArena1$[.@i] +"^000000 -> "+ .@count1[.@i] +" pontos";
+				close;
+				break;
+				
+			// ------------- Arena sem Mob 2 ------------- 
+			case 2:
+				if ( !.@char_arena2 ) {
+					clear;
+					mes .nomeNpc$;
+					mes "Ainda não há pontuação no ranking atual (nº "+.rotacao+").";
+					close;
+				}
+				if (select("[>]^0000FF Top 10^000000:[>]^0000FF Sua pontuação^000000") == 2) {
+					query_sql "select arena2_pvp from `char` where char_id = "+ getcharid(0), .@matou;
+					clear;
+					mes .nomeNpc$;
+					mes "Seu personagem possui ^0000FF"+ .@matou +"^000000 pontos PVP na ^0000FFArena sem Mob^000000.";;
+					close;
+				}
+				clear;
+				mes .nomeNpc$;
+				mes "Colocações da [^0000FFArena sem Mob^000000] Ranking nº ^0000FF"+.rotacao+":^000000";
+				for ( .@i = 0; .@i < .@char_arena2; .@i++ )
+					mes ( .@i +1 )+". ^0000FF"+ .@nameArena2$[.@i] +"^000000 -> "+ .@count2[.@i] +" pontos";
+				close;
+				break;
+				
+			// ------------- Arena sem Donate ------------- 
+			case 3:
+				
+				if ( !.@char_arena3 ) {
+					clear;
+					mes .nomeNpc$;
+					mes "Ainda não há pontuação no ranking atual (nº "+.rotacao+").";
+					close;
+				}
+				
+				if (select("[>]^0000FF Top 10^000000:[>]^0000FF Sua pontuação^000000") == 2) {
+					query_sql "select arena3_pvp from `char` where char_id = "+ getcharid(0), .@matou;
+					clear;
+					mes .nomeNpc$;
+					mes "Seu personagem possui ^0000FF"+ .@matou +"^000000 pontos PVP na ^0000FFArena sem Donate^000000.";
+					close;
+				}
+				clear;
+				mes .nomeNpc$;
+				mes "Colocações da [^0000FFArena sem Donate^000000] Ranking nº ^0000FF"+.rotacao+":^000000";
+				for ( .@i = 0; .@i < .@char_arena3; .@i++ )
+					mes ( .@i +1 )+". ^0000FF"+ .@nameArena3$[.@i] +"^000000 -> "+ .@count3[.@i] +" pontos";
+				close;
+				break;
+		}
+		return;
+	end;
+	
+// ===================================================================
+//	Ranking MvP - Interação com o NPC
+// ===================================================================
+
+	OnRankingMvP:
+		.@char_mvp = query_sql( "select name, mvp_rank from `char` where mvp_rank > 0 order by mvp_rank desc limit 10", .@nameMvp$, .@count );
+		if ( !.@char_mvp ) {
+			clear;
+			mes .nomeNpc$;
+			mes "Ainda não há pontuação no ranking atual (nº "+.rotacaoMvp+").";
+			close;
+		}
+			
+		if (select("[>]^0000FF Top 10^000000:[>]^0000FF Sua pontuação^000000") == 2) {
+			query_sql "select mvp_rank from `char` where char_id = "+ getcharid(0), .@matou;
+			clear;
+			mes .nomeNpc$;
+			mes "Seu personagem possui ^0000FF"+ .@matou +"^000000 pontos MvP.";
+			close;
+		}
+		clear;
+		mes .nomeNpc$;
+		mes "Colocações [^0000FFMvP^000000] Ranking nº ^0000FF"+.rotacaoMvp+"^000000";
+		for ( .@i = 0; .@i < .@char_mvp; .@i++ )
+			mes ( .@i +1 )+". ^0000FF"+ .@nameMvp$[.@i] +"^000000 -> "+ .@count[.@i] +" pontos";
+		close;
+	end;
+
+// ===================================================================
+//	Ranking WoE - Interação com o NPC
+// ===================================================================
+
+	OnRankingWoE:
+		.@char_killer_woe = query_sql( "SELECT name, woe_killer_rank FROM `char` WHERE woe_killer_rank > 0 ORDER BY woe_killer_rank DESC LIMIT 10", .@nameKillerWoe$, .@countKiller );
+		.@char_breaker_woe = query_sql( "SELECT name, woe_breaker_rank FROM `char` WHERE woe_breaker_rank > 0 ORDER BY woe_breaker_rank DESC LIMIT 10", .@nameBreakerWoe$, .@countBreaker );
+		.@char_guild_woe = query_sql( "SELECT name, guild_rank FROM `guild` WHERE guild_rank > 0 ORDER BY guild_rank DESC LIMIT 10", .@nameGuildWoe$, .@countGuild );
+		if ( !.@char_killer_woe && !.@char_breaker_woe && !.@char_guild_woe ) {
+			clear;
+			mes .nomeNpc$;
+			mes "Ainda não há pontuação no ranking atual (nº "+.rotacaoWoe+").";
+			close;
+		}
+		
+		switch (select("[>]^0000FF Killers WoE^000000:[>]^0000FF Breakers WoE^000000:[>]^0000FF Clãs WoE^000000:")) {
+		
+			// Killers WoE
+			case 1:
+				if ( !.@char_killer_woe ) {
+					clear;
+					mes .nomeNpc$;
+					mes "Ainda não há pontuação no ranking atual (nº "+.rotacaoWoe+").";
+					close;
+				}
+				
+				if (select("[>]^0000FF Top 10^000000:[>]^0000FF Sua pontuação^000000") == 2) {
+					query_sql "SELECT woe_killer_rank FROM `char` WHERE char_id = "+ getcharid(0), .@killer;
+					clear;
+					mes .nomeNpc$;
+					mes "Seu personagem possui ^0000FF"+ .@killer +"^000000 pontos por abates na ^0000FFGuerra do Emperium^000000.";
+					close;
+				}
+				clear;
+				mes .nomeNpc$;
+				mes "Colocações de Killers da [^0000FFGuerra do Emperium^000000] Ranking nº ^0000FF"+.rotacaoWoe+":^000000";
+				for ( .@i = 0; .@i < .@char_killer_woe; .@i++ )
+					mes ( .@i +1 )+". ^0000FF"+ .@nameKillerWoe$[.@i] +"^000000 -> "+ .@countKiller[.@i] +" pontos";
+				close;
+				break;
+			// Breakers WoE
+			case 2:
+				if ( !.@char_breaker_woe ) {
+					clear;
+					mes .nomeNpc$;
+					mes "Ainda não há pontuação no ranking atual (nº "+.rotacaoWoe+").";
+					close;
+				}
+				
+				if (select("[>]^0000FF Top 10^000000:[>]^0000FF Sua pontuação^000000") == 2) {
+					query_sql "SELECT woe_breaker_rank FROM `char` WHERE char_id = "+ getcharid(0), .@breaker;
+					clear;
+					mes .nomeNpc$;
+					mes "Seu personagem possui ^0000FF"+ .@breaker +"^000000 pontos de quebra na ^0000FFGuerra do Emperium^000000.";
+					close;
+				}
+				clear;
+				mes .nomeNpc$;
+				mes "Colocações de Breakers da [^0000FFGuerra do Emperium^000000] Ranking nº ^0000FF"+.rotacaoWoe+":^000000";
+				for ( .@i = 0; .@i < .@char_breaker_woe; .@i++ )
+					mes ( .@i +1 )+". ^0000FF"+ .@nameBreakerWoe$[.@i] +"^000000 -> "+ .@countBreaker[.@i] +" pontos";
+				close;
+				break;
+			// Clãs WoE
+			case 3:
+				if ( !.@char_guild_woe ) {
+					clear;
+					mes .nomeNpc$;
+					mes "Ainda não há pontuação no ranking atual (nº "+.rotacaoWoe+").";
+					close;
+				}
+				
+				if (select("[>]^0000FF Top 10^000000:[>]^0000FF Pontuação do seu Clã^000000") == 2) {
+					.@guild_id = getcharid(2);
+					query_sql "SELECT name, guild_rank FROM `guild` WHERE guild_id = "+ .@guild_id, .@guild_name$, .@guildPoint;
+					clear;
+					mes .nomeNpc$;
+					mes "Seu clã [^0000FF"+.@guild_name$+"^000000] possui ^0000FF"+ .@guildPoint +"^000000 pontos de castelos na ^0000FFGuerra do Emperium^000000.";
+					close;
+				}
+				clear;
+				mes .nomeNpc$;
+				mes "Colocações de Clãs da [^0000FFGuerra do Emperium^000000] Ranking nº ^0000FF"+.rotacaoWoe+":^000000";
+				for ( .@i = 0; .@i < .@char_guild_woe; .@i++ )
+					mes ( .@i +1 )+". ^0000FF"+ .@nameGuildWoe$[.@i] +"^000000 -> "+ .@countGuild[.@i] +" pontos";
+				close;
+				break;
+		}
+	end;
+
+// ===================================================================
+//	Informações - Interação com o NPC
+// ===================================================================
+
+	OnInformation:
+		query_sql( "SELECT DATEDIFF(CURDATE(), `timeStart`) FROM `pvp_rank_archive` WHERE `controleRewards` = 0", .@timePassedPvp);
+		query_sql( "SELECT DATEDIFF(CURDATE(), `timeStart`) FROM `mvp_rank_archive` WHERE `controleRewards` = 0", .@timePassedMvp);
+		query_sql( "SELECT DATEDIFF(CURDATE(), `timeStart`) FROM `woe_rank_archive` WHERE `controleRewards` = 0", .@timePassedWoe);
+		set .tempoRestantePvp, (.tempoDuracaoPvp - .@timePassedPvp);
+		set .tempoRestanteMvp, (.tempoDuracaoMvp - .@timePassedMvp);
+		set .tempoRestanteWoe, (.tempoDuracaoWoe - .@timePassedWoe);
+		mes .nomeNpc$;
+		mes "Em nosso servidor, temos diversos rankings e premiações exclusivas para os três primeiros com maiores pontuações.";
+		mes "O que você gostaria de saber mais?";
+		switch (select("[>]^0000FF Duração^000000:[>]^0000FF Premiações Atuais^000000:")) {
+			// ----- Duração -----
+			case 1:
+				clear;
+				mes .nomeNpc$;
+				mes "Possuímos um sistema rotativo com pontuações e premiações exclusivas para PvP, MvP e WoE.";
+				mes "Ao final de uma rotação, os três primeiros com maiores pontuações receberão prêmios exclusivos e o ranking reiniciará.";
+				next;
+				mes .nomeNpc$;
+				mes "O ranking PvP atual tem duração total de ^0000FF"+.tempoDuracaoPvp+" dias^000000 corridos. (Restam ^FF0000"+.tempoRestantePvp+" dias^000000)";
+				mes "Já o ranking MvP atual tem duração total de ^0000FF"+.tempoDuracaoMvp+" dias^000000 corridos. (Restam ^FF0000"+.tempoRestanteMvp+" dias^000000)";
+				mes "Por fim, o ranking WoE atual tem duração total de ^0000FF"+.tempoDuracaoWoe+" dias^000000 corridos. (Restam ^FF0000"+.tempoRestanteWoe+" dias^000000)";
+				next;
+				mes .nomeNpc$;
+				mes "Após o reinício da rotação, novas premiações serão oferecidas para o ciclo seguinte.";
+				mes "Gostaria de checar as premiações dos rankings?";
+				if(select("[>]^0000FF Sim:Não, obrigado") == 2) {
+					clear;
+					mes .nomeNpc$;
+					mes "Tudo bem, volte quando quiser!";
+					close;
+				} else {
+					goto L_Premiacoes;
+				}
+				break;
+			
+			// ----- Premiações -----
+			case 2:
+				callsub L_Premiacoes;
+				break;
+			
+		}
+		
+	end;
+	
+// ===================================================================
+//	Informações - Premiações da Rotação Atual
+// ===================================================================
+
+	L_Premiacoes:
+	
+		clear;
+		mes .nomeNpc$;
+		mes "Quais premiações você gostaria de visualizar?";
+		
+		switch( select("[>]^0000FF Prêmios PvP^000000:[>]^0000FF Prêmios MvP^000000:[>]^0000FF Prêmios WoE^000000:Cancelar") ) {
+			
+			case 1:
+				clear;
+				mes .nomeNpc$;
+				mes "[Premiações Atuais PvP - Arena Livre]:";
+				mes "Top 1: ^0000FF"+mesitemlink(.premiosArena1Pvp[0])+", "+.quantArena1Pvp[0]+"x.^000000";
+				mes "Top 2: ^0000FF"+mesitemlink(.premiosArena1Pvp[1])+", "+.quantArena1Pvp[1]+"x.^000000";
+				mes "Top 3: ^0000FF"+mesitemlink(.premiosArena1Pvp[2])+", "+.quantArena1Pvp[2]+"x.^000000";
+				mes " ";
+				mes "[Premiações Atuais PvP - Arena sem Mob]:";
+				mes "Top 1: ^0000FF"+mesitemlink(.premiosArena2Pvp[0])+", "+.quantArena2Pvp[0]+"x.^000000";
+				mes "Top 2: ^0000FF"+mesitemlink(.premiosArena2Pvp[1])+", "+.quantArena2Pvp[1]+"x.^000000";
+				mes "Top 3: ^0000FF"+mesitemlink(.premiosArena2Pvp[2])+", "+.quantArena2Pvp[2]+"x.^000000";
+				mes " ";
+				mes "[Premiações Atuais PvP - Arena sem Donate]:";
+				mes "Top 1: ^0000FF"+mesitemlink(.premiosArena3Pvp[0])+", "+.quantArena3Pvp[0]+"x.^000000";
+				mes "Top 2: ^0000FF"+mesitemlink(.premiosArena3Pvp[1])+", "+.quantArena3Pvp[1]+"x.^000000";
+				mes "Top 3: ^0000FF"+mesitemlink(.premiosArena3Pvp[2])+", "+.quantArena3Pvp[2]+"x.^000000";
+				.@checkGmPremios$ = (getgroupid() >= 90) ? ("~ ^0000FFVoltar^000000:~ ^0000FFMais detalhes^000000 [^FF0000GM^000000]") : ("^0000FF~ Voltar^000000");
+				if (select(.@checkGmPremios$) == 1)
+					callsub L_Premiacoes;
+				else
+					break;
+				break;
+			case 2:
+				clear;
+				mes .nomeNpc$;
+				mes "[Premiações Atuais MvP]:";
+				mes "Top 1: ^0000FF"+mesitemlink(.premiosMvp[0])+", "+.quantMvp[0]+"x.^000000";
+				mes "Top 2: ^0000FF"+mesitemlink(.premiosMvp[1])+", "+.quantMvp[1]+"x.^000000";
+				mes "Top 3: ^0000FF"+mesitemlink(.premiosMvp[2])+", "+.quantMvp[2]+"x.^000000";
+				.@checkGmPremios$ = (getgroupid() >= 90) ? ("~ ^0000FFVoltar^000000:~ ^0000FFMais detalhes^000000 [^FF0000GM^000000]") : ("^0000FF~ Voltar^000000");
+				if (select(.@checkGmPremios$) == 1)
+					callsub L_Premiacoes;
+				else
+					break;
+				break;
+			case 3:
+				clear;
+				mes .nomeNpc$;
+				mes "[Premiações Atuais - Killers WoE]:";
+				mes "Top 1: ^0000FF"+mesitemlink(.premiosKillerWoe[0])+", "+.quantKillerWoe[0]+"x.^000000";
+				mes "Top 2: ^0000FF"+mesitemlink(.premiosKillerWoe[1])+", "+.quantKillerWoe[1]+"x.^000000";
+				mes "Top 3: ^0000FF"+mesitemlink(.premiosKillerWoe[2])+", "+.quantKillerWoe[2]+"x.^000000";
+				mes " ";
+				mes "[Premiações Atuais - Breakers WoE]:";
+				mes "Top 1: ^0000FF"+mesitemlink(.premiosBreakerWoe[0])+", "+.quantBreakerWoe[0]+"x.^000000";
+				mes "Top 2: ^0000FF"+mesitemlink(.premiosBreakerWoe[1])+", "+.quantBreakerWoe[1]+"x.^000000";
+				mes "Top 3: ^0000FF"+mesitemlink(.premiosBreakerWoe[2])+", "+.quantBreakerWoe[2]+"x.^000000";
+				mes " ";
+				mes "[Premiações Atuais - Clãs WoE]:";
+				mes "Top 1: ^0000FF"+mesitemlink(.premiosGuildWoe[0])+", "+.quantGuildWoe[0]+"x.^000000";
+				.@checkGmPremios$ = (getgroupid() >= 90) ? ("~ ^0000FFVoltar^000000:~ ^0000FFMais detalhes^000000 [^FF0000GM^000000]") : ("^0000FF~ Voltar^000000");
+				if (select(.@checkGmPremios$) == 1)
+					callsub L_Premiacoes;
+				else
+					break;
+			case 4:
+				clear;
+				mes .nomeNpc$;
+				mes "Estarei por aqui caso queira mais informações!";
+				close;
+				break;
+			
+		}
+		if (getgroupid() >= 90) {
+			clear;
+			mes .nomeNpc$;
+			mes "O que mais você gostaria?";
+			switch(select("[>]^0000FF Mudar Premiações^000000:[>]^0000FF Mais informações^000000:Voltar")) {
+				// Mudar Premiações
+				case 1: 
+					// Mudar PvP, MvP, WoE
+					switch(select("[>]^0000FF Premiações PvP^000000:[>]^0000FF Premiações MvP^000000:[>]^0000FF Premiações WoE^000000")) {
+						
+						case 1: callsub OnPremiosPvp; break;
+						case 2: callsub OnPremiosMvp; break;
+						case 3: callsub OnPremiosWoe; break;
+						
+					}
+					break;
+					
+				// Mais informações
+				case 2: clear; callsub OnInformation; break;
+				// Volta ao menu GM
+				case 3: clear; callsub L_GMmenu; break;
+			}
+		} else {
+			next;
+			mes .nomeNpc$;
+			mes "E aí, preparado para competir em um de nossos rankings?";
+			close;
+		}
+
+	end;
+	
+// ===================================================================
+//	Alteração das Premiações de PvP
+// ===================================================================
+
+	OnPremiosPvp:
+		.@gmNpc$ = "[^FF0000 --- GM Menu --- ^000000]";
+		clear;
+		mes .@gmNpc$;
+		mes "Qual Arena você deseja editar?";
+		switch (select("~ ^0000FFArena Livre^000000:~ ^0000FFArena sem Mob^000000:~ ^0000FFArena sem Donate^000000:Voltar")) {
+			
+			// --------------- Arena Livre -----------------
+			case 1:
+				.@loopControl = 0;
+				clear;
+				mes .@gmNpc$;
+				mes "Qual posição você quer alterar da [^0000FFArena Livre^000000]?";
+				switch(select("~ ^0000FFTop 1^000000:~ ^0000FFTop 2^000000:~ ^0000FFTop 3^000000")) {
+					case 1: break;
+					case 2: .@loopControl = 1; break;
+					case 3: .@loopControl = 2; break;
+				}
+				// ----- Top 1 -----
+				
+				while ( .@loopControl == 0 ) {
+					// ----- Top 1 -----
+					clear;
+					mes .@gmNpc$;
+					mes "Escolha um ID para o [^0000FFTop 1 - PvP - Arena Livre^000000]:";
+					input .@top1pvpID; if (!.@top1pvpID || getiteminfo(.@top1pvpID, 0) == -1) .@top1pvpID = 501;
+					clear;
+					mes .@gmNpc$;
+					mes "Você escolheu o item ^0000FF"+mesitemlink(.@top1pvpID)+"^000000. Está correto?";
+					if (select("Sim:Não") == 1) {
+						clear;
+						mes .@gmNpc$;
+						mes "Agora escolha a quantidade a ser dada:";
+						input .@top1pvpQnt; if (!.@top1pvpQnt) .@top1pvpQnt = 1;
+						clear;
+						mes .@gmNpc$;
+						mes "Você dar ^0000FF"+.@top1pvpQnt+"^000000 itens para o [^0000FFTop 1 - PvP - Arena Livre^000000]. Está correto?";
+						if (select("Sim:Não") == 1) {
+							clear;
+							mes .@gmNpc$;
+							mes "[ Confirme suas alterações ]";
+							mes "Arena: ^0000FFArena Livre^000000";
+							mes "Ranking: ^0000FFAtual^000000";
+							mes "Posição: ^0000FFTop 1^000000";
+							mes "Prêmio: ^0000FF"+mesitemlink(.@top1pvpID)+"^000000";
+							mes "Quantidade: ^0000FF"+.@top1pvpQnt+"^000000";
+							if (select("Confirma:Não") == 1) {
+								set .premiosArena1Pvp[0], .@top1pvpID;
+								set .quantArena1Pvp[0], .@top1pvpQnt;
+								query_sql "update `pvp_rank_archive` set arena1Top1 = "+.@top1pvpID+", qntArena1Top1 = "+.@top1pvpQnt+" where `controleRewards` = 0";
+								clear;
+								mes .@gmNpc$;
+								mes "Premiações salvas para o ^0000FFTop 1 - Pvp - Arena Livre^000000!";
+								.@loopControl = 1;
+								sleep2 1000;
+								goto OnPremiosPvp;
+							}
+						}
+					}
+				}
+				
+				// ----- Top 2 -----
+				while ( .@loopControl == 1 ) {
+					clear;
+					mes .@gmNpc$;
+					mes "Escolha um ID para o [^0000FFTop 2 - PvP - Arena Livre^000000]:";
+					input .@top2pvpID; if (!.@top2pvpID || getiteminfo(.@top2pvpID, 0) == -1) .@top2pvpID = 501;
+					clear;
+					mes .@gmNpc$;
+					mes "Você escolheu o item ^0000FF"+mesitemlink(.@top2pvpID)+"^000000. Está correto?";
+					if (select("Sim:Não") == 1) {
+						clear;
+						mes .@gmNpc$;
+						mes "Agora escolha a quantidade a ser dada:";
+						input .@top2pvpQnt; if (!.@top2pvpQnt) .@top2pvpQnt = 1;
+						clear;
+						mes .@gmNpc$;
+						mes "Você dar ^0000FF"+.@top2pvpQnt+"^000000 itens para o [^0000FFTop 2 - PvP - Arena Livre^000000]. Está correto?";
+						if (select("Sim:Não") == 1) {
+							clear;
+							mes .@gmNpc$;
+							mes "[ Confirme suas alterações ]";
+							mes "Arena: ^0000FFArena Livre^000000";
+							mes "Ranking: ^0000FFAtual^000000";
+							mes "Posição: ^0000FFTop 2^000000";
+							mes "Prêmio: ^0000FF"+mesitemlink(.@top2pvpID)+"^000000";
+							mes "Quantidade: ^0000FF"+.@top2pvpQnt+"^000000";
+							if (select("Confirma:Não") == 1) {
+								set .premiosArena1Pvp[1], .@top2pvpID;
+								set .quantArena1Pvp[1], .@top2pvpQnt;
+								query_sql "update `pvp_rank_archive` set arena1Top2 = "+.@top2pvpID+", qntArena1Top2 = "+.@top2pvpQnt+" where `controleRewards` = 0";
+								clear; 
+								mes .@gmNpc$;
+								mes "Premiações salvas para o ^0000FFTop 2 - Pvp - Arena Livre^000000!";
+								.@loopControl = 2;
+								sleep2 1000;
+								goto OnPremiosPvp;
+							}
+						}
+					}
+				}
+				
+				// ----- Top 3 -----
+				while ( .@loopControl == 2 ) {
+					clear;
+					mes .@gmNpc$;
+					mes "Escolha um ID para o [^0000FFTop 3 - PvP - Arena Livre^000000]:";
+					input .@top3pvpID; if (!.@top3pvpID || getiteminfo(.@top3pvpID, 0) == -1) .@top3pvpID = 501;
+					clear;
+					mes .@gmNpc$;
+					mes "Você escolheu o item ^0000FF"+mesitemlink(.@top3pvpID)+"^000000. Está correto?";
+					if (select("Sim:Não") == 1) {
+						clear;
+						mes .@gmNpc$;
+						mes "Agora escolha a quantidade a ser dada:";
+						input .@top3pvpQnt;
+						clear;
+						mes .@gmNpc$;
+						mes "Você dar ^0000FF"+.@top3pvpQnt+"^000000 itens para o [^0000FFTop 3 - PvP - Arena Livre^000000]. Está correto?";
+						if (select("Sim:Não") == 1) {
+							clear;
+							mes .@gmNpc$;
+							mes "[ Confirme suas alterações ]";
+							mes "Arena: ^0000FFArena Livre^000000";
+							mes "Ranking: ^0000FFAtual^000000";
+							mes "Posição: ^0000FFTop 3^000000";
+							mes "Prêmio: ^0000FF"+mesitemlink(.@top3pvpID)+"^000000";
+							mes "Quantidade: ^0000FF"+.@top3pvpQnt+"^000000";
+							if (select("Confirma:Não") == 1) {
+								set .premiosArena1Pvp[2], .@top3pvpID;
+								set .quantArena1Pvp[2], .@top3pvpQnt;
+								query_sql "update `pvp_rank_archive` set arena1Top3 = "+.@top3pvpID+", qntArena1Top3 = "+.@top3pvpQnt+" where `controleRewards` = 0";
+								clear; 
+								mes .@gmNpc$;
+								mes "Premiações salvas para o ^0000FFTop 3 - Pvp - Arena Livre^000000!";
+								.@loopControl = 3;
+								sleep2 1000;
+								goto OnPremiosPvp;
+							}
+						}
+					}
+				}
+			
+			break;
+			
+			// --------------- Arena sem Mob -----------------
+			case 2:
+				.@loopControl = 0;
+				clear;
+				mes .@gmNpc$;
+				mes "Qual posição você quer alterar da [^0000FFArena sem Mob^000000]?";
+				switch(select("~ ^0000FFTop 1^000000:~ ^0000FFTop 2^000000:~ ^0000FFTop 3^000000")) {
+					case 1: break;
+					case 2: .@loopControl = 1; break;
+					case 3: .@loopControl = 2; break;
+				}
+				// ----- Top 1 -----
+				while ( .@loopControl == 0 ) {
+					// ----- Top 1 -----
+					clear;
+					mes .@gmNpc$;
+					mes "Escolha um ID para o [^0000FFTop 1 - PvP - Arena sem Mob^000000]:";
+					input .@top1pvpID; if (!.@top1pvpID || getiteminfo(.@top1pvpID, 0) == -1) .@top1pvpID = 501;
+					clear;
+					mes .@gmNpc$;
+					mes "Você escolheu o item ^0000FF"+mesitemlink(.@top1pvpID)+"^000000. Está correto?";
+					if (select("Sim:Não") == 1) {
+						clear;
+						mes .@gmNpc$;
+						mes "Agora escolha a quantidade a ser dada:";
+						input .@top1pvpQnt; if (!.@top1pvpQnt) .@top1pvpQnt = 1;
+						clear;
+						mes .@gmNpc$;
+						mes "Você dar ^0000FF"+.@top1pvpQnt+"^000000 itens para o [^0000FFTop 1 - PvP - Arena sem Mob^000000]. Está correto?";
+						if (select("Sim:Não") == 1) {
+							clear;
+							mes .@gmNpc$;
+							mes "[ Confirme suas alterações ]";
+							mes "Arena: ^0000FFArena sem Mob^000000";
+							mes "Ranking: ^0000FFAtual^000000";
+							mes "Posição: ^0000FFTop 1^000000";
+							mes "Prêmio: ^0000FF"+mesitemlink(.@top1pvpID)+"^000000";
+							mes "Quantidade: ^0000FF"+.@top1pvpQnt+"^000000";
+							if (select("Confirma:Não") == 1) {
+								set .premiosArena2Pvp[0], .@top1pvpID;
+								set .quantArena2Pvp[0], .@top1pvpQnt;
+								query_sql "update `pvp_rank_archive` set arena2Top1 = "+.@top1pvpID+", qntArena2Top1 = "+.@top1pvpQnt+" where `controleRewards` = 0";
+								clear;
+								mes .@gmNpc$;
+								mes "Premiações salvas para o ^0000FFTop 1 - Pvp - Arena sem Mob^000000!";
+								.@loopControl = 1;
+								sleep2 1000;
+								goto OnPremiosPvp;
+							}
+						}
+					}
+				}
+				
+				// ----- Top 2 -----
+				while ( .@loopControl == 1 ) {
+					clear;
+					mes .@gmNpc$;
+					mes "Escolha um ID para o [^0000FFTop 2 - PvP - Arena sem Mob^000000]:";
+					input .@top2pvpID; if (!.@top2pvpID || getiteminfo(.@top2pvpID, 0) == -1) .@top2pvpID = 501;
+					clear;
+					mes .@gmNpc$;
+					mes "Você escolheu o item ^0000FF"+mesitemlink(.@top2pvpID)+"^000000. Está correto?";
+					if (select("Sim:Não") == 1) {
+						clear;
+						mes .@gmNpc$;
+						mes "Agora escolha a quantidade a ser dada:";
+						input .@top2pvpQnt; if (!.@top2pvpQnt) .@top2pvpQnt = 1;
+						clear;
+						mes .@gmNpc$;
+						mes "Você dar ^0000FF"+.@top2pvpQnt+"^000000 itens para o [^0000FFTop 2 - PvP - Arena sem Mob^000000]. Está correto?";
+						if (select("Sim:Não") == 1) {
+							clear;
+							mes .@gmNpc$;
+							mes "[ Confirme suas alterações ]";
+							mes "Arena: ^0000FFArena sem Mob^000000";
+							mes "Ranking: ^0000FFAtual^000000";
+							mes "Posição: ^0000FFTop 2^000000";
+							mes "Prêmio: ^0000FF"+mesitemlink(.@top2pvpID)+"^000000";
+							mes "Quantidade: ^0000FF"+.@top2pvpQnt+"^000000";
+							if (select("Confirma:Não") == 1) {
+								set .premiosArena2Pvp[1], .@top2pvpID;
+								set .quantArena2Pvp[1], .@top2pvpQnt;
+								query_sql "update `pvp_rank_archive` set arena2Top2 = "+.@top2pvpID+", qntArena2Top2 = "+.@top2pvpQnt+" where `controleRewards` = 0";
+								clear; 
+								mes .@gmNpc$;
+								mes "Premiações salvas para o ^0000FFTop 2 - Pvp - Arena sem Mob^000000!";
+								.@loopControl = 2;
+								sleep2 1000;
+								goto OnPremiosPvp;
+							}
+						}
+					}
+				}
+				
+				// ----- Top 3 -----
+				while ( .@loopControl == 2 ) {
+					clear;
+					mes .@gmNpc$;
+					mes "Escolha um ID para o [^0000FFTop 3 - PvP - Arena sem Mob^000000]:";
+					input .@top3pvpID; if (!.@top3pvpID || getiteminfo(.@top3pvpID, 0) == -1) .@top3pvpID = 501;
+					clear;
+					mes .@gmNpc$;
+					mes "Você escolheu o item ^0000FF"+mesitemlink(.@top3pvpID)+"^000000. Está correto?";
+					if (select("Sim:Não") == 1) {
+						clear;
+						mes .@gmNpc$;
+						mes "Agora escolha a quantidade a ser dada:";
+						input .@top3pvpQnt;
+						clear;
+						mes .@gmNpc$;
+						mes "Você dar ^0000FF"+.@top3pvpQnt+"^000000 itens para o [^0000FFTop 3 - PvP - Arena sem Mob^000000]. Está correto?";
+						if (select("Sim:Não") == 1) {
+							clear;
+							mes .@gmNpc$;
+							mes "[ Confirme suas alterações ]";
+							mes "Arena: ^0000FFArena sem Mob^000000";
+							mes "Ranking: ^0000FFAtual^000000";
+							mes "Posição: ^0000FFTop 3^000000";
+							mes "Prêmio: ^0000FF"+mesitemlink(.@top3pvpID)+"^000000";
+							mes "Quantidade: ^0000FF"+.@top3pvpQnt+"^000000";
+							if (select("Confirma:Não") == 1) {
+								set .premiosArena2Pvp[2], .@top3pvpID;
+								set .quantArena2Pvp[2], .@top3pvpQnt;
+								query_sql "update `pvp_rank_archive` set arena2Top3 = "+.@top3pvpID+", qntArena2Top3 = "+.@top3pvpQnt+" where `controleRewards` = 0";
+								clear; 
+								mes .@gmNpc$;
+								mes "Premiações salvas para o ^0000FFTop 3 - Pvp - Arena sem Mob^000000!";
+								.@loopControl = 3;
+								sleep2 1000;
+								goto OnPremiosPvp;
+							}
+						}
+					}
+				}
+				close;
+			
+			break;
+			
+			// --------------- Arena sem Donate -----------------
+			case 3:
+				.@loopControl = 0;
+				clear;
+				mes .@gmNpc$;
+				mes "Qual posição você quer alterar da [^0000FFArena sem Donate^000000]?";
+				switch(select("~ ^0000FFTop 1^000000:~ ^0000FFTop 2^000000:~ ^0000FFTop 3^000000")) {
+					case 1: break;
+					case 2: .@loopControl = 1; break;
+					case 3: .@loopControl = 2; break;
+				}
+				// ----- Top 1 -----
+				while ( .@loopControl == 0 ) {
+					// ----- Top 1 -----
+					clear;
+					mes .@gmNpc$;
+					mes "Escolha um ID para o [^0000FFTop 1 - PvP - Arena sem Donate^000000]:";
+					input .@top1pvpID; if (!.@top1pvpID || getiteminfo(.@top1pvpID, 0) == -1) .@top1pvpID = 501;
+					clear;
+					mes .@gmNpc$;
+					mes "Você escolheu o item ^0000FF"+mesitemlink(.@top1pvpID)+"^000000. Está correto?";
+					if (select("Sim:Não") == 1) {
+						clear;
+						mes .@gmNpc$;
+						mes "Agora escolha a quantidade a ser dada:";
+						input .@top1pvpQnt; if (!.@top1pvpQnt) .@top1pvpQnt = 1;
+						clear;
+						mes .@gmNpc$;
+						mes "Você dar ^0000FF"+.@top1pvpQnt+"^000000 itens para o [^0000FFTop 1 - PvP - Arena sem Donate^000000]. Está correto?";
+						if (select("Sim:Não") == 1) {
+							clear;
+							mes .@gmNpc$;
+							mes "[ Confirme suas alterações ]";
+							mes "Arena: ^0000FFArena sem Donate^000000";
+							mes "Ranking: ^0000FFAtual^000000";
+							mes "Posição: ^0000FFTop 1^000000";
+							mes "Prêmio: ^0000FF"+mesitemlink(.@top1pvpID)+"^000000";
+							mes "Quantidade: ^0000FF"+.@top1pvpQnt+"^000000";
+							if (select("Confirma:Não") == 1) {
+								set .premiosArena3Pvp[0], .@top1pvpID;
+								set .quantArena3Pvp[0], .@top1pvpQnt;
+								query_sql "update `pvp_rank_archive` set arena3Top1 = "+.@top1pvpID+", qntArena3Top1 = "+.@top1pvpQnt+" where `controleRewards` = 0";
+								clear;
+								mes .@gmNpc$;
+								mes "Premiações salvas para o ^0000FFTop 1 - Pvp - Arena sem Donate^000000!";
+								.@loopControl = 1;
+								sleep2 1000;
+								goto OnPremiosPvp;
+							}
+						}
+					}
+				}
+				
+				// ----- Top 2 -----
+				while ( .@loopControl == 1 ) {
+					clear;
+					mes .@gmNpc$;
+					mes "Escolha um ID para o [^0000FFTop 2 - PvP - Arena sem Donate^000000]:";
+					input .@top2pvpID; if (!.@top2pvpID || getiteminfo(.@top2pvpID, 0) == -1) .@top2pvpID = 501;
+					clear;
+					mes .@gmNpc$;
+					mes "Você escolheu o item ^0000FF"+mesitemlink(.@top2pvpID)+"^000000. Está correto?";
+					if (select("Sim:Não") == 1) {
+						clear;
+						mes .@gmNpc$;
+						mes "Agora escolha a quantidade a ser dada:";
+						input .@top2pvpQnt; if (!.@top2pvpQnt) .@top2pvpQnt = 1;
+						clear;
+						mes .@gmNpc$;
+						mes "Você dar ^0000FF"+.@top2pvpQnt+"^000000 itens para o [^0000FFTop 2 - PvP - Arena sem Donate^000000]. Está correto?";
+						if (select("Sim:Não") == 1) {
+							clear;
+							mes .@gmNpc$;
+							mes "[ Confirme suas alterações ]";
+							mes "Arena: ^0000FFArena sem Donate^000000";
+							mes "Ranking: ^0000FFAtual^000000";
+							mes "Posição: ^0000FFTop 2^000000";
+							mes "Prêmio: ^0000FF"+mesitemlink(.@top2pvpID)+"^000000";
+							mes "Quantidade: ^0000FF"+.@top2pvpQnt+"^000000";
+							if (select("Confirma:Não") == 1) {
+								set .premiosArena3Pvp[1], .@top2pvpID;
+								set .quantArena3Pvp[1], .@top2pvpQnt;
+								query_sql "update `pvp_rank_archive` set arena3Top2 = "+.@top2pvpID+", qntArena3Top2 = "+.@top2pvpQnt+" where `controleRewards` = 0";
+								clear; 
+								mes .@gmNpc$;
+								mes "Premiações salvas para o ^0000FFTop 2 - Pvp - Arena sem Donate^000000!";
+								.@loopControl = 2;
+								sleep2 1000;
+								goto OnPremiosPvp;
+							}
+						}
+					}
+				}
+				
+				// ----- Top 3 -----
+				while ( .@loopControl == 2 ) {
+					clear;
+					mes .@gmNpc$;
+					mes "Escolha um ID para o [^0000FFTop 3 - PvP - Arena sem Donate^000000]:";
+					input .@top3pvpID; if (!.@top3pvpID || getiteminfo(.@top3pvpID, 0) == -1) .@top3pvpID = 501;
+					clear;
+					mes .@gmNpc$;
+					mes "Você escolheu o item ^0000FF"+mesitemlink(.@top3pvpID)+"^000000. Está correto?";
+					if (select("Sim:Não") == 1) {
+						clear;
+						mes .@gmNpc$;
+						mes "Agora escolha a quantidade a ser dada:";
+						input .@top3pvpQnt;
+						clear;
+						mes .@gmNpc$;
+						mes "Você dar ^0000FF"+.@top3pvpQnt+"^000000 itens para o [^0000FFTop 3 - PvP - Arena sem Donate^000000]. Está correto?";
+						if (select("Sim:Não") == 1) {
+							clear;
+							mes .@gmNpc$;
+							mes "[ Confirme suas alterações ]";
+							mes "Arena: ^0000FFArena sem Donate^000000";
+							mes "Ranking: ^0000FFAtual^000000";
+							mes "Posição: ^0000FFTop 3^000000";
+							mes "Prêmio: ^0000FF"+mesitemlink(.@top3pvpID)+"^000000";
+							mes "Quantidade: ^0000FF"+.@top3pvpQnt+"^000000";
+							if (select("Confirma:Não") == 1) {
+								set .premiosArena3Pvp[2], .@top3pvpID;
+								set .quantArena3Pvp[2], .@top3pvpQnt;
+								query_sql "update `pvp_rank_archive` set arena3Top3 = "+.@top3pvpID+", qntArena3Top3 = "+.@top3pvpQnt+" where `controleRewards` = 0";
+								clear;
+								mes .@gmNpc$;
+								mes "Premiações salvas para o ^0000FFTop 3 - Pvp - Arena sem Donate^000000!";
+								.@loopControl = 3;
+								sleep2 1000;
+								goto OnPremiosPvp;
+							}
+						}
+					}
+				}
+			break;
+			
+			// ----- Voltar -----
+			case 4: clear; goto L_GMmenu; break;
+		}
+		return;
+	end;
+	
+// ===================================================================
+//	Visualização / Alteração das durações de Rankings PvP/MvP/WoE
+// ===================================================================
+	
+	OnDuracaoRanking:
+		
+		query_sql( "SELECT DATEDIFF(CURDATE(), `timeStart`) FROM `pvp_rank_archive` WHERE `controleRewards` = 0", .@timePassedPvp);
+		query_sql( "SELECT DATEDIFF(CURDATE(), `timeStart`) FROM `mvp_rank_archive` WHERE `controleRewards` = 0", .@timePassedMvp);
+		query_sql( "SELECT DATEDIFF(CURDATE(), `timeStart`) FROM `woe_rank_archive` WHERE `controleRewards` = 0", .@timePassedWoe);
+		
+		.@gmNpc$ = "[^FF0000 --- GM Menu --- ^000000]";
+		clear;
+		mes .@gmNpc$;
+		mes "Selecione o Ranking para alterações:";
+		switch (select("~ ^0000FFDuração PvP^000000:~ ^0000FFDuração MvP^000000:~ ^0000FFDuração WoE^000000")) {
+			
+			// Duração PvP
+			case 1:
+				switch(select("~ ^0000FFAlterar Nº de Dias^000000:~ ^0000FFResetar Ranking PvP^000000:Voltar")) {
+					case 1: .@loopControl = 0; break;
+					case 2: .@loopControl = 1; break;
+					case 3: callsub L_GMmenu; break;
+				}
+				
+				while (.@loopControl == 0) {
+					// ----- Alterar Nº de Dias -----
+					clear;
+					mes .@gmNpc$;
+					mes "Escolha o número de dias para o [^0000FFRanking PvP^000000] (Atual: ^0000FF"+.tempoDuracaoPvp+" dias^000000):";
+					input .@numDias; if (!.@numDias || .@numDias > 365) .@numDias = 1;
+					clear;
+					mes .@gmNpc$;
+					mes "Você escolheu alterar o número de dias para ^0000FF"+.@numDias+"^000000. Está correto?";
+					if (select("Sim:Não") == 1) {
+						clear;
+						mes .@gmNpc$;
+						mes "[ Confirme suas alterações ]";
+						mes "Ranking: ^0000FFAtual^000000";
+						mes "Dias Restantes: ^0000FF"+.tempoRestantePvp+"^000000";
+						mes "Duração Anterior: ^FF0000"+.tempoDuracaoPvp+" dias^000000";
+						mes "Nova Duração: ^0000FF"+.@numDias+" dias^000000";
+						if (select("Confirma:Não") == 1) {
+							set .tempoDuracaoPvp, .@numDias;
+							set .tempoRestantePvp, (.@numDias - .@timePassedPvp);
+							query_sql "update `pvp_rank_archive` set timeLimit = "+.@numDias+" where `controleRewards` = 0";
+							clear;
+							mes .@gmNpc$;
+							mes "A nova duração para ^0000FFRanking PvP^000000 foi salva! (^0000FF"+.@numDias+" dias^000000)";
+							.@loopControl = 2;
+							sleep2 1000; clear;
+							callsub L_GMmenu;
+						}
+					}
+				}
+				
+				while (.@loopControl == 1) {
+					// ----- Resetar Ranking -----
+					clear;
+					mes .@gmNpc$;
+					mes "[Informações do Ranking PvP]";
+					mes "Ranking Nº: ^0000FF"+.rotacao+"^000000";
+					mes "Duração: ^0000FF"+.tempoDuracaoPvp+"^000000";
+					mes "Dias Restantes: ^0000FF"+.tempoRestantePvp+"^000000";
+					next;
+					mes .@gmNpc$;
+					mes "Ao resetar o Ranking PvP o seguinte acontecerá:";
+					mes "^0000FF1)^000000 O Ranking reiniciará do dia 0.";
+					mes "^0000FF2)^000000 Todos os jogadores perderão seus pontos.";
+					if (select("^0000FFSim, resetar^000000:Voltar") == 2) {
+						clear;
+						callsub L_GMmenu;
+					}
+					clear;
+					mes .@gmNpc$;
+					mes "Insira a duração do Ranking PvP após o reset:";
+					input .@numDias; if (!.@numDias) .@numDias = 1;
+					clear;
+					mes .@gmNpc$;
+					mes "Você escolheu ^0000FF"+.@numDias+" dias^000000 para a duração. Está correto?";
+					if (select("Sim:Não") == 2)
+						callsub L_GMmenu;
+					clear;
+					mes .@gmNpc$;
+					mes "[ Confirme suas alterações ]";
+					mes "Ranking: ^0000FFAtual^000000";
+					mes "Próxima Duração: ^FF0000"+.@numDias+" dias^000000";
+					if (select("Confirma:Não") == 1) {
+						query_sql ( "UPDATE `pvp_rank_archive` SET timeStart = CURDATE(), timeLimit = "+.@numDias+"  WHERE `controleRewards` = 0" );
+						query_sql( "SELECT DATEDIFF(CURDATE(), `timeStart`) FROM `pvp_rank_archive` WHERE `controleRewards` = 0", .@timePassedPvp);
+						query_sql ( "UPDATE `char` SET `arena1_pvp` = 0, `arena2_pvp` = 0, `arena3_pvp` = 0");
+						set .tempoRestantePvp, (.@numDias - .@timePassedPvp);
+						set .tempoDuracaoPvp, .@numDias;
+						clear;
+						mes .@gmNpc$;
+						mes "O ranking PvP foi resetado com sucesso.";
+						mes "Duração Atual: ^0000FF"+.@numDias+"^000000";
+						mes "Dias Restantes: ^0000FF"+.tempoRestantePvp+"^000000";
+						sleep2 1000;
+						clear;
+						callsub L_GMmenu;
+					}
+				}
+				
+				break;
+			// Duração MvP
+			case 2: 
+			
+				switch(select("~ ^0000FFAlterar Nº de Dias^000000:~ ^0000FFResetar Ranking MvP^000000:Voltar")) {
+					case 1: .@loopControl = 0; break;
+					case 2: .@loopControl = 1; break;
+					case 3: callsub L_GMmenu; break;
+				}
+				
+				while (.@loopControl == 0) {
+					// ----- Alterar Nº de Dias -----
+					clear;
+					mes .@gmNpc$;
+					mes "Escolha o número de dias para o [^0000FFRanking MvP^000000] (Atual: ^0000FF"+.tempoDuracaoMvp+" dias^000000):";
+					input .@numDias; if (!.@numDias || .@numDias > 365) .@numDias = 1;
+					clear;
+					mes .@gmNpc$;
+					mes "Você escolheu alterar o número de dias para ^0000FF"+.@numDias+"^000000. Está correto?";
+					if (select("Sim:Não") == 1) {
+						clear;
+						mes .@gmNpc$;
+						mes "[ Confirme suas alterações ]";
+						mes "Ranking: ^0000FFAtual / MvP^000000";
+						mes "Dias Restantes: ^0000FF"+.tempoRestanteMvp+"^000000";
+						mes "Duração Anterior: ^FF0000"+.tempoDuracaoMvp+" dias^000000";
+						mes "Nova Duração: ^0000FF"+.@numDias+" dias^000000";
+						if (select("Confirma:Não") == 1) {
+							set .tempoDuracaoMvp, .@numDias;
+							query_sql "update `mvp_rank_archive` set timeLimit = "+.@numDias+" where `controleRewards` = 0";
+							clear;
+							mes .@gmNpc$;
+							mes "A nova duração para ^0000FFRanking MvP^000000 foi salva! (^0000FF"+.@numDias+" dias^000000)";
+							.@loopControl = 2;
+							sleep2 1000; clear;
+							callsub L_GMmenu;
+						}
+					}
+				}
+				
+				while (.@loopControl == 1) {
+					// ----- Resetar Ranking -----
+					clear;
+					mes .@gmNpc$;
+					mes "[Informações do Ranking MvP]";
+					mes "Ranking Nº: ^0000FF"+.rotacao+"^000000";
+					mes "Duração: ^0000FF"+.tempoDuracaoMvp+"^000000";
+					mes "Dias Restantes: ^0000FF"+.tempoRestanteMvp+"^000000";
+					next;
+					mes .@gmNpc$;
+					mes "Ao resetar o Ranking MvP o seguinte acontecerá:";
+					mes "^0000FF1)^000000 O Ranking reiniciará do dia 0.";
+					mes "^0000FF2)^000000 Todos os jogadores perderão seus pontos.";
+					if (select("^0000FFSim, resetar^000000:Voltar") == 2) {
+						clear;
+						callsub L_GMmenu;
+					}
+					clear;
+					mes .@gmNpc$;
+					mes "Insira a duração do Ranking MvP após o reset:";
+					input .@numDias; if (!.@numDias) .@numDias = 1;
+					clear;
+					mes .@gmNpc$;
+					mes "Você escolheu ^0000FF"+.@numDias+" dias^000000 para a duração. Está correto?";
+					if (select("Sim:Não") == 2)
+						clear; callsub L_GMmenu;
+					clear;
+					mes .@gmNpc$;
+					mes "[ Confirme suas alterações ]";
+					mes "Ranking: ^0000FFAtual / MvP^000000";
+					mes "Próxima Duração: ^FF0000"+.@numDias+" dias^000000";
+					if (select("Confirma:Não") == 1) {
+						query_sql ( "UPDATE `mvp_rank_archive` SET timeStart = CURDATE(), timeLimit = "+.@numDias+"  WHERE `controleRewards` = 0" );
+						query_sql( "SELECT DATEDIFF(CURDATE(), `timeStart`) FROM `mvp_rank_archive` WHERE `controleRewards` = 0", .@timePassedMvp);
+						query_sql ( "UPDATE `char` SET `mvp_rank` = 0");
+						set .tempoRestanteMvp, (.@numDias - .@timePassedMvp);
+						set .tempoDuracaoMvp, .@numDias;
+						clear;
+						mes .@gmNpc$;
+						mes "O ranking MvP foi resetado com sucesso.";
+						mes "Duração Atual: ^0000FF"+.@numDias+"^000000";
+						mes "Dias Restantes: ^0000FF"+.tempoRestanteMvp+"^000000";
+						sleep2 1000; clear;
+						callsub L_GMmenu;
+					}
+				}
+				
+				break;
+				
+			// Duração WoE
+			case 3:
+				switch(select("~ ^0000FFAlterar Nº de Dias^000000:~ ^0000FFResetar Ranking WoE^000000:Voltar")) {
+					case 1: .@loopControl = 0; break;
+					case 2: .@loopControl = 1; break;
+					case 3: callsub L_GMmenu; break;
+				}
+				
+				while (.@loopControl == 0) {
+					// ----- Alterar Nº de Dias -----
+					clear;
+					mes .@gmNpc$;
+					mes "Escolha o número de dias para o [^0000FFRanking WoE^000000] (Atual: ^0000FF"+.tempoDuracaoWoe+" dias^000000):";
+					input .@numDias; if (!.@numDias || .@numDias > 365) .@numDias = 1;
+					clear;
+					mes .@gmNpc$;
+					mes "Você escolheu alterar o número de dias para ^0000FF"+.@numDias+"^000000. Está correto?";
+					if (select("Sim:Não") == 1) {
+						clear;
+						mes .@gmNpc$;
+						mes "[ Confirme suas alterações ]";
+						mes "Ranking: ^0000FFAtual^000000";
+						mes "Dias Restantes: ^0000FF"+.tempoRestanteWoe+"^000000";
+						mes "Duração Anterior: ^FF0000"+.tempoDuracaoWoe+" dias^000000";
+						mes "Nova Duração: ^0000FF"+.@numDias+" dias^000000";
+						if (select("Confirma:Não") == 1) {
+							set .tempoDuracaoWoe, .@numDias;
+							set .tempoRestanteWoe, (.@numDias - .@timePassedWoe);
+							query_sql "update `woe_rank_archive` set timeLimit = "+.@numDias+" where `controleRewards` = 0";
+							clear;
+							mes .@gmNpc$;
+							mes "A nova duração para ^0000FFRanking WoE^000000 foi salva! (^0000FF"+.@numDias+" dias^000000)";
+							.@loopControl = 2;
+							sleep2 1000; clear;
+							callsub L_GMmenu;
+						}
+					}
+				}
+				
+				while (.@loopControl == 1) {
+					// ----- Resetar Ranking -----
+					clear;
+					mes .@gmNpc$;
+					mes "[Informações do Ranking WoE]";
+					mes "Ranking Nº: ^0000FF"+.rotacaoWoe+"^000000";
+					mes "Duração: ^0000FF"+.tempoDuracaoWoe+"^000000";
+					mes "Dias Restantes: ^0000FF"+.tempoRestanteWoe+"^000000";
+					next;
+					mes .@gmNpc$;
+					mes "Ao resetar o Ranking WoE o seguinte acontecerá:";
+					mes "^0000FF1)^000000 O Ranking reiniciará do dia 0.";
+					mes "^0000FF2)^000000 Todos os jogadores perderão seus pontos.";
+					if (select("^0000FFSim, resetar^000000:Voltar") == 2) {
+						clear;
+						callsub L_GMmenu;
+					}
+					clear;
+					mes .@gmNpc$;
+					mes "Insira a duração do Ranking WoE após o reset:";
+					input .@numDias; if (!.@numDias) .@numDias = 1;
+					clear;
+					mes .@gmNpc$;
+					mes "Você escolheu ^0000FF"+.@numDias+" dias^000000 para a duração. Está correto?";
+					if (select("Sim:Não") == 2)
+						callsub L_GMmenu;
+					clear;
+					mes .@gmNpc$;
+					mes "[ Confirme suas alterações ]";
+					mes "Ranking: ^0000FFAtual^000000";
+					mes "Próxima Duração: ^FF0000"+.@numDias+" dias^000000";
+					if (select("Confirma:Não") == 1) {
+						query_sql ( "UPDATE `woe_rank_archive` SET timeStart = CURDATE(), timeLimit = "+.@numDias+"  WHERE `controleRewards` = 0" );
+						query_sql( "SELECT DATEDIFF(CURDATE(), `timeStart`) FROM `woe_rank_archive` WHERE `controleRewards` = 0", .@timePassedWoe);
+						query_sql ( "UPDATE `char` SET `woe_killer_rank` = 0, `woe_breaker_rank` = 0" );
+						query_sql ( "UPDATE `guild` SET `guild_rank` = 0" );
+						set .tempoRestanteWoe, (.@numDias - .@timePassedWoe);
+						set .tempoDuracaoWoe, .@numDias;
+						clear;
+						mes .@gmNpc$;
+						mes "O ranking PvP foi resetado com sucesso.";
+						mes "Duração Atual: ^0000FF"+.@numDias+"^000000";
+						mes "Dias Restantes: ^0000FF"+.tempoRestanteWoe+"^000000";
+						sleep2 1000; clear;
+						callsub L_GMmenu;
+					}
+				}
+				break;
+			
+		}
+		
+	end;
+	
+// ===================================================================
+//	Alteração das Premiações de MvP
+// ===================================================================
+
+	OnPremiosMvp:
+		
+		.@gmNpc$ = "[^FF0000 --- GM Menu --- ^000000]";
+		.@loopControl = 0;
+		clear;
+		mes .@gmNpc$;
+		mes "Qual posição você quer alterar do [^0000FFRanking MvP^000000]?";
+		switch(select("~ ^0000FFTop 1^000000:~ ^0000FFTop 2^000000:~ ^0000FFTop 3^000000")) {
+			case 1: break;
+			case 2: .@loopControl = 1; break;
+			case 3: .@loopControl = 2; break;
+		}
+		// ----- Top 1 -----
+				
+		while ( .@loopControl == 0 ) {
+			clear;
+			mes .@gmNpc$;
+			mes "Escolha um ID para o [^0000FFTop 1 - Ranking MvP^000000]:";
+			input .@top1mvpID; if (!.@top1mvpID || getiteminfo(.@top1mvpID, 0) == -1) .@top1mvpID = 501;
+			clear;
+			mes .@gmNpc$;
+			mes "Você escolheu o item ^0000FF"+mesitemlink(.@top1mvpID)+"^000000. Está correto?";
+			if (select("Sim:Não") == 1) {
+				clear;
+				mes .@gmNpc$;
+				mes "Agora escolha a quantidade a ser dada:";
+				input .@top1mvpQnt; if (!.@top1mvpQnt) .@top1mvpQnt = 1;
+				clear;
+				mes .@gmNpc$;
+				mes "Você dar ^0000FF"+.@top1mvpQnt+"^000000 itens para o [^0000FFTop 1 - Ranking MvP^000000]. Está correto?";
+				if (select("Sim:Não") == 1) {
+					clear;
+					mes .@gmNpc$;
+					mes "[ Confirme suas alterações ]";
+					mes "Tipo: ^0000FFMvP^000000";
+					mes "Ranking: ^0000FFAtual^000000";
+					mes "Posição: ^0000FFTop 1^000000";
+					mes "Prêmio: ^0000FF"+mesitemlink(.@top1mvpID)+"^000000";
+					mes "Quantidade: ^0000FF"+.@top1mvpQnt+"^000000";
+					if (select("Confirma:Não") == 1) {
+						set .premiosMvp[0], .@top1mvpID;
+						set .quantMvp[0], .@top1mvpQnt;
+						query_sql "update `mvp_rank_archive` set mvpTop1 = "+.@top1mvpID+", qntMvpTop1 = "+.@top1mvpQnt+" where `controleRewards` = 0";
+						clear;
+						mes .@gmNpc$;
+						mes "Premiações salvas para o ^0000FFTop 1 - Ranking MvP^000000!";
+						sleep2 1000;
+						goto OnPremiosMvp;
+					}
+				}
+			}
+		}
+				
+		// ----- Top 2 -----
+		while ( .@loopControl == 1 ) {
+			clear;
+			mes .@gmNpc$;
+			mes "Escolha um ID para o [^0000FFTop 2 - Ranking MvP^000000]:";
+			input .@top2mvpID; if (!.@top2mvpID || getiteminfo(.@top2mvpID, 0) == -1) .@top2mvpID = 501;
+			clear;
+			mes .@gmNpc$;
+			mes "Você escolheu o item ^0000FF"+mesitemlink(.@top2mvpID)+"^000000. Está correto?";
+			if (select("Sim:Não") == 1) {
+				clear;
+				mes .@gmNpc$;
+				mes "Agora escolha a quantidade a ser dada:";
+				input .@top2mvpQnt; if (!.@top2mvpQnt) .@top2mvpQnt = 1;
+				clear;
+				mes .@gmNpc$;
+				mes "Você dar ^0000FF"+.@top2mvpQnt+"^000000 itens para o [^0000FFTop 2 - Ranking MvP^000000]. Está correto?";
+				if (select("Sim:Não") == 1) {
+					clear;
+					mes .@gmNpc$;
+					mes "[ Confirme suas alterações ]";
+					mes "Tipo: ^0000FFMvP^000000";
+					mes "Ranking: ^0000FFAtual^000000";
+					mes "Posição: ^0000FFTop 2^000000";
+					mes "Prêmio: ^0000FF"+mesitemlink(.@top2mvpID)+"^000000";
+					mes "Quantidade: ^0000FF"+.@top2mvpQnt+"^000000";
+					if (select("Confirma:Não") == 1) {
+						set .premiosMvp[1], .@top2mvpID;
+						set .quantMvp[1], .@top2mvpQnt;
+						query_sql "update `mvp_rank_archive` set mvpTop2 = "+.@top2mvpID+", qntMvpTop2 = "+.@top2mvpQnt+" where `controleRewards` = 0";
+						clear;
+						mes .@gmNpc$;
+						mes "Premiações salvas para o ^0000FFTop 2 - Ranking MvP^000000!";
+						sleep2 1000;
+						goto OnPremiosMvp;
+					}
+				}
+			}
+		}
+				
+		// ----- Top 3 -----
+		while ( .@loopControl == 2 ) {
+			clear;
+			mes .@gmNpc$;
+			mes "Escolha um ID para o [^0000FFTop 3 - Ranking MvP^000000]:";
+			input .@top3mvpID; if (!.@top3mvpID || getiteminfo(.@top3mvpID, 0) == -1) .@top3mvpID = 501;
+			clear;
+			mes .@gmNpc$;
+			mes "Você escolheu o item ^0000FF"+mesitemlink(.@top3mvpID)+"^000000. Está correto?";
+			if (select("Sim:Não") == 1) {
+				clear;
+				mes .@gmNpc$;
+				mes "Agora escolha a quantidade a ser dada:";
+				input .@top3mvpQnt; if (!.@top3mvpQnt) .@top3mvpQnt = 1;
+				clear;
+				mes .@gmNpc$;
+				mes "Você dar ^0000FF"+.@top3mvpQnt+"^000000 itens para o [^0000FFTop 3 - Ranking MvP^000000]. Está correto?";
+				if (select("Sim:Não") == 1) {
+					clear;
+					mes .@gmNpc$;
+					mes "[ Confirme suas alterações ]";
+					mes "Tipo: ^0000FFMvP^000000";
+					mes "Ranking: ^0000FFAtual^000000";
+					mes "Posição: ^0000FFTop 3^000000";
+					mes "Prêmio: ^0000FF"+mesitemlink(.@top3mvpID)+"^000000";
+					mes "Quantidade: ^0000FF"+.@top3mvpQnt+"^000000";
+					if (select("Confirma:Não") == 1) {
+						set .premiosMvp[2], .@top3mvpID;
+						set .quantMvp[2], .@top3mvpQnt;
+						query_sql "update `mvp_rank_archive` set mvpTop3 = "+.@top3mvpID+", qntMvpTop3 = "+.@top3mvpQnt+" where `controleRewards` = 0";
+						clear;
+						mes .@gmNpc$;
+						mes "Premiações salvas para o ^0000FFTop 3 - Ranking MvP^000000!";
+						sleep2 1000;
+						goto OnPremiosMvp;
+					}
+				}
+			}
+		}
+		
+	end;
+	
+// ===================================================================
+//	Alteração das Premiações de WoE
+// ===================================================================
+
+	OnPremiosWoe:
+	
+		.@gmNpc$ = "[^FF0000 --- GM Menu --- ^000000]";
+		clear;
+		mes .@gmNpc$;
+		mes "Qual Arena você deseja editar?";
+		switch (select("~ ^0000FFKillers WoE^000000:~ ^0000FFBreakers WoE^000000:~ ^0000FFClãs WoE^000000:Voltar")) {
+			
+			// --------------- Killers WoE -----------------
+			case 1:
+				.@loopControl = 0;
+				clear;
+				mes .@gmNpc$;
+				mes "Qual posição você quer alterar da [^0000FFKillers WoE^000000]?";
+				switch(select("~ ^0000FFTop 1^000000:~ ^0000FFTop 2^000000:~ ^0000FFTop 3^000000")) {
+					case 1: break;
+					case 2: .@loopControl = 1; break;
+					case 3: .@loopControl = 2; break;
+				}
+				// ----- Top 1 -----
+				
+				while ( .@loopControl == 0 ) {
+					// ----- Top 1 -----
+					clear;
+					mes .@gmNpc$;
+					mes "Escolha um ID para o [^0000FFTop 1 - Killers WoE^000000]:";
+					input .@top1killerID; if (!.@top1killerID || getiteminfo(.@top1killerID, 0) == -1) .@top1killerID = 501;
+					clear;
+					mes .@gmNpc$;
+					mes "Você escolheu o item ^0000FF"+mesitemlink(.@top1killerID)+"^000000. Está correto?";
+					if (select("Sim:Não") == 1) {
+						clear;
+						mes .@gmNpc$;
+						mes "Agora escolha a quantidade a ser dada:";
+						input .@top1killerQnt; if (!.@top1killerQnt) .@top1killerQnt = 1;
+						clear;
+						mes .@gmNpc$;
+						mes "Você dar ^0000FF"+.@top1killerQnt+"^000000 itens para o [^0000FFTop 1 - Killers WoE^000000]. Está correto?";
+						if (select("Sim:Não") == 1) {
+							clear;
+							mes .@gmNpc$;
+							mes "[ Confirme suas alterações ]";
+							mes "Arena: ^0000FFKillers WoE^000000";
+							mes "Ranking: ^0000FFAtual^000000";
+							mes "Posição: ^0000FFTop 1^000000";
+							mes "Prêmio: ^0000FF"+mesitemlink(.@top1killerID)+"^000000";
+							mes "Quantidade: ^0000FF"+.@top1killerQnt+"^000000";
+							if (select("Confirma:Não") == 1) {
+								set .premiosKillerWoe[0], .@top1killerID;
+								set .quantKillerWoe[0], .@top1killerQnt;
+								query_sql "update `woe_rank_archive` set killerTop1 = "+.@top1killerID+", qntKillerTop1 = "+.@top1killerQnt+" where `controleRewards` = 0";
+								clear;
+								mes .@gmNpc$;
+								mes "Premiações salvas para o ^0000FFTop 1 - Killers WoE^000000!";
+								.@loopControl = 3;
+								sleep2 1000;
+								goto OnPremiosWoe;
+							}
+						}
+					}
+				}
+				
+				// ----- Top 2 -----
+				while ( .@loopControl == 1 ) {
+					clear;
+					mes .@gmNpc$;
+					mes "Escolha um ID para o [^0000FFTop 2 - Killers WoE^000000]:";
+					input .@top2killerID; if (!.@top2killerID || getiteminfo(.@top2killerID, 0) == -1) .@top2killerID = 501;
+					clear;
+					mes .@gmNpc$;
+					mes "Você escolheu o item ^0000FF"+mesitemlink(.@top2killerID)+"^000000. Está correto?";
+					if (select("Sim:Não") == 1) {
+						clear;
+						mes .@gmNpc$;
+						mes "Agora escolha a quantidade a ser dada:";
+						input .@top2killerQnt; if (!.@top2killerQnt) .@top2killerQnt = 1;
+						clear;
+						mes .@gmNpc$;
+						mes "Você dar ^0000FF"+.@top2killerQnt+"^000000 itens para o [^0000FFTop 2 - Killers WoE^000000]. Está correto?";
+						if (select("Sim:Não") == 1) {
+							clear;
+							mes .@gmNpc$;
+							mes "[ Confirme suas alterações ]";
+							mes "Arena: ^0000FFKillers WoE^000000";
+							mes "Ranking: ^0000FFAtual^000000";
+							mes "Posição: ^0000FFTop 2^000000";
+							mes "Prêmio: ^0000FF"+mesitemlink(.@top2killerID)+"^000000";
+							mes "Quantidade: ^0000FF"+.@top2killerQnt+"^000000";
+							if (select("Confirma:Não") == 1) {
+								set .premiosKillerWoe[1], .@top2killerID;
+								set .quantKillerWoe[1], .@top2killerQnt;
+								query_sql "update `woe_rank_archive` set killerTop2 = "+.@top2killerID+", qntKillerTop2 = "+.@top2killerQnt+" where `controleRewards` = 0";
+								clear;
+								mes .@gmNpc$;
+								mes "Premiações salvas para o ^0000FFTop 2 - Killers WoE^000000!";
+								.@loopControl = 3;
+								sleep2 1000;
+								goto OnPremiosWoe;
+							}
+						}
+					}
+				}
+				
+				// ----- Top 3 -----
+				while ( .@loopControl == 2 ) {
+					clear;
+					mes .@gmNpc$;
+					mes "Escolha um ID para o [^0000FFTop 3 - Killers WoE^000000]:";
+					input .@top2killerID; if (!.@top3killerID || getiteminfo(.@top3killerID, 0) == -1) .@top3killerID = 501;
+					clear;
+					mes .@gmNpc$;
+					mes "Você escolheu o item ^0000FF"+mesitemlink(.@top3killerID)+"^000000. Está correto?";
+					if (select("Sim:Não") == 1) {
+						clear;
+						mes .@gmNpc$;
+						mes "Agora escolha a quantidade a ser dada:";
+						input .@top3killerQnt; if (!.@top3killerQnt) .@top3killerQnt = 1;
+						clear;
+						mes .@gmNpc$;
+						mes "Você dar ^0000FF"+.@top3killerQnt+"^000000 itens para o [^0000FFTop 3 - Killers WoE^000000]. Está correto?";
+						if (select("Sim:Não") == 1) {
+							clear;
+							mes .@gmNpc$;
+							mes "[ Confirme suas alterações ]";
+							mes "Arena: ^0000FFKillers WoE^000000";
+							mes "Ranking: ^0000FFAtual^000000";
+							mes "Posição: ^0000FFTop 3^000000";
+							mes "Prêmio: ^0000FF"+mesitemlink(.@top3killerID)+"^000000";
+							mes "Quantidade: ^0000FF"+.@top3killerQnt+"^000000";
+							if (select("Confirma:Não") == 1) {
+								set .premiosKillerWoe[2], .@top3killerID;
+								set .quantKillerWoe[2], .@top3killerQnt;
+								query_sql "update `woe_rank_archive` set killerTop3 = "+.@top3killerID+", qntKillerTop3 = "+.@top3killerQnt+" where `controleRewards` = 0";
+								clear;
+								mes .@gmNpc$;
+								mes "Premiações salvas para o ^0000FFTop 3 - Killers WoE^000000!";
+								.@loopControl = 3;
+								sleep2 1000;
+								goto OnPremiosWoe;
+							}
+						}
+					}
+				}
+			
+			break;
+			
+			// --------------- Breakers WoE -----------------
+			case 2:
+				.@loopControl = 0;
+				clear;
+				mes .@gmNpc$;
+				mes "Qual posição você quer alterar da [^0000FFBreakers WoE^000000]?";
+				switch(select("~ ^0000FFTop 1^000000:~ ^0000FFTop 2^000000:~ ^0000FFTop 3^000000")) {
+					case 1: break;
+					case 2: .@loopControl = 1; break;
+					case 3: .@loopControl = 2; break;
+				}
+				// ----- Top 1 -----
+				while ( .@loopControl == 0 ) {
+					// ----- Top 1 -----
+					clear;
+					mes .@gmNpc$;
+					mes "Escolha um ID para o [^0000FFTop 1 - Breakers WoE^000000]:";
+					input .@top1breakerID; if (!.@top1breakerID || getiteminfo(.@top1breakerID, 0) == -1) .@top1breakerID = 501;
+					clear;
+					mes .@gmNpc$;
+					mes "Você escolheu o item ^0000FF"+mesitemlink(.@top1breakerID)+"^000000. Está correto?";
+					if (select("Sim:Não") == 1) {
+						clear;
+						mes .@gmNpc$;
+						mes "Agora escolha a quantidade a ser dada:";
+						input .@top1breakerQnt; if (!.@top1breakerQnt) .@top1breakerQnt = 1;
+						clear;
+						mes .@gmNpc$;
+						mes "Você dar ^0000FF"+.@top1breakerQnt+"^000000 itens para o [^0000FFTop 1 - Breakers WoE^000000]. Está correto?";
+						if (select("Sim:Não") == 1) {
+							clear;
+							mes .@gmNpc$;
+							mes "[ Confirme suas alterações ]";
+							mes "Arena: ^0000FFBreakers WoE^000000";
+							mes "Ranking: ^0000FFAtual^000000";
+							mes "Posição: ^0000FFTop 1^000000";
+							mes "Prêmio: ^0000FF"+mesitemlink(.@top1breakerID)+"^000000";
+							mes "Quantidade: ^0000FF"+.@top1breakerQnt+"^000000";
+							if (select("Confirma:Não") == 1) {
+								set .premiosBreakerWoe[0], .@top1breakerID;
+								set .quantBreakerWoe[0], .@top1breakerQnt;
+								query_sql "update `woe_rank_archive` set breakerTop1 = "+.@top1breakerID+", qntBreakerTop1 = "+.@top1breakerQnt+" where `controleRewards` = 0";
+								clear;
+								mes .@gmNpc$;
+								mes "Premiações salvas para o ^0000FFTop 1 - Breakers WoE^000000!";
+								.@loopControl = 3;
+								sleep2 1000;
+								goto OnPremiosWoe;
+							}
+						}
+					}
+				}
+				
+				// ----- Top 2 -----
+				while ( .@loopControl == 1 ) {
+					clear;
+					mes .@gmNpc$;
+					mes "Escolha um ID para o [^0000FFTop 2 - Breakers WoE^000000]:";
+					input .@top2breakerID; if (!.@top2breakerID || getiteminfo(.@top2breakerID, 0) == -1) .@top2breakerID = 501;
+					clear;
+					mes .@gmNpc$;
+					mes "Você escolheu o item ^0000FF"+mesitemlink(.@top2breakerID)+"^000000. Está correto?";
+					if (select("Sim:Não") == 1) {
+						clear;
+						mes .@gmNpc$;
+						mes "Agora escolha a quantidade a ser dada:";
+						input .@top2breakerQnt; if (!.@top2breakerQnt) .@top2breakerQnt = 1;
+						clear;
+						mes .@gmNpc$;
+						mes "Você dar ^0000FF"+.@top2breakerQnt+"^000000 itens para o [^0000FFTop 2 - Breakers WoE^000000]. Está correto?";
+						if (select("Sim:Não") == 1) {
+							clear;
+							mes .@gmNpc$;
+							mes "[ Confirme suas alterações ]";
+							mes "Arena: ^0000FFBreakers WoE^000000";
+							mes "Ranking: ^0000FFAtual^000000";
+							mes "Posição: ^0000FFTop 2^000000";
+							mes "Prêmio: ^0000FF"+mesitemlink(.@top2breakerID)+"^000000";
+							mes "Quantidade: ^0000FF"+.@top2breakerQnt+"^000000";
+							if (select("Confirma:Não") == 1) {
+								set .premiosBreakerWoe[1], .@top2breakerID;
+								set .quantBreakerWoe[1], .@top2breakerQnt;
+								query_sql "update `woe_rank_archive` set breakerTop2 = "+.@top2breakerID+", qntBreakerTop2 = "+.@top2breakerQnt+" where `controleRewards` = 0";
+								clear;
+								mes .@gmNpc$;
+								mes "Premiações salvas para o ^0000FFTop 2 - Breakers WoE^000000!";
+								.@loopControl = 3;
+								sleep2 1000;
+								goto OnPremiosWoe;
+							}
+						}
+					}
+				}
+				
+				// ----- Top 3 -----
+				while ( .@loopControl == 2 ) {
+					clear;
+					mes .@gmNpc$;
+					mes "Escolha um ID para o [^0000FFTop 3 - Breakers WoE^000000]:";
+					input .@top3breakerID; if (!.@top3breakerID || getiteminfo(.@top3breakerID, 0) == -1) .@top3breakerID = 501;
+					clear;
+					mes .@gmNpc$;
+					mes "Você escolheu o item ^0000FF"+mesitemlink(.@top3breakerID)+"^000000. Está correto?";
+					if (select("Sim:Não") == 1) {
+						clear;
+						mes .@gmNpc$;
+						mes "Agora escolha a quantidade a ser dada:";
+						input .@top3breakerQnt; if (!.@top3breakerQnt) .@top3breakerQnt = 1;
+						clear;
+						mes .@gmNpc$;
+						mes "Você dar ^0000FF"+.@top3breakerQnt+"^000000 itens para o [^0000FFTop 3 - Breakers WoE^000000]. Está correto?";
+						if (select("Sim:Não") == 1) {
+							clear;
+							mes .@gmNpc$;
+							mes "[ Confirme suas alterações ]";
+							mes "Arena: ^0000FFBreakers WoE^000000";
+							mes "Ranking: ^0000FFAtual^000000";
+							mes "Posição: ^0000FFTop 3^000000";
+							mes "Prêmio: ^0000FF"+mesitemlink(.@top3breakerID)+"^000000";
+							mes "Quantidade: ^0000FF"+.@top3breakerQnt+"^000000";
+							if (select("Confirma:Não") == 1) {
+								set .premiosBreakerWoe[2], .@top3breakerID;
+								set .quantBreakerWoe[2], .@top3breakerQnt;
+								query_sql "update `woe_rank_archive` set breakerTop3 = "+.@top2breakerID+", qntBreakerTop3 = "+.@top2breakerQnt+" where `controleRewards` = 0";
+								clear;
+								mes .@gmNpc$;
+								mes "Premiações salvas para o ^0000FFTop 3 - Breakers WoE^000000!";
+								.@loopControl = 3;
+								sleep2 1000;
+								goto OnPremiosWoe;
+							}
+						}
+					}
+				}
+				close;
+			
+			break;
+			
+			// --------------- Clãs WoE -----------------
+			case 3:
+				.@loopControl = 0;
+				clear;
+				mes .@gmNpc$;
+				mes "Qual posição você quer alterar da [^0000FFClãs WoE^000000]?";
+				switch(select("~ ^0000FFTop 1^000000")) {
+					case 1: break;
+				}
+				// ----- Top 1 -----
+				while ( .@loopControl == 0 ) {
+					// ----- Top 1 -----
+					clear;
+					mes .@gmNpc$;
+					mes "Escolha um ID para o [^0000FFTop 1 - Clãs WoE^000000]:";
+					input .@top1guildID; if (!.@top1guildID || getiteminfo(.@top1guildID, 0) == -1) .@top1guildID = 501;
+					clear;
+					mes .@gmNpc$;
+					mes "Você escolheu o item ^0000FF"+mesitemlink(.@top1guildID)+"^000000. Está correto?";
+					if (select("Sim:Não") == 1) {
+						clear;
+						mes .@gmNpc$;
+						mes "Agora escolha a quantidade a ser dada:";
+						input .@top1guildQnt; if (!.@top1guildQnt) .@top1guildQnt = 1;
+						clear;
+						mes .@gmNpc$;
+						mes "Você dar ^0000FF"+.@top1guildQnt+"^000000 itens para o [^0000FFTop 1 - Clãs WoE^000000]. Está correto?";
+						if (select("Sim:Não") == 1) {
+							clear;
+							mes .@gmNpc$;
+							mes "[ Confirme suas alterações ]";
+							mes "Arena: ^0000FFClãs WoE^000000";
+							mes "Ranking: ^0000FFAtual^000000";
+							mes "Posição: ^0000FFTop 1^000000";
+							mes "Prêmio: ^0000FF"+mesitemlink(.@top1guildID)+"^000000";
+							mes "Quantidade: ^0000FF"+.@top1guildQnt+"^000000";
+							if (select("Confirma:Não") == 1) {
+								set .premiosGuildWoe[0], .@top1guildID;
+								set .quantGuildWoe[0], .@top1guildQnt;
+								query_sql "update `woe_rank_archive` set guildWinner = "+.@top1guildID+", qntGuildWinner = "+.@top1guildQnt+" where `controleRewards` = 0";
+								clear;
+								mes .@gmNpc$;
+								mes "Premiações salvas para o ^0000FFTop 1 - Clãs WoE^000000!";
+								.@loopControl = 3;
+								sleep2 1000;
+								goto OnPremiosWoe;
+							}
+						}
+					}
+				}
+
+			break;
+			
+			// ----- Voltar -----
+			case 4: clear; goto L_GMmenu; break;
+		}
+		return;
+	
+	end;
+	
+// ===================================================================
+//	Agendamento PvP - GM Menu
+// ===================================================================
+
+	L_AgendamentosPvP:
+		.@gmNpc$ = "[^FF0000 --- GM Menu --- ^000000]";
+		clear;
+		.@nextA1 = query_sql( "select nextArena1Top1, nextArena1Top2, nextArena1Top3, nextQntArena1Top1, nextQntArena1Top2, nextQntArena1Top3 from `pvp_rank_archive` where `controleRewards` = 0", .@nextPrizeA1T1, .@nextPrizeA1T2, .@nextPrizeA1T3, .@nextQntA1T1, .@nextQntA1T2, .@nextQntA1T3);
+		.@nextA2 = query_sql( "select nextArena2Top1, nextArena2Top2, nextArena2Top3, nextQntArena2Top1, nextQntArena2Top2, nextQntArena2Top3 from `pvp_rank_archive` where `controleRewards` = 0", .@nextPrizeA2T1, .@nextPrizeA2T2, .@nextPrizeA2T3, .@nextQntA2T1, .@nextQntA2T2, .@nextQntA1T3);
+		.@nextA3 = query_sql( "select nextArena3Top1, nextArena3Top2, nextArena3Top3, nextQntArena3Top1, nextQntArena3Top2, nextQntArena3Top3 from `pvp_rank_archive` where `controleRewards` = 0", .@nextPrizeA3T1, .@nextPrizeA3T2, .@nextPrizeA3T3, .@nextQntA3T1, .@nextQntA3T2, .@nextQntA3T3);
+
+		if ( !.@nextA1 && !.@nextA2 && !.@nextA3 ) {
+			mes .@gmNpc$;
+			mes "Ainda não há nenhum agendamento para o próximo Ranking PvP.";
+			close;
+		}
+		
+		// Agendamentos
+		
+		mes .@gmNpc$;
+		mes "Muito bem. Aqui estão os agendamentos planejados para a próxima rotação:";
+		mes "[Próximo Ranking - Arena Livre]";
+		mes "Top 1: ^0000FF" + mesitemlink(.nextPremiosArena1Pvp[0]) + "^000000, ^0000FF" + .nextQuantArena1Pvp[0] + "x^000000.";
+		mes "Top 2: ^0000FF" + mesitemlink(.nextPremiosArena1Pvp[1]) + "^000000, ^0000FF" + .nextQuantArena1Pvp[1] + "x^000000.";
+		mes "Top 3: ^0000FF" + mesitemlink(.nextPremiosArena1Pvp[2]) + "^000000, ^0000FF" + .nextQuantArena1Pvp[2] + "x^000000.";	
+		mes " ";
+		mes "[Próximo Ranking - Arena sem Mob]";
+		mes "Top 1: ^0000FF" + mesitemlink(.nextPremiosArena2Pvp[0]) + "^000000, ^0000FF" + .nextQuantArena2Pvp[0] + "x^000000.";
+		mes "Top 2: ^0000FF" + mesitemlink(.nextPremiosArena2Pvp[1]) + "^000000, ^0000FF" + .nextQuantArena2Pvp[1] + "x^000000.";
+		mes "Top 3: ^0000FF" + mesitemlink(.nextPremiosArena2Pvp[2]) + "^000000, ^0000FF" + .nextQuantArena2Pvp[2] + "x^000000.";
+		mes " ";
+		mes "[Próximo Ranking - Arena sem Donate]";
+		mes "Top 1: ^0000FF" + mesitemlink(.nextPremiosArena3Pvp[0]) + "^000000, ^0000FF" + .nextQuantArena3Pvp[0] + "x^000000.";
+		mes "Top 2: ^0000FF" + mesitemlink(.nextPremiosArena3Pvp[1]) + "^000000, ^0000FF" + .nextQuantArena3Pvp[1] + "x^000000.";
+		mes "Top 3: ^0000FF" + mesitemlink(.nextPremiosArena3Pvp[2]) + "^000000, ^0000FF" + .nextQuantArena3Pvp[2] + "x^000000.";
+		next;
+		mes .@gmNpc$;
+		mes "Gostaria de fazer alguma mudança?";
+		if (select("Sim:Não") == 2) {
+			clear;
+			mes .@gmNpc$;
+			mes "Até depois então.";
+			close;
+		}
+		clear;
+		mes .@gmNpc$;
+		mes "Qual Arena você quer editar?";
+		switch (select("~ ^0000FFArena Livre^000000:~ ^0000FFArena sem Mob^000000:~ ^0000FFArena sem Donate^000000:Voltar")) {
+			
+			// --------------- Arena Livre -----------------
+			case 1:
+				.@loopControl = 0;
+				clear;
+				mes .@gmNpc$;
+				mes "Qual posição você quer alterar da [^0000FFArena Livre^000000]?";
+				switch(select("~ ^0000FFTop 1^000000:~ ^0000FFTop 2^000000:~ ^0000FFTop 3^000000")) {
+					case 1: break;
+					case 2: .@loopControl = 1; break;
+					case 3: .@loopControl = 2; break;
+				}
+				// ----- Top 1 -----
+				
+				while ( .@loopControl == 0 ) {
+					// ----- Top 1 -----
+					clear;
+					mes .@gmNpc$;
+					mes "Escolha um ID para o [^0000FFTop 1 - PvP - Arena Livre^000000] do próximo ranking:";
+					input .@top1pvpID; if (!.@top1pvpID || getiteminfo(.@top1pvpID, 0) == -1) .@top1pvpID = 501;
+					clear;
+					mes .@gmNpc$;
+					mes "Você escolheu o item ^0000FF"+mesitemlink(.@top1pvpID)+"^000000. Está correto?";
+					if (select("Sim:Não") == 1) {
+						clear;
+						mes .@gmNpc$;
+						mes "Agora escolha a quantidade a ser dada:";
+						input .@top1pvpQnt; if (!.@top1pvpQnt) .@top1pvpQnt = 1;
+						clear;
+						mes .@gmNpc$;
+						mes "Você dar ^0000FF"+.@top1pvpQnt+"^000000 itens para o [^0000FFTop 1 - PvP - Arena Livre^000000]. Está correto?";
+						if (select("Sim:Não") == 1) {
+							clear;
+							mes .@gmNpc$;
+							mes "[ Confirme suas alterações ]";
+							mes "Arena: ^0000FFArena Livre^000000";
+							mes "Ranking: ^0000FFPróximo^000000";
+							mes "Posição: ^0000FFTop 1^000000";
+							mes "Prêmio: ^0000FF"+mesitemlink(.@top1pvpID)+"^000000";
+							mes "Quantidade: ^0000FF"+.@top1pvpQnt+"^000000";
+							if (select("Confirma:Não") == 1) {
+								set .nextPremiosArena1Pvp[0], .@top1pvpID;
+								set .nextQuantArena1Pvp[0], .@top1pvpQnt;
+								query_sql "update `pvp_rank_archive` set nextArena1Top1 = "+.@top1pvpID+", nextQntArena1Top1 = "+.@top1pvpQnt+" where `controleRewards` = 0";
+								clear;
+								mes .@gmNpc$;
+								mes "Premiações salvas para o ^0000FFTop 1 - Pvp - Arena Livre^000000!";
+								.@loopControl = 1;
+								sleep2 1000;
+								goto L_AgendamentosPvP;
+							}
+						}
+					}
+				}
+				
+				// ----- Top 2 -----
+				while ( .@loopControl == 1 ) {
+					clear;
+					mes .@gmNpc$;
+					mes "Escolha um ID para o [^0000FFTop 2 - PvP - Arena Livre^000000]:";
+					input .@top2pvpID; if (!.@top2pvpID || getiteminfo(.@top2pvpID, 0) == -1) .@top2pvpID = 501;
+					clear;
+					mes .@gmNpc$;
+					mes "Você escolheu o item ^0000FF"+mesitemlink(.@top2pvpID)+"^000000. Está correto?";
+					if (select("Sim:Não") == 1) {
+						clear;
+						mes .@gmNpc$;
+						mes "Agora escolha a quantidade a ser dada:";
+						input .@top2pvpQnt; if (!.@top2pvpQnt) .@top2pvpQnt = 1;
+						clear;
+						mes .@gmNpc$;
+						mes "Você dar ^0000FF"+.@top2pvpQnt+"^000000 itens para o [^0000FFTop 2 - PvP - Arena Livre^000000]. Está correto?";
+						if (select("Sim:Não") == 1) {
+							clear;
+							mes .@gmNpc$;
+							mes "[ Confirme suas alterações ]";
+							mes "Arena: ^0000FFArena Livre^000000";
+							mes "Ranking: ^0000FFPróximo^000000";
+							mes "Posição: ^0000FFTop 2^000000";
+							mes "Prêmio: ^0000FF"+mesitemlink(.@top2pvpID)+"^000000";
+							mes "Quantidade: ^0000FF"+.@top2pvpQnt+"^000000";
+							if (select("Confirma:Não") == 1) {
+								set .nextPremiosArena1Pvp[1], .@top2pvpID;
+								set .nextQuantArena1Pvp[1], .@top2pvpQnt;
+								query_sql "update `pvp_rank_archive` set nextArena1Top2 = "+.@top2pvpID+", nextQntArena1Top2 = "+.@top2pvpQnt+" where `controleRewards` = 0";
+								clear; 
+								mes .@gmNpc$;
+								mes "Premiações salvas para o ^0000FFTop 2 - Pvp - Arena Livre^000000!";
+								.@loopControl = 2;
+								sleep2 1000;
+								goto L_AgendamentosPvP;
+							}
+						}
+					}
+				}
+				
+				// ----- Top 3 -----
+				while ( .@loopControl == 2 ) {
+					clear;
+					mes .@gmNpc$;
+					mes "Escolha um ID para o [^0000FFTop 3 - PvP - Arena Livre^000000] do próximo ranking:";
+					input .@top3pvpID; if (!.@top3pvpID || getiteminfo(.@top3pvpID, 0) == -1) .@top3pvpID = 501;
+					clear;
+					mes .@gmNpc$;
+					mes "Você escolheu o item ^0000FF"+mesitemlink(.@top3pvpID)+"^000000. Está correto?";
+					if (select("Sim:Não") == 1) {
+						clear;
+						mes .@gmNpc$;
+						mes "Agora escolha a quantidade a ser dada:";
+						input .@top3pvpQnt;
+						clear;
+						mes .@gmNpc$;
+						mes "Você dar ^0000FF"+.@top3pvpQnt+"^000000 itens para o [^0000FFTop 3 - PvP - Arena Livre^000000]. Está correto?";
+						if (select("Sim:Não") == 1) {
+							clear;
+							mes .@gmNpc$;
+							mes "[ Confirme suas alterações ]";
+							mes "Arena: ^0000FFArena Livre^000000";
+							mes "Ranking: ^0000FFPróximo^000000";
+							mes "Posição: ^0000FFTop 3^000000";
+							mes "Prêmio: ^0000FF"+mesitemlink(.@top3pvpID)+"^000000";
+							mes "Quantidade: ^0000FF"+.@top3pvpQnt+"^000000";
+							if (select("Confirma:Não") == 1) {
+								set .nextPremiosArena1Pvp[2], .@top3pvpID;
+								set .nextQuantArena1Pvp[2], .@top3pvpQnt;
+								query_sql "update `pvp_rank_archive` set nextArena1Top3 = "+.@top3pvpID+", nextQntArena1Top3 = "+.@top3pvpQnt+" where `controleRewards` = 0";
+								clear; 
+								mes .@gmNpc$;
+								mes "Premiações salvas para o ^0000FFTop 3 - Pvp - Arena Livre^000000!";
+								.@loopControl = 3;
+								sleep2 1000;
+								goto L_AgendamentosPvP;
+							}
+						}
+					}
+				}
+			
+			break;
+			
+			// --------------- Arena sem Mob -----------------
+			case 2:
+				.@loopControl = 0;
+				clear;
+				mes .@gmNpc$;
+				mes "Qual posição você quer alterar da [^0000FFArena sem Mob^000000]?";
+				switch(select("~ ^0000FFTop 1^000000:~ ^0000FFTop 2^000000:~ ^0000FFTop 3^000000")) {
+					case 1: break;
+					case 2: .@loopControl = 1; break;
+					case 3: .@loopControl = 2; break;
+				}
+				// ----- Top 1 -----
+				while ( .@loopControl == 0 ) {
+					// ----- Top 1 -----
+					clear;
+					mes .@gmNpc$;
+					mes "Escolha um ID para o [^0000FFTop 1 - PvP - Arena sem Mob^000000] do próximo ranking:";
+					input .@top1pvpID; if (!.@top1pvpID || getiteminfo(.@top1pvpID, 0) == -1) .@top1pvpID = 501;
+					clear;
+					mes .@gmNpc$;
+					mes "Você escolheu o item ^0000FF"+mesitemlink(.@top1pvpID)+"^000000. Está correto?";
+					if (select("Sim:Não") == 1) {
+						clear;
+						mes .@gmNpc$;
+						mes "Agora escolha a quantidade a ser dada:";
+						input .@top1pvpQnt; if (!.@top1pvpQnt) .@top1pvpQnt = 1;
+						clear;
+						mes .@gmNpc$;
+						mes "Você dar ^0000FF"+.@top1pvpQnt+"^000000 itens para o [^0000FFTop 1 - PvP - Arena sem Mob^000000]. Está correto?";
+						if (select("Sim:Não") == 1) {
+							clear;
+							mes .@gmNpc$;
+							mes "[ Confirme suas alterações ]";
+							mes "Arena: ^0000FFArena sem Mob^000000";
+							mes "Ranking: ^0000FFPróximo^000000";
+							mes "Posição: ^0000FFTop 1^000000";
+							mes "Prêmio: ^0000FF"+mesitemlink(.@top1pvpID)+"^000000";
+							mes "Quantidade: ^0000FF"+.@top1pvpQnt+"^000000";
+							if (select("Confirma:Não") == 1) {
+								set .nextPremiosArena2Pvp[0], .@top1pvpID;
+								set .nextQuantArena2Pvp[0], .@top1pvpQnt;
+								query_sql "update `pvp_rank_archive` set nextArena2Top1 = "+.@top1pvpID+", nextQntArena2Top1 = "+.@top1pvpQnt+" where `controleRewards` = 0";
+								clear;
+								mes .@gmNpc$;
+								mes "Premiações salvas para o ^0000FFTop 1 - Pvp - Arena sem Mob^000000!";
+								.@loopControl = 1;
+								sleep2 1000;
+								goto L_AgendamentosPvP;
+							}
+						}
+					}
+				}
+				
+				// ----- Top 2 -----
+				while ( .@loopControl == 1 ) {
+					clear;
+					mes .@gmNpc$;
+					mes "Escolha um ID para o [^0000FFTop 2 - PvP - Arena sem Mob^000000] do próximo ranking:";
+					input .@top2pvpID; if (!.@top2pvpID || getiteminfo(.@top2pvpID, 0) == -1) .@top2pvpID = 501;
+					clear;
+					mes .@gmNpc$;
+					mes "Você escolheu o item ^0000FF"+mesitemlink(.@top2pvpID)+"^000000. Está correto?";
+					if (select("Sim:Não") == 1) {
+						clear;
+						mes .@gmNpc$;
+						mes "Agora escolha a quantidade a ser dada:";
+						input .@top2pvpQnt; if (!.@top2pvpQnt) .@top2pvpQnt = 1;
+						clear;
+						mes .@gmNpc$;
+						mes "Você dar ^0000FF"+.@top2pvpQnt+"^000000 itens para o [^0000FFTop 2 - PvP - Arena sem Mob^000000]. Está correto?";
+						if (select("Sim:Não") == 1) {
+							clear;
+							mes .@gmNpc$;
+							mes "[ Confirme suas alterações ]";
+							mes "Arena: ^0000FFArena sem Mob^000000";
+							mes "Ranking: ^0000FFPróximo^000000";
+							mes "Posição: ^0000FFTop 2^000000";
+							mes "Prêmio: ^0000FF"+mesitemlink(.@top2pvpID)+"^000000";
+							mes "Quantidade: ^0000FF"+.@top2pvpQnt+"^000000";
+							if (select("Confirma:Não") == 1) {
+								set .nextPremiosArena2Pvp[1], .@top2pvpID;
+								set .nextQuantArena2Pvp[1], .@top2pvpQnt;
+								query_sql "update `pvp_rank_archive` set nextArena2Top2 = "+.@top2pvpID+", nextQntArena2Top2 = "+.@top2pvpQnt+" where `controleRewards` = 0";
+								clear; 
+								mes .@gmNpc$;
+								mes "Premiações salvas para o ^0000FFTop 2 - Pvp - Arena sem Mob^000000!";
+								.@loopControl = 2;
+								sleep2 1000;
+								goto L_AgendamentosPvP;
+							}
+						}
+					}
+				}
+				
+				// ----- Top 3 -----
+				while ( .@loopControl == 2 ) {
+					clear;
+					mes .@gmNpc$;
+					mes "Escolha um ID para o [^0000FFTop 3 - PvP - Arena sem Mob^000000] do próximo ranking:";
+					input .@top3pvpID; if (!.@top3pvpID || getiteminfo(.@top3pvpID, 0) == -1) .@top3pvpID = 501;
+					clear;
+					mes .@gmNpc$;
+					mes "Você escolheu o item ^0000FF"+mesitemlink(.@top3pvpID)+"^000000. Está correto?";
+					if (select("Sim:Não") == 1) {
+						clear;
+						mes .@gmNpc$;
+						mes "Agora escolha a quantidade a ser dada:";
+						input .@top3pvpQnt;
+						clear;
+						mes .@gmNpc$;
+						mes "Você dar ^0000FF"+.@top3pvpQnt+"^000000 itens para o [^0000FFTop 3 - PvP - Arena sem Mob^000000]. Está correto?";
+						if (select("Sim:Não") == 1) {
+							clear;
+							mes .@gmNpc$;
+							mes "[ Confirme suas alterações ]";
+							mes "Arena: ^0000FFArena sem Mob^000000";
+							mes "Ranking: ^0000FFPróximo^000000";
+							mes "Posição: ^0000FFTop 3^000000";
+							mes "Prêmio: ^0000FF"+mesitemlink(.@top3pvpID)+"^000000";
+							mes "Quantidade: ^0000FF"+.@top3pvpQnt+"^000000";
+							if (select("Confirma:Não") == 1) {
+								set .nextPremiosArena2Pvp[2], .@top3pvpID;
+								set .nextQuantArena2Pvp[2], .@top3pvpQnt;
+								query_sql "update `pvp_rank_archive` set nextArena2Top3 = "+.@top3pvpID+", nextQntArena2Top3 = "+.@top3pvpQnt+" where `controleRewards` = 0";
+								clear; 
+								mes .@gmNpc$;
+								mes "Premiações salvas para o ^0000FFTop 3 - Pvp - Arena sem Mob^000000!";
+								.@loopControl = 3;
+								sleep2 1000;
+								goto L_AgendamentosPvP;
+							}
+						}
+					}
+				}
+				close;
+			
+			break;
+			
+			// --------------- Arena sem Donate -----------------
+			case 3:
+				.@loopControl = 0;
+				clear;
+				mes .@gmNpc$;
+				mes "Qual posição você quer alterar da [^0000FFArena sem Donate^000000]?";
+				switch(select("~ ^0000FFTop 1^000000:~ ^0000FFTop 2^000000:~ ^0000FFTop 3^000000")) {
+					case 1: break;
+					case 2: .@loopControl = 1; break;
+					case 3: .@loopControl = 2; break;
+				}
+				// ----- Top 1 -----
+				while ( .@loopControl == 0 ) {
+					// ----- Top 1 -----
+					clear;
+					mes .@gmNpc$;
+					mes "Escolha um ID para o [^0000FFTop 1 - PvP - Arena sem Donate^000000] do próximo ranking:";
+					input .@top1pvpID; if (!.@top1pvpID || getiteminfo(.@top1pvpID, 0) == -1) .@top1pvpID = 501;
+					clear;
+					mes .@gmNpc$;
+					mes "Você escolheu o item ^0000FF"+mesitemlink(.@top1pvpID)+"^000000. Está correto?";
+					if (select("Sim:Não") == 1) {
+						clear;
+						mes .@gmNpc$;
+						mes "Agora escolha a quantidade a ser dada:";
+						input .@top1pvpQnt; if (!.@top1pvpQnt) .@top1pvpQnt = 1;
+						clear;
+						mes .@gmNpc$;
+						mes "Você dar ^0000FF"+.@top1pvpQnt+"^000000 itens para o [^0000FFTop 1 - PvP - Arena sem Donate^000000]. Está correto?";
+						if (select("Sim:Não") == 1) {
+							clear;
+							mes .@gmNpc$;
+							mes "[ Confirme suas alterações ]";
+							mes "Arena: ^0000FFArena sem Donate^000000";
+							mes "Ranking: ^0000FFPróximo^000000";
+							mes "Posição: ^0000FFTop 1^000000";
+							mes "Prêmio: ^0000FF"+mesitemlink(.@top1pvpID)+"^000000";
+							mes "Quantidade: ^0000FF"+.@top1pvpQnt+"^000000";
+							if (select("Confirma:Não") == 1) {
+								set .nextPremiosArena3Pvp[0], .@top1pvpID;
+								set .nextQuantArena3Pvp[0], .@top1pvpQnt;
+								query_sql "update `pvp_rank_archive` set nextArena3Top1 = "+.@top1pvpID+", nextQntArena3Top1 = "+.@top1pvpQnt+" where `controleRewards` = 0";
+								clear;
+								mes .@gmNpc$;
+								mes "Premiações salvas para o ^0000FFTop 1 - Pvp - Arena sem Donate^000000!";
+								.@loopControl = 1;
+								sleep2 1000;
+								goto L_AgendamentosPvP;
+							}
+						}
+					}
+				}
+				
+				// ----- Top 2 -----
+				while ( .@loopControl == 1 ) {
+					clear;
+					mes .@gmNpc$;
+					mes "Escolha um ID para o [^0000FFTop 2 - PvP - Arena sem Donate^000000] do próximo ranking:";
+					input .@top2pvpID; if (!.@top2pvpID || getiteminfo(.@top2pvpID, 0) == -1) .@top2pvpID = 501;
+					clear;
+					mes .@gmNpc$;
+					mes "Você escolheu o item ^0000FF"+mesitemlink(.@top2pvpID)+"^000000. Está correto?";
+					if (select("Sim:Não") == 1) {
+						clear;
+						mes .@gmNpc$;
+						mes "Agora escolha a quantidade a ser dada:";
+						input .@top2pvpQnt; if (!.@top2pvpQnt) .@top2pvpQnt = 1;
+						clear;
+						mes .@gmNpc$;
+						mes "Você dar ^0000FF"+.@top2pvpQnt+"^000000 itens para o [^0000FFTop 2 - PvP - Arena sem Donate^000000]. Está correto?";
+						if (select("Sim:Não") == 1) {
+							clear;
+							mes .@gmNpc$;
+							mes "[ Confirme suas alterações ]";
+							mes "Arena: ^0000FFArena sem Donate^000000";
+							mes "Ranking: ^0000FFPróximo^000000";
+							mes "Posição: ^0000FFTop 2^000000";
+							mes "Prêmio: ^0000FF"+mesitemlink(.@top2pvpID)+"^000000";
+							mes "Quantidade: ^0000FF"+.@top2pvpQnt+"^000000";
+							if (select("Confirma:Não") == 1) {
+								set .nextPremiosArena3Pvp[1], .@top2pvpID;
+								set .nextQuantArena3Pvp[1], .@top2pvpQnt;
+								query_sql "update `pvp_rank_archive` set nextArena3Top2 = "+.@top2pvpID+", nextQntArena3Top2 = "+.@top2pvpQnt+" where `controleRewards` = 0";
+								clear; 
+								mes .@gmNpc$;
+								mes "Premiações salvas para o ^0000FFTop 2 - Pvp - Arena sem Donate^000000!";
+								.@loopControl = 2;
+								sleep2 1000;
+								goto L_AgendamentosPvP;
+							}
+						}
+					}
+				}
+				
+				// ----- Top 3 -----
+				while ( .@loopControl == 2 ) {
+					clear;
+					mes .@gmNpc$;
+					mes "Escolha um ID para o [^0000FFTop 3 - PvP - Arena sem Donate^000000] do próximo ranking:";
+					input .@top3pvpID; if (!.@top3pvpID || getiteminfo(.@top3pvpID, 0) == -1) .@top3pvpID = 501;
+					clear;
+					mes .@gmNpc$;
+					mes "Você escolheu o item ^0000FF"+mesitemlink(.@top3pvpID)+"^000000. Está correto?";
+					if (select("Sim:Não") == 1) {
+						clear;
+						mes .@gmNpc$;
+						mes "Agora escolha a quantidade a ser dada:";
+						input .@top3pvpQnt;
+						clear;
+						mes .@gmNpc$;
+						mes "Você dar ^0000FF"+.@top3pvpQnt+"^000000 itens para o [^0000FFTop 3 - PvP - Arena sem Donate^000000]. Está correto?";
+						if (select("Sim:Não") == 1) {
+							clear;
+							mes .@gmNpc$;
+							mes "[ Confirme suas alterações ]";
+							mes "Arena: ^0000FFArena sem Donate^000000";
+							mes "Ranking: ^0000FFPróximo^000000";
+							mes "Posição: ^0000FFTop 3^000000";
+							mes "Prêmio: ^0000FF"+mesitemlink(.@top3pvpID)+"^000000";
+							mes "Quantidade: ^0000FF"+.@top3pvpQnt+"^000000";
+							if (select("Confirma:Não") == 1) {
+								set .nextPremiosArena3Pvp[2], .@top3pvpID;
+								set .nextQuantArena3Pvp[2], .@top3pvpQnt;
+								query_sql "update `pvp_rank_archive` set nextArena3Top3 = "+.@top3pvpID+", nextQntArena3Top3 = "+.@top3pvpQnt+" where `controleRewards` = 0";
+								clear;
+								mes .@gmNpc$;
+								mes "Premiações salvas para o ^0000FFTop 3 - Pvp - Arena sem Donate^000000!";
+								.@loopControl = 3;
+								sleep2 1000;
+								goto L_AgendamentosPvP;
+							}
+						}
+					}
+				}
+			break;
+			
+			// ----- Voltar -----
+			case 4: clear; goto L_GMmenu; break;
+		}
+		
+		
+		
+	end;
+	
+// ===================================================================
+//	Agendamento MvP - GM Menu
+// ===================================================================
+
+	L_AgendamentosMvP:
+	
+		.@gmNpc$ = "[^FF0000 --- GM Menu --- ^000000]";
+		clear;
+		.@nextA1 = query_sql( "select nextMvpTop1, nextMvpTop2, nextMvpTop3, nextQntMvpTop1, nextQntMvpTop2, nextQntMvpTop3 from `mvp_rank_archive` where `controleRewards` = 0", .@nextPrizeMvpT1, .@nextPrizeMvpT2, .@nextPrizeMvpT3, .@nextQntMvpT1, .@nextQntMvpT2, .@nextQntMvpT3);
+
+		if ( !.@nextA1 ) {
+			mes .@gmNpc$;
+			mes "Ainda não há nenhum agendamento para o próximo Ranking MvP.";
+			close;
+		}
+		
+		// Agendamentos
+		
+		mes .@gmNpc$;
+		mes "Muito bem. Aqui estão os agendamentos planejados para a próxima rotação:";
+		mes "[Próximo Ranking - MvP]";
+		mes "Top 1: ^0000FF" + mesitemlink(.nextPremiosMvp[0]) + "^000000, ^0000FF" + .nextQuantMvp[0] + "x^000000.";
+		mes "Top 2: ^0000FF" + mesitemlink(.nextPremiosMvp[1]) + "^000000, ^0000FF" + .nextQuantMvp[1] + "x^000000.";
+		mes "Top 3: ^0000FF" + mesitemlink(.nextPremiosMvp[2]) + "^000000, ^0000FF" + .nextQuantMvp[2] + "x^000000.";	
+		next;
+		mes .@gmNpc$;
+		mes "Gostaria de fazer alguma mudança?";
+		if (select("Sim:Não") == 2) {
+			clear;
+			mes .@gmNpc$;
+			mes "Até depois então.";
+			close;
+		}
+		
+		.@loopControl = 0;
+		clear;
+		mes .@gmNpc$;
+		mes "Qual posição você quer alterar do [^0000FFRanking Mvp^000000]?";
+		switch(select("~ ^0000FFTop 1^000000:~ ^0000FFTop 2^000000:~ ^0000FFTop 3^000000")) {
+			case 1: break;
+			case 2: .@loopControl = 1; break;
+			case 3: .@loopControl = 2; break;
+		}
+		
+		// ----- Top 1 -----	
+		while ( .@loopControl == 0 ) {
+			clear;
+			mes .@gmNpc$;
+			mes "Escolha um ID para o [^0000FFTop 1 - Ranking MvP^000000] do próximo ranking:";
+			input .@top1mvpID; if (!.@top1mvpID || getiteminfo(.@top1mvpID, 0) == -1) .@top1mvpID = 501;
+			clear;
+			mes .@gmNpc$;
+			mes "Você escolheu o item ^0000FF"+mesitemlink(.@top1mvpID)+"^000000. Está correto?";
+			if (select("Sim:Não") == 1) {
+				clear;
+				mes .@gmNpc$;
+				mes "Agora escolha a quantidade a ser dada:";
+				input .@top1mvpQnt; if (!.@top1mvpQnt) .@top1mvpQnt = 1;
+				clear;
+				mes .@gmNpc$;
+				mes "Você dar ^0000FF"+.@top1mvpQnt+"^000000 itens para o próximo [^0000FFTop 1 - Ranking MvP^000000]. Está correto?";
+				if (select("Sim:Não") == 1) {
+					clear;
+					mes .@gmNpc$;
+					mes "[ Confirme suas alterações ]";
+					mes "Tipo: ^0000FFMvP^000000";
+					mes "Ranking: ^0000FFPróximo^000000";
+					mes "Posição: ^0000FFTop 1^000000";
+					mes "Prêmio: ^0000FF"+mesitemlink(.@top1mvpID)+"^000000";
+					mes "Quantidade: ^0000FF"+.@top1mvpQnt+"^000000";
+					if (select("Confirma:Não") == 1) {
+						set .nextPremiosMvp[0], .@top1mvpID;
+						set .nextQuantMvp[0], .@top1mvpQnt;
+						query_sql "update `mvp_rank_archive` set nextMvpTop1 = "+.@top1mvpID+", nextQntMvpTop1 = "+.@top1mvpQnt+" where `controleRewards` = 0";
+						clear;
+						mes .@gmNpc$;
+						mes "Premiações salvas para o próximo ^0000FFTop 1 - Ranking MvP^000000!";
+						sleep2 1000;
+						goto L_AgendamentosMvP;
+					}
+				}
+			}
+		}
+				
+		// ----- Top 2 -----
+		while ( .@loopControl == 1 ) {
+			clear;
+			mes .@gmNpc$;
+			mes "Escolha um ID para o [^0000FFTop 2 - Ranking MvP^000000] do próximo ranking:";
+			input .@top2mvpID; if (!.@top2mvpID || getiteminfo(.@top2mvpID, 0) == -1) .@top2mvpID = 501;
+			clear;
+			mes .@gmNpc$;
+			mes "Você escolheu o item ^0000FF"+mesitemlink(.@top2mvpID)+"^000000. Está correto?";
+			if (select("Sim:Não") == 1) {
+				clear;
+				mes .@gmNpc$;
+				mes "Agora escolha a quantidade a ser dada:";
+				input .@top2mvpQnt; if (!.@top2mvpQnt) .@top2mvpQnt = 1;
+				clear;
+				mes .@gmNpc$;
+				mes "Você dar ^0000FF"+.@top2mvpQnt+"^000000 itens para o próximo [^0000FFTop 2 - Ranking MvP^000000]. Está correto?";
+				if (select("Sim:Não") == 1) {
+					clear;
+					mes .@gmNpc$;
+					mes "[ Confirme suas alterações ]";
+					mes "Tipo: ^0000FFMvP^000000";
+					mes "Ranking: ^0000FFPróximo^000000";
+					mes "Posição: ^0000FFTop 2^000000";
+					mes "Prêmio: ^0000FF"+mesitemlink(.@top2mvpID)+"^000000";
+					mes "Quantidade: ^0000FF"+.@top2mvpQnt+"^000000";
+					if (select("Confirma:Não") == 1) {
+						set .nextPremiosMvp[1], .@top2mvpID;
+						set .nextQuantMvp[1], .@top2mvpQnt;
+						query_sql "update `mvp_rank_archive` set nextMvpTop2 = "+.@top2mvpID+", nextQntMvpTop2 = "+.@top2mvpQnt+" where `controleRewards` = 0";
+						clear;
+						mes .@gmNpc$;
+						mes "Premiações salvas para o próximo ^0000FFTop 2 - Ranking MvP^000000!";
+						sleep2 1000;
+						goto L_AgendamentosMvP;
+					}
+				}
+			}
+		}
+				
+		// ----- Top 3 -----
+		while ( .@loopControl == 2 ) {
+			clear;
+			mes .@gmNpc$;
+			mes "Escolha um ID para o [^0000FFTop 3 - Ranking MvP^000000] do próximo ranking:";
+			input .@top3mvpID; if (!.@top3mvpID || getiteminfo(.@top3mvpID, 0) == -1) .@top3mvpID = 501;
+			clear;
+			mes .@gmNpc$;
+			mes "Você escolheu o item ^0000FF"+mesitemlink(.@top3mvpID)+"^000000. Está correto?";
+			if (select("Sim:Não") == 1) {
+				clear;
+				mes .@gmNpc$;
+				mes "Agora escolha a quantidade a ser dada:";
+				input .@top3mvpQnt; if (!.@top3mvpQnt) .@top3mvpQnt = 1;
+				clear;
+				mes .@gmNpc$;
+				mes "Você dar ^0000FF"+.@top3mvpQnt+"^000000 itens para o próximo [^0000FFTop 3 - Ranking MvP^000000]. Está correto?";
+				if (select("Sim:Não") == 1) {
+					clear;
+					mes .@gmNpc$;
+					mes "[ Confirme suas alterações ]";
+					mes "Tipo: ^0000FFMvP^000000";
+					mes "Ranking: ^0000FFPróximo^000000";
+					mes "Posição: ^0000FFTop 3^000000";
+					mes "Prêmio: ^0000FF"+mesitemlink(.@top3mvpID)+"^000000";
+					mes "Quantidade: ^0000FF"+.@top3mvpQnt+"^000000";
+					if (select("Confirma:Não") == 1) {
+						set .nextPremiosMvp[2], .@top3mvpID;
+						set .nextQuantMvp[2], .@top3mvpQnt;
+						query_sql "update `mvp_rank_archive` set nextMvpTop3 = "+.@top3mvpID+", nextQntMvpTop3 = "+.@top3mvpQnt+" where `controleRewards` = 0";
+						clear;
+						mes .@gmNpc$;
+						mes "Premiações salvas para o próximo ^0000FFTop 3 - Ranking MvP^000000!";
+						sleep2 1000;
+						goto L_AgendamentosMvP;
+					}
+				}
+			}
+		}
+	
+	end;
+	
+// ===================================================================
+//	Agendamento WoE - GM Menu
+// ===================================================================
+
+	L_AgendamentosWoE:
+	
+		.@gmNpc$ = "[^FF0000 --- GM Menu --- ^000000]";
+		clear;
+		.@nextKiller = query_sql( "SELECT nextKillerTop1, nextKillerTop2, nextKillerTop3, nextQntKillerTop1, nextQntKillerTop2, nextQntKillerTop3 FROM `woe_rank_archive` WHERE `controleRewards` = 0", .@nextPrizeKillerT1, .@nextPrizeKillerT2, .@nextPrizeKillerT3, .@nextQntKillerT1, .@nextQntKillerT2, .@nextQntKillerT3);
+		.@nextBreaker = query_sql( "SELECT nextBreakerTop1, nextBreakerTop2, nextBreakerTop3, nextQntBreakerTop1, nextQntBreakerTop2, nextQntBreakerTop3 FROM `woe_rank_archive` WHERE `controleRewards` = 0", .@nextPrizeBreakerT1, .@nextPrizeBreakerT2, .@nextPrizeBreakerT3, .@nextQntBreakerT1, .@nextQntBreakerT2, .@nextQntBreakerT3);
+		.@nextGuild = query_sql( "SELECT nextGuildWinner, nextQntGuildWinner FROM `woe_rank_archive` WHERE `controleRewards` = 0", .@nextPrizeGuildWinner, .@nextQntGuildWinner );
+		
+		// Agendamentos
+		
+		mes .@gmNpc$;
+		mes "Muito bem. Aqui estão os agendamentos planejados para a próxima rotação:";
+		mes "[Próximo Ranking - Killers WoE]";
+		mes "Top 1: ^0000FF" + mesitemlink(.nextPremiosKillerWoe[0]) + "^000000, ^0000FF" + .nextQuantKillerWoe[0] + "x^000000.";
+		mes "Top 2: ^0000FF" + mesitemlink(.nextPremiosKillerWoe[1]) + "^000000, ^0000FF" + .nextQuantKillerWoe[1] + "x^000000.";
+		mes "Top 3: ^0000FF" + mesitemlink(.nextPremiosKillerWoe[2]) + "^000000, ^0000FF" + .nextQuantKillerWoe[2] + "x^000000.";
+		mes " ";
+		mes "[Próximo Ranking - Breakers WoE]";
+		mes "Top 1: ^0000FF" + mesitemlink(.nextPremiosBreakerWoe[0]) + "^000000, ^0000FF" + .nextQuantBreakerWoe[0] + "x^000000.";
+		mes "Top 2: ^0000FF" + mesitemlink(.nextPremiosBreakerWoe[1]) + "^000000, ^0000FF" + .nextQuantBreakerWoe[1] + "x^000000.";
+		mes "Top 3: ^0000FF" + mesitemlink(.nextPremiosBreakerWoe[2]) + "^000000, ^0000FF" + .nextQuantBreakerWoe[2] + "x^000000.";	
+		mes " ";
+		mes "[Próximo Ranking - Clãs WoE]";
+		mes "Top 1: ^0000FF" + mesitemlink(.nextPremiosGuildWoe[0]) + "^000000, ^0000FF" + .nextQuantGuildWoe[0] + "x^000000.";
+		next;
+		mes .@gmNpc$;
+		mes "Gostaria de fazer alguma mudança?";
+		if (select("Sim:Não") == 2) {
+			clear;
+			mes .@gmNpc$;
+			mes "Até depois então.";
+			close;
+		}
+		
+		if ( !.@nextKiller && !.@nextBreaker && !.@nextGuild ) {
+			mes .@gmNpc$;
+			mes "Ainda não há nenhum agendamento para o próximo Ranking Killers WoE.";
+			close;
+		}
+		clear;
+		mes .@gmNpc$;
+		mes "Qual Arena você quer editar?";
+		switch (select("~ ^0000FFKillers WoE^000000:~ ^0000FFBreakers WoE^000000:~ ^0000FFClãs WoE^000000:Voltar")) {
+			
+			// ------- Killers WoE ------
+			case 1:
+
+				.@loopControl = 0;
+				clear;
+				mes .@gmNpc$;
+				mes "Qual posição você quer alterar do [^0000FFRanking Killers WoE^000000]?";
+				switch(select("~ ^0000FFTop 1^000000:~ ^0000FFTop 2^000000:~ ^0000FFTop 3^000000")) {
+					case 1: break;
+					case 2: .@loopControl = 1; break;
+					case 3: .@loopControl = 2; break;
+				}
+				
+				// ----- Top 1 -----	
+				while ( .@loopControl == 0 ) {
+					clear;
+					mes .@gmNpc$;
+					mes "Escolha um ID para o [^0000FFTop 1 - Ranking Killers WoE^000000] do próximo ranking:";
+					input .@top1killerID; if (!.@top1killerID || getiteminfo(.@top1killerID, 0) == -1) .@top1killerID = 501;
+					clear;
+					mes .@gmNpc$;
+					mes "Você escolheu o item ^0000FF"+mesitemlink(.@top1killerID)+"^000000. Está correto?";
+					if (select("Sim:Não") == 1) {
+						clear;
+						mes .@gmNpc$;
+						mes "Agora escolha a quantidade a ser dada:";
+						input .@top1killerQnt; if (!.@top1killerQnt) .@top1killerQnt = 1;
+						clear;
+						mes .@gmNpc$;
+						mes "Você dar ^0000FF"+.@top1killerQnt+"^000000 itens para o próximo [^0000FFTop 1 - Ranking Killers WoE^000000]. Está correto?";
+						if (select("Sim:Não") == 1) {
+							clear;
+							mes .@gmNpc$;
+							mes "[ Confirme suas alterações ]";
+							mes "Tipo: ^0000FFKillers WoE^000000";
+							mes "Ranking: ^0000FFPróximo^000000";
+							mes "Posição: ^0000FFTop 1^000000";
+							mes "Prêmio: ^0000FF"+mesitemlink(.@top1killerID)+"^000000";
+							mes "Quantidade: ^0000FF"+.@top1killerQnt+"^000000";
+							if (select("Confirma:Não") == 1) {
+								set .nextPremiosKillerWoe[0], .@top1killerID;
+								set .nextQuantKillerWoe[0], .@top1killerQnt;
+								query_sql "UPDATE `woe_rank_archive` SET nextKillerTop1 = "+.@top1killerID+", nextQntKillerTop1 = "+.@top1killerQnt+" WHERE `controleRewards` = 0";
+								clear;
+								mes .@gmNpc$;
+								mes "Premiações salvas para o próximo ^0000FFTop 1 - Ranking Killers WoE^000000!";
+								sleep2 1000;
+								goto L_AgendamentosWoE;
+							}
+						}
+					}
+				}
+						
+				// ----- Top 2 -----
+				while ( .@loopControl == 1 ) {
+					clear;
+					mes .@gmNpc$;
+					mes "Escolha um ID para o [^0000FFTop 2 - Ranking Killers WoE^000000] do próximo ranking:";
+					input .@top2killerID; if (!.@top2killerID || getiteminfo(.@top2killerID, 0) == -1) .@top2killerID = 501;
+					clear;
+					mes .@gmNpc$;
+					mes "Você escolheu o item ^0000FF"+mesitemlink(.@top2killerID)+"^000000. Está correto?";
+					if (select("Sim:Não") == 1) {
+						clear;
+						mes .@gmNpc$;
+						mes "Agora escolha a quantidade a ser dada:";
+						input .@top2killerQnt; if (!.@top2killerQnt) .@top2killerQnt = 1;
+						clear;
+						mes .@gmNpc$;
+						mes "Você dar ^0000FF"+.@top2killerQnt+"^000000 itens para o próximo [^0000FFTop 2 - Ranking Killers WoE^000000]. Está correto?";
+						if (select("Sim:Não") == 1) {
+							clear;
+							mes .@gmNpc$;
+							mes "[ Confirme suas alterações ]";
+							mes "Tipo: ^0000FFKillers WoE^000000";
+							mes "Ranking: ^0000FFPróximo^000000";
+							mes "Posição: ^0000FFTop 2^000000";
+							mes "Prêmio: ^0000FF"+mesitemlink(.@top2killerID)+"^000000";
+							mes "Quantidade: ^0000FF"+.@top2killerQnt+"^000000";
+							if (select("Confirma:Não") == 1) {
+								set .nextPremiosKillerWoe[1], .@top2killerID;
+								set .nextQuantKillerWoe[1], .@top2killerQnt;
+								query_sql "UPDATE `woe_rank_archive` SET nextKillerTop2 = "+.@top2killerID+", nextQntKillerTop2 = "+.@top2killerQnt+" WHERE `controleRewards` = 0";
+								clear;
+								mes .@gmNpc$;
+								mes "Premiações salvas para o próximo ^0000FFTop 2 - Ranking Killers WoE^000000!";
+								sleep2 1000;
+								goto L_AgendamentosWoE;
+							}
+						}
+					}
+				}
+						
+				// ----- Top 3 -----
+				while ( .@loopControl == 2 ) {
+					clear;
+					mes .@gmNpc$;
+					mes "Escolha um ID para o [^0000FFTop 3 - Ranking Killers WoE^000000] do próximo ranking:";
+					input .@top3killerID; if (!.@top3killerID || getiteminfo(.@top3killerID, 0) == -1) .@top3killerID = 501;
+					clear;
+					mes .@gmNpc$;
+					mes "Você escolheu o item ^0000FF"+mesitemlink(.@top3killerID)+"^000000. Está correto?";
+					if (select("Sim:Não") == 1) {
+						clear;
+						mes .@gmNpc$;
+						mes "Agora escolha a quantidade a ser dada:";
+						input .@top3killerQnt; if (!.@top3killerQnt) .@top3killerQnt = 1;
+						clear;
+						mes .@gmNpc$;
+						mes "Você dar ^0000FF"+.@top3killerQnt+"^000000 itens para o próximo [^0000FFTop 3 - Ranking Killers WoE^000000]. Está correto?";
+						if (select("Sim:Não") == 1) {
+							clear;
+							mes .@gmNpc$;
+							mes "[ Confirme suas alterações ]";
+							mes "Tipo: ^0000FFKillers WoE^000000";
+							mes "Ranking: ^0000FFPróximo^000000";
+							mes "Posição: ^0000FFTop 3^000000";
+							mes "Prêmio: ^0000FF"+mesitemlink(.@top3killerID)+"^000000";
+							mes "Quantidade: ^0000FF"+.@top3killerQnt+"^000000";
+							if (select("Confirma:Não") == 1) {
+								set .nextPremiosKillerWoe[2], .@top3killerID;
+								set .nextQuantKillerWoe[2], .@top3killerQnt;
+								query_sql "UPDATE `woe_rank_archive` SET nextKillerTop3 = "+.@top3killerID+", nextQntKillerTop3 = "+.@top3killerQnt+" WHERE `controleRewards` = 0";
+								clear;
+								mes .@gmNpc$;
+								mes "Premiações salvas para o próximo ^0000FFTop 3 - Ranking Killers WoE^000000!";
+								sleep2 1000;
+								goto L_AgendamentosWoE;
+							}
+						}
+					}
+				}
+			break;
+			
+			// ------ Breakers WoE ------
+			case 2:
+			
+				.@loopControl = 0;
+				clear;
+				mes .@gmNpc$;
+				mes "Qual posição você quer alterar do [^0000FFRanking Breakers WoE^000000]?";
+				switch(select("~ ^0000FFTop 1^000000:~ ^0000FFTop 2^000000:~ ^0000FFTop 3^000000")) {
+					case 1: break;
+					case 2: .@loopControl = 1; break;
+					case 3: .@loopControl = 2; break;
+				}
+				
+				// ----- Top 1 -----	
+				while ( .@loopControl == 0 ) {
+					clear;
+					mes .@gmNpc$;
+					mes "Escolha um ID para o [^0000FFTop 1 - Ranking Breakers WoE^000000] do próximo ranking:";
+					input .@top1breakerID; if (!.@top1breakerID || getiteminfo(.@top1breakerID, 0) == -1) .@top1breakerID = 501;
+					clear;
+					mes .@gmNpc$;
+					mes "Você escolheu o item ^0000FF"+mesitemlink(.@top1breakerID)+"^000000. Está correto?";
+					if (select("Sim:Não") == 1) {
+						clear;
+						mes .@gmNpc$;
+						mes "Agora escolha a quantidade a ser dada:";
+						input .@top1breakerQnt; if (!.@top1breakerQnt) .@top1breakerQnt = 1;
+						clear;
+						mes .@gmNpc$;
+						mes "Você dar ^0000FF"+.@top1breakerQnt+"^000000 itens para o próximo [^0000FFTop 1 - Ranking Breakers WoE^000000]. Está correto?";
+						if (select("Sim:Não") == 1) {
+							clear;
+							mes .@gmNpc$;
+							mes "[ Confirme suas alterações ]";
+							mes "Tipo: ^0000FFBreakers WoE^000000";
+							mes "Ranking: ^0000FFPróximo^000000";
+							mes "Posição: ^0000FFTop 1^000000";
+							mes "Prêmio: ^0000FF"+mesitemlink(.@top1breakerID)+"^000000";
+							mes "Quantidade: ^0000FF"+.@top1breakerQnt+"^000000";
+							if (select("Confirma:Não") == 1) {
+								set .nextPremiosBreakerWoe[0], .@top1breakerID;
+								set .nextQuantBreakerWoe[0], .@top1breakerQnt;
+								query_sql "UPDATE `woe_rank_archive` SET nextBreakerTop1 = "+.@top1breakerID+", nextQntBreakerTop1 = "+.@top1breakerQnt+" WHERE `controleRewards` = 0";
+								clear;
+								mes .@gmNpc$;
+								mes "Premiações salvas para o próximo ^0000FFTop 1 - Ranking Breakers WoE^000000!";
+								sleep2 1000;
+								goto L_AgendamentosWoE;
+							}
+						}
+					}
+				}
+				
+				// ----- Top 2 -----	
+				while ( .@loopControl == 1 ) {
+					clear;
+					mes .@gmNpc$;
+					mes "Escolha um ID para o [^0000FFTop 2 - Ranking Breakers WoE^000000] do próximo ranking:";
+					input .@top2breakerID; if (!.@top2breakerID || getiteminfo(.@top2breakerID, 0) == -1) .@top2breakerID = 501;
+					clear;
+					mes .@gmNpc$;
+					mes "Você escolheu o item ^0000FF"+mesitemlink(.@top2breakerID)+"^000000. Está correto?";
+					if (select("Sim:Não") == 1) {
+						clear;
+						mes .@gmNpc$;
+						mes "Agora escolha a quantidade a ser dada:";
+						input .@top2breakerQnt; if (!.@top2breakerQnt) .@top2breakerQnt = 1;
+						clear;
+						mes .@gmNpc$;
+						mes "Você dar ^0000FF"+.@top2breakerQnt+"^000000 itens para o próximo [^0000FFTop 2 - Ranking Breakers WoE^000000]. Está correto?";
+						if (select("Sim:Não") == 1) {
+							clear;
+							mes .@gmNpc$;
+							mes "[ Confirme suas alterações ]";
+							mes "Tipo: ^0000FFBreakers WoE^000000";
+							mes "Ranking: ^0000FFPróximo^000000";
+							mes "Posição: ^0000FFTop 2^000000";
+							mes "Prêmio: ^0000FF"+mesitemlink(.@top2breakerID)+"^000000";
+							mes "Quantidade: ^0000FF"+.@top2breakerQnt+"^000000";
+							if (select("Confirma:Não") == 1) {
+								set .nextPremiosBreakerWoe[1], .@top2breakerID;
+								set .nextQuantBreakerWoe[1], .@top2breakerQnt;
+								query_sql "UPDATE `woe_rank_archive` SET nextBreakerTop2 = "+.@top2breakerID+", nextQntBreakerTop2 = "+.@top2breakerQnt+" WHERE `controleRewards` = 0";
+								clear;
+								mes .@gmNpc$;
+								mes "Premiações salvas para o próximo ^0000FFTop 2 - Ranking Breakers WoE^000000!";
+								sleep2 1000;
+								goto L_AgendamentosWoE;
+							}
+						}
+					}
+				}
+				
+				// ----- Top 3 -----	
+				while ( .@loopControl == 2 ) {
+					clear;
+					mes .@gmNpc$;
+					mes "Escolha um ID para o [^0000FFTop 3 - Ranking Breakers WoE^000000] do próximo ranking:";
+					input .@top3breakerID; if (!.@top3breakerID || getiteminfo(.@top3breakerID, 0) == -1) .@top3breakerID = 501;
+					clear;
+					mes .@gmNpc$;
+					mes "Você escolheu o item ^0000FF"+mesitemlink(.@top3breakerID)+"^000000. Está correto?";
+					if (select("Sim:Não") == 1) {
+						clear;
+						mes .@gmNpc$;
+						mes "Agora escolha a quantidade a ser dada:";
+						input .@top3breakerQnt; if (!.@top3breakerQnt) .@top3breakerQnt = 1;
+						clear;
+						mes .@gmNpc$;
+						mes "Você dar ^0000FF"+.@top3breakerQnt+"^000000 itens para o próximo [^0000FFTop 3 - Ranking Breakers WoE^000000]. Está correto?";
+						if (select("Sim:Não") == 1) {
+							clear;
+							mes .@gmNpc$;
+							mes "[ Confirme suas alterações ]";
+							mes "Tipo: ^0000FFBreakers WoE^000000";
+							mes "Ranking: ^0000FFPróximo^000000";
+							mes "Posição: ^0000FFTop 3^000000";
+							mes "Prêmio: ^0000FF"+mesitemlink(.@top3breakerID)+"^000000";
+							mes "Quantidade: ^0000FF"+.@top3breakerQnt+"^000000";
+							if (select("Confirma:Não") == 1) {
+								set .nextPremiosBreakerWoe[2], .@top3breakerID;
+								set .nextQuantBreakerWoe[2], .@top3breakerQnt;
+								query_sql "UPDATE `woe_rank_archive` SET nextBreakerTop3 = "+.@top3breakerID+", nextQntBreakerTop3 = "+.@top3breakerQnt+" WHERE `controleRewards` = 0";
+								clear;
+								mes .@gmNpc$;
+								mes "Premiações salvas para o próximo ^0000FFTop 3 - Ranking Breakers WoE^000000!";
+								sleep2 1000;
+								goto L_AgendamentosWoE;
+							}
+						}
+					}
+				}
+			
+			break;
+			
+			// ----- Clãs WoE -----
+			case 3:
+			
+				.@loopControl = 0;
+				clear;
+				mes .@gmNpc$;
+				mes "Qual posição você quer alterar do [^0000FFRanking Clãs WoE^000000]?";
+				switch(select("~ ^0000FFTop 1^000000:Voltar")) {
+					case 1: break;
+					case 2: callsub L_AgendamentosWoE; break;
+				}
+				
+				// ----- Top 1 -----	
+				while ( .@loopControl == 0 ) {
+					clear;
+					mes .@gmNpc$;
+					mes "Escolha um ID para o [^0000FFTop 1 - Ranking Breakers WoE^000000] do próximo ranking:";
+					input .@top1guildID; if (!.@top1guildID || getiteminfo(.@top1guildID, 0) == -1) .@top1guildID = 501;
+					clear;
+					mes .@gmNpc$;
+					mes "Você escolheu o item ^0000FF"+mesitemlink(.@top1guildID)+"^000000. Está correto?";
+					if (select("Sim:Não") == 1) {
+						clear;
+						mes .@gmNpc$;
+						mes "Agora escolha a quantidade a ser dada:";
+						input .@top1guildQnt; if (!.@top1guildQnt) .@top1guildQnt = 1;
+						clear;
+						mes .@gmNpc$;
+						mes "Você dar ^0000FF"+.@top1guildQnt+"^000000 itens para o próximo [^0000FFTop 1 - Ranking Clãs WoE^000000]. Está correto?";
+						if (select("Sim:Não") == 1) {
+							clear;
+							mes .@gmNpc$;
+							mes "[ Confirme suas alterações ]";
+							mes "Tipo: ^0000FFClãs WoE^000000";
+							mes "Ranking: ^0000FFPróximo^000000";
+							mes "Posição: ^0000FFTop 1^000000";
+							mes "Prêmio: ^0000FF"+mesitemlink(.@top1guildID)+"^000000";
+							mes "Quantidade: ^0000FF"+.@top1guildQnt+"^000000";
+							if (select("Confirma:Não") == 1) {
+								set .nextPremiosGuildWoe[0], .@top1guildID;
+								set .nextQuantGuildWoe[0], .@top1guildQnt;
+								query_sql "UPDATE `woe_rank_archive` SET nextGuildWinner = "+.@top1guildID+", nextQntGuildWinner = "+.@top1guildQnt+" WHERE `controleRewards` = 0";
+								clear;
+								mes .@gmNpc$;
+								mes "Premiações salvas para o próximo ^0000FFTop 1 - Ranking Clãs WoE^000000!";
+								sleep2 1000;
+								goto L_AgendamentosWoE;
+							}
+						}
+					}
+				}
+			
+			// ----- Voltar -----
+			case 4:
+				clear;
+				callsub L_GMmenu; break;
+			
+		}
+	end;
+
+// ===================================================================
+//	OnEndingRankings - Área de entrega de premiações + Nova rotação
+// ===================================================================
+
+OnHour00:
+OnHour08:
+OnHour16:
+
+	// --------------------------------------------------------------------------------------------------
+	//	Ranking PvP
+	// --------------------------------------------------------------------------------------------------
+	
+	// Checagem PvP
+	.@checkPvp = query_sql( "select DATEDIFF(CURDATE(), `timeStart`), `rotacao` from `pvp_rank_archive` where `controleRewards` = 0", .@fimPvp, .@numRotacaoPvp);
+	set .tempoRestantePvp, (.tempoDuracaoPvp - .@fimPvp);
+	
+	// Verifica se a passagem de tempo é superior ao limite informado para o PvP
+	if ( .tempoRestantePvp <= 0 ) {
+		announce "[Sistema Rankings]: O ranking PvP que estava em andamento se encerrou. As pontuações foram resetadas e prêmios entregues.",bc_blue;
+		
+		// Busca dos agendamentos & premiações
+		
+		// Premiações
+		// Arena Livre
+		query_sql( "SELECT `arena1Top1`, `arena1Top2`, `arena1Top3`, `qntArena1Top1`, `qntArena1Top2`, `qntArena1Top3` FROM `pvp_rank_archive` WHERE `controleRewards` = 0", .@premiosArena1[0], .@premiosArena1[1], .@premiosArena1[2], .@qntPremiosArena1[0], .@qntPremiosArena1[1], .@qntPremiosArena1[2]);
+		
+		// Arena sem Mob
+		query_sql( "SELECT `arena2Top1`, `arena2Top2`, `arena2Top3`, `qntArena2Top1`, `qntArena2Top2`, `qntArena2Top3` FROM `pvp_rank_archive` WHERE `controleRewards` = 0", .@premiosArena2[0], .@premiosArena2[1], .@premiosArena2[2], .@qntPremiosArena2[0], .@qntPremiosArena2[1], .@qntPremiosArena2[2] );
+		
+		// Arena sem Donate
+		query_sql( "SELECT `arena3Top1`, `arena3Top2`, `arena3Top3`, `qntArena3Top1`, `qntArena3Top2`, `qntArena3Top3` FROM `pvp_rank_archive` WHERE `controleRewards` = 0", .@premiosArena3[0], .@premiosArena3[1], .@premiosArena3[2], .@qntPremiosArena3[0], .@qntPremiosArena3[1], .@qntPremiosArena3[2] );
+		
+		// Agendamentos
+		
+
+		// First part: Retrieve values for Arena 1
+		query_sql("SELECT `nextArena1Top1`, `nextArena1Top2`, `nextArena1Top3`, `nextQntArena1Top1`, `nextQntArena1Top2`, `nextQntArena1Top3` FROM `pvp_rank_archive` WHERE `controleRewards` = 0", .@nextArena1Top1, .@nextArena1Top2, .@nextArena1Top3, .@nextQntArena1Top1, .@nextQntArena1Top2, .@nextQntArena1Top3);
+
+		// Second part: Retrieve values for Arena 2
+		query_sql("SELECT `nextArena2Top1`, `nextArena2Top2`, `nextArena2Top3`, `nextQntArena2Top1`, `nextQntArena2Top2`, `nextQntArena2Top3` FROM `pvp_rank_archive` WHERE `controleRewards` = 0", .@nextArena2Top1, .@nextArena2Top2, .@nextArena2Top3, .@nextQntArena2Top1, .@nextQntArena2Top2, .@nextQntArena2Top3);
+
+		// Third part: Retrieve values for Arena 3
+		query_sql("SELECT `nextArena3Top1`, `nextArena3Top2`, `nextArena3Top3`, `nextQntArena3Top1`, `nextQntArena3Top2`, `nextQntArena3Top3` FROM `pvp_rank_archive` WHERE `controleRewards` = 0", .@nextArena3Top1, .@nextArena3Top2, .@nextArena3Top3, .@nextQntArena3Top1, .@nextQntArena3Top2, .@nextQntArena3Top3 );
+		
+		// Lista do Top 3 + Pontos (Arena Livre)
+		query_sql( "SELECT `char_id`, `account_id`, `arena1_pvp` FROM `char` WHERE `arena1_pvp` > 0 ORDER BY `arena1_pvp` DESC LIMIT 3", .@topArena1Char, .@topArena1ID, .@pointCount1 );
+
+		// Lista do Top 3 + Pontos (Arena sem Mob)
+		query_sql( "SELECT `char_id`, `account_id`, `arena2_pvp` FROM `char` WHERE `arena2_pvp` > 0 ORDER BY `arena2_pvp` DESC LIMIT 3", .@topArena2Char, .@topArena2ID, .@pointCount2 );
+		
+		// Lista do Top 3 + Pontos (Arena sem Donate)
+		query_sql( "SELECT `char_id`, `account_id`, `arena3_pvp` FROM `char` WHERE `arena3_pvp` > 0 ORDER BY `arena3_pvp` DESC LIMIT 3", .@topArena3Char, .@topArena3ID, .@pointCount3 );
+
+
+		for ( .@i = 0; .@i < 3; .@i++ ) {
+			// Arena Livre
+			if ( .@topArena1ID[.@i] > 0 ) {
+				switch ( .@i ) {
+					case 0: query_sql( "UPDATE `pvp_rank_archive` SET `charArena1Top1`= "+.@topArena1ID[.@i]+" WHERE `controleRewards` = 0" ); break;
+					case 1: query_sql( "UPDATE `pvp_rank_archive` SET `charArena1Top2`= "+.@topArena1ID[.@i]+" WHERE `controleRewards` = 0" ); break;
+					case 2: query_sql( "UPDATE `pvp_rank_archive` SET `charArena1Top3`= "+.@topArena1ID[.@i]+" WHERE `controleRewards` = 0" ); break;
+				}
+				if ( isloggedin( .@topArena1ID[.@i] ) ) {
+					// Se o jogador está Online, entrega o prêmio
+					if ( attachrid( .@topArena1ID[.@i] ) ) {
+						getitem .premiosArena1Pvp[.@i], .quantArena1Pvp[.@i];
+						dispbottom "[Ranking PvP]: Parabéns por ter finalizado o Ranking PvP em "+(.@i+1)+"º com "+.@pointCount1[.@i]+" pontos na Arena Livre!";
+						detachrid();
+					}
+				// Se o jogador está Offline, manda o prêmio por email
+				} else {
+					mail .@topArena1Char[.@i], "[Ranking PvP]", "Prêmio PvP", "[Ranking PvP]: Parabéns por ter finalizado o Ranking PvP em "+(.@i+1)+"º com "+.@pointCount1[.@i]+" pontos na Arena Livre!", 0, .premiosArena1Pvp[.@i], .quantArena1Pvp[.@i];
+				}
+			}
+
+			// Arena sem Mob
+			if ( .@topArena2ID[.@i] > 0 ) {
+				switch ( .@i ) {
+					case 0: query_sql( "UPDATE `pvp_rank_archive` SET `charArena2Top1`= "+.@topArena2ID[.@i]+" WHERE `controleRewards` = 0" ); break;
+					case 1: query_sql( "UPDATE `pvp_rank_archive` SET `charArena2Top2`= "+.@topArena2ID[.@i]+" WHERE `controleRewards` = 0" ); break;
+					case 2: query_sql( "UPDATE `pvp_rank_archive` SET `charArena2Top3`= "+.@topArena2ID[.@i]+" WHERE `controleRewards` = 0" ); break;
+				}
+				if ( isloggedin( .@topArena2ID[.@i] ) ) {
+					// Se o jogador está Online, entrega o prêmio
+					if ( attachrid( .@topArena2ID[.@i] ) ) {
+						getitem .premiosArena2Pvp[.@i], .quantArena2Pvp[.@i];
+						dispbottom "[Ranking PvP]: Parabéns por ter finalizado o Ranking PvP em "+(.@i+1)+"º com "+.@pointCount2[.@i]+" pontos na Arena sem Mob!";
+						detachrid();
+					}
+				// Se o jogador está Offline, manda o prêmio por email
+				} else {
+					mail .@topArena2Char[.@i], "[Ranking PvP]", "Prêmio PvP", "[Ranking PvP]: Parabéns por ter finalizado o Ranking PvP em "+(.@i+1)+"º com "+.@pointCount2[.@i]+" pontos na Arena sem Mob!", 0, .premiosArena2Pvp[.@i], .quantArena2Pvp[.@i];
+				}
+			}
+
+			// Arena sem Donate
+			if ( .@topArena3ID[.@i] > 0 ) {
+				switch ( .@i ) {
+					case 0: query_sql( "UPDATE `pvp_rank_archive` SET `charArena3Top1`= "+.@topArena3ID[.@i]+" WHERE `controleRewards` = 0" ); break;
+					case 1: query_sql( "UPDATE `pvp_rank_archive` SET `charArena3Top2`= "+.@topArena3ID[.@i]+" WHERE `controleRewards` = 0" ); break;
+					case 2: query_sql( "UPDATE `pvp_rank_archive` SET `charArena3Top3`= "+.@topArena3ID[.@i]+" WHERE `controleRewards` = 0" ); break;
+				}
+				if ( isloggedin( .@topArena3ID[.@i] ) ) {
+					// Se o jogador está Online, entrega o prêmio
+					if ( attachrid( .@topArena3ID[.@i] ) ) {
+						getitem .premiosArena3Pvp[.@i], .quantArena3Pvp[.@i];
+						dispbottom "[Ranking PvP]: Parabéns por ter finalizado o Ranking PvP em "+(.@i+1)+"º com "+.@pointCount3[.@i]+" pontos na Arena sem Donate!";
+						detachrid();
+					}
+				} else {
+					// Se o jogador está Offline, manda o prêmio por email
+					mail .@topArena3Char[.@i], "[Ranking PvP]", "Prêmio PvP", "[Ranking PvP]: Parabéns por ter finalizado o Ranking PvP em "+(.@i+1)+"º com "+.@pointCount3[.@i]+" pontos na Arena sem Donate!", 0, .premiosArena3Pvp[.@i], .quantArena3Pvp[.@i];
+				}
+			}
+		}
+		
+		// Encerra o registro anterior PvP
+		query_sql( "UPDATE `pvp_rank_archive` SET `controleRewards` = 1 WHERE `controleRewards` = 0" );
+		
+		// Insere uma nova linha no banco de dados (Novo ranking PvP)
+		query_sql("INSERT INTO `pvp_rank_archive` (`rotacao`, `timeStart`, `timeLimit`, `controleRewards`) VALUES ("+(.@numRotacaoPvp+1)+", CURDATE(), "+.tempoDuracaoPvp+", 0)");
+
+		// Update with the first set of columns
+		query_sql("UPDATE `pvp_rank_archive` SET `arena1Top1`="+.@nextArena1Top1+", `arena1Top2`="+.@nextArena1Top2+", `arena1Top3`="+.@nextArena1Top3+", `arena2Top1`="+.@nextArena2Top1+", `arena2Top2`="+.@nextArena2Top2+", `arena2Top3`="+.@nextArena2Top3+" WHERE `controleRewards`= 0 ");
+
+		// Update with the second set of columns
+		query_sql("UPDATE `pvp_rank_archive` SET `arena3Top1`="+.@nextArena3Top1+", `arena3Top2`="+.@nextArena3Top2+", `arena3Top3`="+.@nextArena3Top3+", `qntArena1Top1`="+.@nextQntArena1Top1+", `qntArena1Top2`="+.@nextQntArena1Top2+", `qntArena1Top3`="+.@nextQntArena1Top3+" WHERE `controleRewards`= 0 ");
+
+		// Update with the third set of columns
+		query_sql("UPDATE `pvp_rank_archive` SET `qntArena2Top1`="+.@nextQntArena2Top1+", `qntArena2Top2`="+.@nextQntArena2Top2+", `qntArena2Top3`="+.@nextQntArena2Top3+", `qntArena3Top1`="+.@nextQntArena3Top1+", `qntArena3Top2`="+.@nextQntArena3Top2+", `qntArena3Top3`="+.@nextQntArena3Top3+" WHERE `controleRewards`= 0 ");
+
+		// Update with the final set of columns
+		query_sql("UPDATE `pvp_rank_archive` SET `nextArena1Top1`="+.@nextArena1Top1+", `nextArena1Top2`="+.@nextArena1Top2+", `nextArena1Top3`="+.@nextArena1Top3+", `nextArena2Top1`="+.@nextArena2Top1+", `nextArena2Top2`="+.@nextArena2Top2+", `nextArena2Top3`="+.@nextArena2Top3+", `nextArena3Top1`="+.@nextArena3Top1+", `nextArena3Top2`="+.@nextArena3Top2+", `nextArena3Top3`="+.@nextArena3Top3+", `nextQntArena1Top1`="+.@nextQntArena1Top1+", `nextQntArena1Top2`="+.@nextQntArena1Top2+", `nextQntArena1Top3`="+.@nextQntArena1Top3+", `nextQntArena2Top1`="+.@nextQntArena2Top1+", `nextQntArena2Top2`="+.@nextQntArena2Top2+", `nextQntArena2Top3`="+.@nextQntArena2Top3+", `nextQntArena3Top1`="+.@nextQntArena3Top1+", `nextQntArena3Top2`="+.@nextQntArena3Top2+", `nextQntArena3Top3`="+.@nextQntArena3Top3+"  WHERE `controleRewards`= 0 ");
+		
+		// Limpa pontuações PvP de jogadores
+		query_sql( "UPDATE `char` SET `arena1_pvp` = 0, `arena2_pvp` = 0, `arena3_pvp` = 0" );
+		
+		setarray .premiosArena1Pvp[0], .@nextArena1Top1, .@nextArena1Top2, .@nextArena1Top3;
+		setarray .premiosArena2Pvp[0], .@nextArena2Top1, .@nextArena2Top2, .@nextArena2Top3;
+		setarray .premiosArena3Pvp[0], .@nextArena3Top1, .@nextArena3Top2, .@nextArena3Top2;
+		setarray .quantArena1Pvp[0], .@nextQntArena1Top1, .@nextQntArena1Top2, .@nextQntArena1Top3;
+		setarray .quantArena2Pvp[0], .@nextQntArena2Top1, .@nextQntArena2Top2, .@nextQntArena2Top3;
+		setarray .quantArena3Pvp[0], .@nextQntArena3Top1, .@nextQntArena3Top2, .@nextQntArena3Top3;
+			
+	} else {
+		if ( .tempoRestantePvp < 5 )
+			announce "[Sistema Rankings]: O ranking PvP acabará em "+.tempoRestantePvp+" dias. Aproveite enquanto há tempo!",bc_blue;
+	}
+
+	// --------------------------------------------------------------------------------------------------
+	//	Ranking MvP
+	// --------------------------------------------------------------------------------------------------
+
+	.@checkMvp = query_sql( "select DATEDIFF(CURDATE(), `timeStart`), `rotacao` from `mvp_rank_archive` where `controleRewards` = 0", .@fimMvp, .@numRotacaoMvp);
+	set .tempoRestanteMvp, (.tempoDuracaoMvp - .@fimMvp);
+
+	// Verifica se a passagem de tempo é superior ao limite informado para o MvP
+	if ( .tempoRestanteMvp <= 0 ) {
+		announce "[Sistema Rankings]: O ranking MvP que estava em andamento se encerrou. As pontuações foram resetadas e prêmios entregues.",bc_blue;
+		
+		// Busca dos agendamentos & premiações
+			
+		setarray .@premiosMvp[0], 0, 0, 0;
+		setarray .@qntPremiosMvp[0], 0, 0, 0;
+			
+		query_sql( "SELECT `mvpTop1`, `mvpTop2`, `mvpTop3`,`qntMvpTop1`, `qntMvpTop2`, `qntMvpTop3`, `nextMvpTop1`, `nextMvpTop2`, `nextMvpTop3`, `nextQntMvpTop1`, `nextQntMvpTop2`, `nextQntMvpTop3` FROM `mvp_rank_archive` WHERE `controleRewards` = 0", .@premiosMvp, .@premiosMvp, .@premiosMvp, .@qntPremiosMvp, .@qntPremiosMvp, .@qntPremiosMvp, .@nextMvpTop1, .@nextMvpTop2, .@nextMvpTop3, .@nextQntMvpTop1, .@nextQntMvpTop2, .@nextQntMvpTop3 );
+			
+			// Vetores para guardar CHAR_ID e Pontuações
+			setarray .@topArena1Chars[0], 0, 0, 0;
+			setarray .@topArena1Pontos[0], 0, 0, 0;
+
+			setarray .@topArena2Chars[0], 0, 0, 0;
+			setarray .@topArena2Pontos[0], 0, 0, 0;
+
+			setarray .@topArena3Chars[0], 0, 0, 0;
+			setarray .@topArena3Pontos[0], 0, 0, 0;
+
+			// Busca os três com maior pontuação do ranking mvp
+			query_sql( "SELECT `char_id`, `account_id`, `mvp_rank` FROM `char` WHERE `mvp_rank` > 0 ORDER BY `mvp_rank` DESC LIMIT 3", .@topMvpChars, .@topMvpID, .@topMvpPontos );
+
+
+			for ( .@i = 0; .@i < 3; .@i++ ) {
+				// Arena Livre
+				if ( .@topMvpChars[.@i] > 0 ) {
+					switch ( .@i ) {
+						case 0: query_sql( "UPDATE `mvp_rank_archive` SET `charMvpTop1`= "+.@topMvpChars[.@i]+" WHERE `controleRewards` = 0" ); break;
+						case 1: query_sql( "UPDATE `mvp_rank_archive` SET `charMvpTop2`= "+.@topMvpChars[.@i]+" WHERE `controleRewards` = 0" ); break;
+						case 2: query_sql( "UPDATE `mvp_rank_archive` SET `charMvpTop3`= "+.@topMvpChars[.@i]+" WHERE `controleRewards` = 0" ); break;
+					}
+					if ( isloggedin( .@topMvpID[.@i] ) ) {
+						// Se o jogador está Online, entrega o prêmio
+						if ( attachrid( .@topMvpID[.@i] ) ) {
+							getitem .@premiosMvp[.@i], .@qntPremiosMvp[.@i];
+							dispbottom "[Ranking MvP]: Parabéns por ter finalizado o Ranking MvP em "+(.@i+1)+"º com "+.@topMvpPontos[.@i]+" pontos!";
+							detachrid();
+						}
+					// Se o jogador está Offline, manda o prêmio por email
+					} else {
+						mail .@topMvpID[.@i], "[Ranking MvP]", "Prêmio MvP", "[Ranking MvP]: Parabéns por ter finalizado o Ranking MvP em "+(.@i+1)+"º com "+.@topMvpPontos[.@i]+" pontos!", 0, .@premiosMvp[.@i], .@qntPremiosMvp[.@i];
+					}
+				}
+			}
+			
+			// Limpa as pontuações de MvP
+			query_sql( "UPDATE `char` SET `mvp_rank` = 0" );
+			
+			// Encerra o Ranking MvP no banco de dados
+			query_sql( "UPDATE `mvp_rank_archive` SET `controleRewards` = 1 WHERE `controleRewards` = 0" );
+			
+			// Adiciona uma nova linha ao banco de dados para o próximo Ranking
+			query_sql "insert into `mvp_rank_archive` (`rotacao`, `timeStart`, `timeLimit`, `mvpTop1`, `mvpTop2`, `mvpTop3`, `qntMvpTop1`, `qntMvpTop2`, `qntMvpTop3`, `nextMvpTop1`, `nextMvpTop2`, `nextMvpTop3`, `nextQntMvpTop1`, `nextQntMvpTop2`, `nextQntMvpTop3`, `controleRewards`) values ("+(.@numRotacaoMvp+1)+", CURDATE(), "+.tempoDuracaoMvp+", "+.@nextMvpTop1+", "+.@nextMvpTop2+", "+.@nextMvpTop3+", "+.@nextQntMvpTop1+", "+.@nextQntMvpTop2+", "+.@nextQntMvpTop3+", 503, 502, 501, 3, 2, 1, 0)";
+	} else {
+		if ( .tempoRestanteMvp < 5 )
+			announce "[Sistema Rankings]: O ranking MvP acabará em "+.tempoRestanteMvp+" dias. Aproveite enquanto há tempo!",bc_blue;
+	}
+
+
+	// --------------------------------------------------------------------------------------------------
+	//	Ranking WoE
+	// --------------------------------------------------------------------------------------------------
+
+	// Checagem WoE
+	.@checkWoe = query_sql( "SELECT DATEDIFF(CURDATE(), `timeStart`), `rotacao` FROM `woe_rank_archive` WHERE `controleRewards` = 0", .@fimWoe, .@numRotacaoWoe);
+	set .tempoRestanteWoe, (.tempoDuracaoWoe - .@fimWoe);
+	
+	// Verifica se a passagem de tempo é superior ao limite informado para o WoE
+	if ( .tempoRestanteWoe <= 0 ) {
+		announce "[Sistema Rankings]: O ranking WoE que estava em andamento se encerrou. As pontuações foram resetadas e prêmios entregues.",bc_blue;
+		
+		// Busca dos agendamentos & premiações
+		
+		// Premiações
+		// Killers WoE
+		query_sql( "SELECT `killerTop1`, `killerTop2`, `killerTop3`, `qntKillerTop1`, `qntKillerTop2`, `qntKillerTop3` FROM `woe_rank_archive` WHERE `controleRewards` = 0", .@premioKillerWoe[0], .@premioKillerWoe[1], .@premioKillerWoe[2], .@qntPremioKillerWoe[0], .@qntPremioKillerWoe[1], .@qntPremioKillerWoe[2]);
+		
+		// Breakers WoE
+		query_sql( "SELECT `breakerTop1`, `breakerTop2`, `breakerTop3`, `qntBreakerTop1`, `qntBreakerTop2`, `qntBreakerTop3` FROM `woe_rank_archive` WHERE `controleRewards` = 0", .@premioBreakerWoe[0], .@premioBreakerWoe[1], .@premioBreakerWoe[2], .@qntPremioBreakerWoe[0], .@qntPremioBreakerWoe[1], .@qntPremioBreakerWoe[2] );
+		
+		// Clãs WoE
+		query_sql( "SELECT `guildWinner`, `qntGuildWinner` FROM `woe_rank_archive` WHERE `controleRewards` = 0", .@premioGuildWinner[0], .@qntGuildWinner[0] );
+		
+		// Agendamentos
+		
+
+		// Salvar valores de Agendamento - Killers WoE
+		query_sql("SELECT `nextKillerTop1`, `nextKillerTop2`, `nextKillerTop3`, `nextQntKillerTop1`, `nextQntKillerTop2`, `nextQntKillerTop3` FROM `woe_rank_archive` WHERE `controleRewards` = 0", .@nextKillerTop1, .@nextKillerTop2, .@nextKillerTop3, .@nextQntKillerTop1, .@nextQntKillerTop2, .@nextQntKillerTop3);
+
+		// Salvar valores de Agendamento - Breakers WoE
+		query_sql("SELECT `nextBreakerTop1`, `nextBreakerTop2`, `nextBreakerTop3`, `nextQntBreakerTop1`, `nextQntBreakerTop2`, `nextQntBreakerTop3` FROM `woe_rank_archive` WHERE `controleRewards` = 0", .@nextBreakerTop1, .@nextBreakerTop2, .@nextBreakerTop3, .@nextQntBreakerTop1, .@nextQntBreakerTop2, .@nextQntBreakerTop3);
+
+		// Salvar valores de Agendamento - Clãs WoE
+		query_sql("SELECT `nextGuildWinner`, `nextQntGuildWinner` FROM `woe_rank_archive` WHERE `controleRewards` = 0", .@nextGuildWinner, .@nextQntGuildWinner );
+		
+		// Lista do Top 3 + Pontos (Killers WoE)
+		query_sql( "SELECT `char_id`, `account_id`, `woe_killer_rank` FROM `char` WHERE `woe_killer_rank` > 0 ORDER BY `woe_killer_rank` DESC LIMIT 3", .@topKillerChar, .@topKillerID, .@pointKiller );
+
+		// Lista do Top 3 + Pontos (Breakers WoE)
+		query_sql( "SELECT `char_id`, `account_id`, `woe_breaker_rank` FROM `char` WHERE `woe_breaker_rank` > 0 ORDER BY `woe_breaker_rank` DESC LIMIT 3", .@topBreakerChar, .@topBreakerID, .@pointBreaker );
+		
+		// Lista do Top 1 + Pontos (Clãs WoE)
+		query_sql( "SELECT `guild_id`, `char_id`, `guild_rank` FROM `guild` WHERE `guild_rank` > 0 ORDER BY `guild_rank` DESC LIMIT 3", .@topGuild, .@topGuildMasterID, .@pointGuild );
+
+
+		for ( .@i = 0; .@i < 3; .@i++ ) {
+			// Killers WoE
+			if ( .@topKillerID[.@i] > 0 ) {
+				if ( isloggedin( .@topKillerID[.@i] ) ) {
+					// Se o jogador está Online, entrega o prêmio
+					if ( attachrid( .@topKillerID[.@i] ) ) {
+						getitem .premiosKillerWoe[.@i], .quantKillerWoe[.@i];
+						dispbottom "[Ranking WoE]: Parabéns por ter finalizado o Ranking WoE em "+(.@i+1)+"º com "+.@pointKiller[.@i]+" pontos em Killers WoE!";
+						detachrid();
+					}
+				// Se o jogador está Offline, manda o prêmio por email
+				} else {
+					mail .@topKillerID[.@i], "[Ranking WoE]", "Prêmio WoE", "[Ranking WoE]: Parabéns por ter finalizado o Ranking WoE em "+(.@i+1)+"º com "+.@pointKiller[.@i]+" pontos em Killers WoE!", 0, .premiosArena1Pvp[.@i], .quantKillerWoe[.@i];
+				}
+			}
+
+			// Breakers WoE
+			if ( .@topBreakerID[.@i] > 0 ) {
+				if ( isloggedin( .@topBreakerID[.@i] ) ) {
+					// Se o jogador está Online, entrega o prêmio
+					if ( attachrid( .@topBreakerID[.@i] ) ) {
+						getitem .premiosBreakerWoe[.@i], .quantBreakerWoe[.@i];
+						dispbottom "[Ranking WoE]: Parabéns por ter finalizado o Ranking WoE em "+(.@i+1)+"º com "+.@pointBreaker[.@i]+" pontos em Breakers WoE!";
+						detachrid();
+					}
+				// Se o jogador está Offline, manda o prêmio por email
+				} else {
+					mail .@topBreakerID[.@i], "[Ranking WoE]", "Prêmio WoE", "[Ranking WoE]: Parabéns por ter finalizado o Ranking WoE em "+(.@i+1)+"º com "+.@pointBreaker[.@i]+" pontos em Breakers WoE!", 0, .premiosBreakerWoe[.@i], .quantBreakerWoe[.@i];
+				}
+			}
+
+			// Clãs WoE
+			if ( .@topGuildMasterID[.@i] > 0 ) {
+				if ( isloggedin( .@topGuildMasterID[.@i] ) ) {
+					// Se o jogador está Online, entrega o prêmio
+					if ( attachrid( .@topGuildMasterID[.@i] ) ) {
+						getitem .premiosGuildWoe[.@i], .quantGuildWoe[.@i];
+						dispbottom "[Ranking WoE]: Parabéns por seu clã ["+getguildname(.@topGuild)+"] ter finalizado o Ranking WoE em "+(.@i+1)+"º com "+.@pointGuild[.@i]+" pontos em Clãs WoE!";
+						detachrid();
+					}
+				} else {
+					// Se o jogador está Offline, manda o prêmio por email
+					mail .@topGuildMasterID[.@i], "[Ranking WoE]", "Prêmio WoE", "[Ranking WoE]: Parabéns por seu clã ["+getguildname(.@topGuild)+"] ter finalizado o Ranking WoE em "+(.@i+1)+"º com "+.@pointGuild[.@i]+" pontos em Clãs WoE!", 0, .premiosGuildWoe[.@i], .quantGuildWoe[.@i];
+				}
+			}
+		}
+		
+		// Limpa as pontuações de WoE existentes
+		query_sql( "UPDATE `char` SET `woe_killer_rank` = 0, `woe_breaker_rank` = 0 " );
+		query_sql( "UPDATE `guild` SET `guild_rank` = 0" );
+		
+		// Encerra o registro anterior WoE
+		query_sql( "UPDATE `woe_rank_archive` SET `controleRewards` = 1 WHERE `controleRewards` = 0" );
+		
+		// Insere uma nova linha no banco de dados (Novo ranking WoE)
+		
+		// Insere informações básicas primeiro
+		query_sql("INSERT INTO `woe_rank_archive` (`rotacao`, `timeStart`, `timeLimit`, `controleRewards`) VALUES ("+(.@numRotacaoWoe+1)+", CURDATE(), "+.tempoDuracaoWoe+", 0)");
+
+		// Update o ranking de Killers, Breakers, Clãs
+		query_sql("UPDATE `woe_rank_archive` SET `killerTop1`="+.@nextKillerTop1+", `killerTop2`="+.@nextKillerTop2+", `killerTop3`="+.@nextKillerTop3+", `breakerTop1`="+.@nextBreakerTop1+", `breakerTop2`="+.@nextBreakerTop2+", `breakerTop3`="+.@nextBreakerTop3+", `guildWinner`="+.@nextGuildWinner+" WHERE `controleRewards`= 0 ");
+
+		// Update as quantidades de todos os rankings
+		query_sql("UPDATE `woe_rank_archive` SET `qntKillerTop1`="+.@nextQntKillerTop1+", `qntKillerTop2`="+.@nextQntKillerTop2+", `qntKillerTop3`="+.@nextQntKillerTop3+", `qntBreakerTop1`="+.@nextBreakerTop1+", `qntBreakerTop2`="+.@nextQntBreakerTop2+", `qntBreakerTop3`="+.@nextQntBreakerTop3+", `qntGuildWinner`="+.@nextQntGuildWinner+" WHERE `controleRewards`= 0 ");
+
+		// Update os campos de agendamento
+		query_sql("UPDATE `woe_rank_archive` SET `nextKillerTop1`="+.@nextKillerTop1+", `nextKillerTop2`="+.@nextKillerTop2+", `nextKillerTop3`="+.@nextKillerTop3+", `nextBreakerTop1`="+.@nextBreakerTop1+", `nextBreakerTop2`="+.@nextBreakerTop2+", `nextBreakerTop3`="+.@nextBreakerTop3+", `nextGuildWinner`="+.@nextGuildWinner+", `nextQntKillerTop1`="+.@nextQntKillerTop1+", `nextQntKillerTop2`="+.@nextQntKillerTop2+", `nextQntKillerTop3`="+.@nextQntKillerTop3+", `nextQntBreakerTop1`="+.@nextQntBreakerTop1+", `nextQntBreakerTop2`="+.@nextQntBreakerTop2+", `nextQntBreakerTop3`="+.@nextQntBreakerTop3+", `nextQntGuildWinner`="+.@nextQntGuildWinner+" WHERE `controleRewards`= 0 ");
+		
+		setarray .premiosKillerWoe[0], .@nextKillerTop1, .@nextKillerTop2, .@nextKillerTop3;
+		setarray .premiosBreakerWoe[0], .@nextBreakerTop1, .@nextBreakerTop2, .@nextBreakerTop3;
+		setarray .premiosGuildWoe[0], .@nextGuildWinner;
+		setarray .quantKillerPvp[0], .@nextQntKillerTop1, .@nextQntKillerTop2, .@nextQntKillerTop3;
+		setarray .quantBreakerPvp[0], .@nextQntBreakerTop1, .@nextQntBreakerTop2, .@nextQntBreakerTop3;
+		setarray .quantGuildWoe[0], .@nextQntGuildWinner;
+		
+	} else {
+		if ( .tempoRestanteWoe < 5 )
+			announce "[Sistema Rankings]: O ranking WoE acabará em "+.tempoRestanteWoE+" dias. Aproveite enquanto há tempo!",bc_blue;
+	}
+	
+	end;
+
+// ===================================================================
+//	Contabilização de Pontos MVP
+// ===================================================================
+
+	OnNPCKillEvent:
+		if ( getmonsterinfo( killedrid, MOB_MVPEXP ) ) {
+			
+			set .@mobID, killedrid;
+			set .@mobName$, getmonsterinfo( killedrid, 0 );
+			
+			// Listas de MvPs por pontuação específica
+			setarray .@mvps_3pontos[0], 1157, 1492, 1623, 1719, 1039, 1658, 1583, 1418;
+			setarray .@mvps_10pontos[0], 1708, 1871, 1768, 1734, 2022, 1779;
+			setarray .@mvps_15pontos[0], 1873, 1751, 1832;
+			setarray .@mvps_30pontos[0], 1646, 1647, 1648, 1649, 1650, 1651;
+			
+			// Loop para verificar primeiro vetor (3 pontos)
+			for (.@i = 0; .@i < getarraysize( .@mvps_3pontos ); .@i++) {
+				if ( .@mobID == .@mvps_3pontos[.@i] )
+					.@mvp_categoria = 3;
+			}
+			
+			// Loop para verificar vetor (10 pontos)
+			if ( !.@mvp_categoria ) {
+				for (.@i = 0; .@i < getarraysize( .@mvps_10pontos ); .@i++) {
+					if ( .@mobID == .@mvps_10pontos[.@i] )
+						.@mvp_categoria = 10;
+				}
+			}
+			
+			// Loop para verificar vetor (15 pontos)
+			if ( !.@mvp_categoria ) {
+				for (.@i = 0; .@i < getarraysize( .@mvps_15pontos ); .@i++) {
+					if ( .@mobID == .@mvps_15pontos[.@i] )
+						.@mvp_categoria = 15;
+				}
+			}
+			
+			// Loop para verificar vetor (30 pontos)
+			if ( !.@mvp_categoria ) {
+				for (.@i = 0; .@i < getarraysize( .@mvps_30pontos ); .@i++) {
+					if ( .@mobID == .@mvps_30pontos[.@i] )
+						.@mvp_categoria = 30;
+				}
+			}
+			
+			// Se o MvP não estiver cadastrado, ganha-se 1 ponto MvP
+			if ( !.@mvp_categoria ) .@mvp_categoria = 1;
+			
+			set .@partyid,getcharid(1);
+			if ( .@partyid ) {
+				set .@aid,getcharid(3);
+				set .@map$,strcharinfo(3);
+				getpartymember .@partyid,1;
+				getpartymember .@partyid,2;
+				set .@counter,0;
+				set .@j, 0;
+				set .@i, 0;
+				
+				while( .@j < $@partymembercount ) {
+					if ( isloggedin( $@partymemberaid[.@j],$@partymembercid[.@j] ) )
+						if ( attachrid( $@partymemberaid[.@j] ) )
+							if ( strcharinfo(3) == .@map$)
+								set .@counter, .@counter + 1;
+					set .@j,.@j + 1;
+				}
+				
+				// Personagens dentro de grupo
+				while( .@i < $@partymembercount ) {
+					// Checa se o membro do grupo está conectado
+					if ( isloggedin( $@partymemberaid[.@i],$@partymembercid[.@i] ) )
+						if ( attachrid( $@partymemberaid[.@i] ) )
+							// Checa de o membro do grupo está no mesmo mapa e vivo
+							if ( strcharinfo(3) == .@map$ && Hp >= 1 ) {
+								// Checa se o membro do grupo está fingindo de morto
+								if ( getstatus(SC_TRICKDEAD) == 0 ) {
+									// Checa se o membro do grupo está AFK
+									if ( checkidle() <= .limiteAfkMvp ) {
+										query_sql "UPDATE `char` SET `mvp_rank` = mvp_rank + "+.@mvp_categoria+" WHERE `char_id` = "+ getcharid(0);
+										query_sql "SELECT `mvp_rank` FROM `char` WHERE `char_id` = "+ getcharid(0), .@killed;
+										#PONTOSMVP += .@mvp_categoria;
+										dispbottom "[Ranking MvP]:  Seu personagem conquistou "+ .@killed +" ponto(s) MVP.";
+										dispbottom "[Ranking MvP]: Você matou [ "+.@mobName$+" ] e ganhou +"+.@mvp_categoria+" ponto(s) MVP. [ Total: "+#PONTOSMVP+" ].";
+									} else {
+										dispbottom "[Ranking MvP]: Você não ganhará pontos MVP se AFK por mais de "+.limiteAfkMvp+" segundos.";
+									}
+								} else {
+										dispbottom "[Ranking MvP]: Você não ganhará pontos MVP se estiver fingindo de morto.";
+								}
+							}
+					set .@i,.@i + 1;
+				}
+				attachrid( .@aid );
+				
+			// Personagem fora de grupo
+			} else {
+				query_sql "UPDATE `char` SET `mvp_rank` = mvp_rank + "+.@mvp_categoria+" WHERE `char_id` = "+ getcharid(0);
+				query_sql "SELECT `mvp_rank` FROM `char` WHERE `char_id` = "+ getcharid(0), .@killed;
+				#PONTOSMVP += .@mvp_categoria;
+				dispbottom "[Ranking MvP]: Seu personagem conquistou "+ .@killed +" ponto(s) MVP.";
+				dispbottom "[Ranking MvP]: Você matou [ "+.@mobName$+" ] e ganhou +"+.@mvp_categoria+" ponto(s) MVP. [ Total: "+#PONTOSMVP+" ].";
+			}
+		}
+	end;
+	
+// ===================================================================
+//	Área de Configuração do NPC / Rankings
+// ===================================================================
+	
+	OnInit:
+	
+		// Nome do NPC colorido em azul
+		set .nomeNpc$, "[^0000FF--- Sistema de Rankings ---^000000]";
+		
+		// Número de dias para reset & premiações automáticas
+		// Ex: '15' = 15 dias corridos
+		// Duração do Ranking PvP
+		set .tempoDuracaoPvp, 15;
+		// Duração do Ranking MvP
+		set .tempoDuracaoMvp, 7;
+		// Duração do Ranking WoE
+		set .tempoDuracaoWoe, 30;
+		// Limite para ganho de pontos MvP
+		set .limiteAfkMvp, 30;
+		
+		// Pontos de Ranking (Premiações)
+		set .guildPontos, 50;
+		set .killerPontos, 1;
+		set .breakerPontos, 20;
+		// Pontos trocáveis em lojas
+		set .killerLoja, 1;
+		set .breakerLoja, 20;
+		set .guildLoja, 50;
+		
+		// Agendamento (0 = inativo / 1 = ativo)
+		set .agendamento, 1;
+		
+		// ------------- Busca no Banco de dados das premiações e quantidades salvas PVP -----------------
+		
+		.@rotacao = query_sql( "select rotacao, timeLimit from `pvp_rank_archive` where `controleRewards` = 0", .@rotacao, .@duracaoPvp );
+		.@date = query_sql( "select timeStart from `pvp_rank_archive` where `controleRewards` = 0", .@startingDate$ );
+		.@premiosA1 = query_sql( "select arena1Top1, arena1Top2, arena1Top3 from `pvp_rank_archive` where `controleRewards` = 0", .@premioA1Top1, .@premioA1Top2, .@premioA1Top3 );
+		.@premiosA2 = query_sql( "select arena2Top1, arena2Top2, arena2Top3 from `pvp_rank_archive` where `controleRewards` = 0", .@premioA2Top1, .@premioA2Top2, .@premioA2Top3 );
+		.@premiosA3 = query_sql( "select arena3Top1, arena3Top2, arena3Top3 from `pvp_rank_archive` where `controleRewards` = 0", .@premioA3Top1, .@premioA3Top2, .@premioA3Top3 );
+		.@qntA1 = query_sql( "select qntArena1Top1, qntArena1Top2, qntArena1Top3 from `pvp_rank_archive` where `controleRewards` = 0", .@qntA1Top1, .@qntA1Top2, .@qntA1Top3 );
+		.@qntA2 = query_sql( "select qntArena2Top1, qntArena2Top2, qntArena2Top3 from `pvp_rank_archive` where `controleRewards` = 0", .@qntA2Top1, .@qntA2Top2, .@qntA2Top3 );
+		.@qntA3 = query_sql( "select qntArena3Top1, qntArena3Top2, qntArena3Top3 from `pvp_rank_archive` where `controleRewards` = 0", .@qntA3Top1, .@qntA3Top2, .@qntA3Top3 );
+
+		.@nextA1 = query_sql( "select nextArena1Top1, nextArena1Top2, nextArena1Top3, nextQntArena1Top1, nextQntArena1Top2, nextQntArena1Top3 from `pvp_rank_archive` where `controleRewards` = 0", .@nextPrizeA1T1, .@nextPrizeA1T2, .@nextPrizeA1T3, .@nextQntA1T1, .@nextQntA1T2, .@nextQntA1T3);
+		.@nextA2 = query_sql( "select nextArena2Top1, nextArena2Top2, nextArena2Top3, nextQntArena2Top1, nextQntArena2Top2, nextQntArena2Top3 from `pvp_rank_archive` where `controleRewards` = 0", .@nextPrizeA2T1, .@nextPrizeA2T2, .@nextPrizeA2T3, .@nextQntA2T1, .@nextQntA2T2, .@nextQntA1T3);
+		.@nextA3 = query_sql( "select nextArena3Top1, nextArena3Top2, nextArena3Top3, nextQntArena3Top1, nextQntArena3Top2, nextQntArena3Top3 from `pvp_rank_archive` where `controleRewards` = 0", .@nextPrizeA3T1, .@nextPrizeA3T2, .@nextPrizeA3T3, .@nextQntA3T1, .@nextQntA3T2, .@nextQntA3T3);
+		
+		// ----- Atualização de prêmios e quantidades (Todas as Arenas) -----
+
+		if (!.@rotacao && !.@premiosA1 && !.@premiosA2 && !.@premiosA3 && !.@qntA1 && !.@qntA2 && !.@qntA3 && !.@date && !.@nextA1 && !.@nextA2 && !.@nextA3) {
+			.@rotacao = 1;
+			query_sql( "SELECT CURDATE()", .@startingDate$ );
+			setarray .premiosArena1Pvp[0], 503, 502, 501;
+			setarray .premiosArena2Pvp[0], 503, 502, 501;
+			setarray .premiosArena3Pvp[0], 503, 502, 501;
+			setarray .quantArena1Pvp[0], 3, 2, 1;
+			setarray .quantArena2Pvp[0], 3, 2, 1;
+			setarray .quantArena3Pvp[0], 3, 2, 1;
+			setarray .nextPremiosArena1Pvp[0], 503, 502, 501; 
+			setarray .nextQuantArena1Pvp[0], 3, 2, 1;
+			setarray .nextPremiosArena2Pvp[0], 503, 502, 501; 
+			setarray .nextQuantArena2Pvp[0], 3, 2, 1;
+			setarray .nextPremiosArena3Pvp[0], 503, 502, 501;
+			setarray .nextQuantArena3Pvp[0], 3, 2, 1;
+			query_sql "insert into `pvp_rank_archive` (`rotacao`, `timeStart`, `timeLimit`, `arena1Top1`, `arena1Top2`, `arena1Top3`, `arena2Top1`, `arena2Top2`, `arena2Top3`, `arena3Top1`, `arena3Top2`, `arena3Top3`, `qntArena1Top1`, `qntArena1Top2`, `qntArena1Top3`, `qntArena2Top1`, `qntArena2Top2`, `qntArena2Top3`, `qntArena3Top1`, `qntArena3Top2`, `qntArena3Top3`, `nextArena1Top1`, `nextArena1Top2`, `nextArena1Top3`, `nextArena2Top1`, `nextArena2Top2`, `nextArena2Top3`, `nextArena3Top1`, `nextArena3Top2`, `nextArena3Top3`, `nextQntArena1Top1`, `nextQntArena1Top2`, `nextQntArena1Top3`,  `nextQntArena2Top1`, `nextQntArena2Top2`, `nextQntArena2Top3`, `nextQntArena3Top1`, `nextQntArena3Top2`, `nextQntArena3Top3`, `controleRewards`) values ("+.@rotacao+", '"+.@startingDate$+"', "+.tempoDuracaoPvp+", 503, 502, 501, 503, 502, 501, 503, 502, 501, 3, 2, 1, 3, 2, 1, 3, 2, 1, 503, 502, 501, 503, 502, 501, 503, 502, 501, 3, 2, 1, 3, 2, 1, 3, 2, 1, 0)";
+			
+		} else {
+			set .rotacao, .@rotacao;
+			set .tempoDuracaoPvp, .@duracaoPvp;
+			set .inicioRankingPvp$, .@startingDate$;
+			setarray .premiosArena1Pvp[0], .@premioA1Top1, .@premioA1Top2, .@premioA1Top3;
+			setarray .premiosArena2Pvp[0], .@premioA2Top1, .@premioA2Top2, .@premioA2Top3;
+			setarray .premiosArena3Pvp[0], .@premioA3Top1, .@premioA3Top2, .@premioA3Top3;
+			setarray .quantArena1Pvp[0], .@qntA1Top1, .@qntA1Top2, .@qntA1Top3;
+			setarray .quantArena2Pvp[0], .@qntA2Top1, .@qntA2Top2, .@qntA2Top3;
+			setarray .quantArena3Pvp[0], .@qntA3Top1, .@qntA3Top2, .@qntA3Top3;
+			setarray .nextPremiosArena1Pvp[0], .@nextPrizeA1T1, .@nextPrizeA1T2, .@nextPrizeA1T3; 
+			setarray .nextPremiosArena2Pvp[0], .@nextPrizeA2T1, .@nextPrizeA2T2, .@nextPrizeA2T3; 
+			setarray .nextPremiosArena3Pvp[0], .@nextPrizeA3T1, .@nextPrizeA3T2, .@nextPrizeA3T3; 
+			setarray .nextQuantArena1Pvp[0], .@nextQntA1T1, .@nextQntA1T2, .@nextQntA1T3;
+			setarray .nextQuantArena2Pvp[0], .@nextQntA2T1, .@nextQntA2T2, .@nextQntA2T3;
+			setarray .nextQuantArena3Pvp[0], .@nextQntA2T1, .@nextQntA2T2, .@nextQntA2T3;
+		}
+		
+		// ------------- Busca no Banco de dados das premiações e quantidades salvas MVP ----------------
+		
+		.@rotacao_mvp = query_sql( "select rotacao, timeLimit from `mvp_rank_archive` where `controleRewards` = 0", .@rotacao_mvp, .@duracaoMvp );
+		.@date_mvp = query_sql( "select timeStart from `mvp_rank_archive` where `controleRewards` = 0", .@startingDateMvp$ );
+		.@premiosMvp = query_sql( "select mvpTop1, mvpTop2, mvpTop3 from `mvp_rank_archive` where `controleRewards` = 0", .@premioMvpTop1, .@premioMvpTop2, .@premioMvpTop3 );
+		.@qntMvp = query_sql( "select qntMvpTop1, qntMvpTop2, qntMvpTop3 from `mvp_rank_archive` where `controleRewards` = 0", .@qntMvpTop1, .@qntMvpTop2, .@qntMvpTop3 );
+		.@nextMvp = query_sql( "select nextMvpTop1, nextMvpTop2, nextMvpTop3, nextQntMvpTop1, nextQntMvpTop2, nextQntMvpTop3 from `mvp_rank_archive` where `controleRewards` = 0", .@nextPrizeMvpT1, .@nextPrizeMvpT2, .@nextPrizeMvpT3, .@nextQntMvpT1, .@nextQntMvpT2, .@nextQntMvpT3);
+		
+		if (!.@rotacao_mvp && !.@premiosMvp && !.@qntMvp && !.@nextMvp && !.@date_mvp) {
+			.@rotacao_mvp = 1;
+			query_sql( "SELECT CURDATE()", .@startingDateMvp$ );
+			setarray .premiosMvp[0], 503, 502, 501;
+			setarray .quantMvp[0], 3, 2, 1;
+			setarray .nextPremiosMvp[0], 503, 502, 501; 
+			setarray .nextQuantMvp[0], 3, 2, 1;
+			
+			query_sql "insert into `mvp_rank_archive` (`rotacao`, `timeStart`, `timeLimit`, `mvpTop1`, `mvpTop2`, `mvpTop3`, `qntMvpTop1`, `qntMvpTop2`, `qntMvpTop3`, `nextMvpTop1`, `nextMvpTop2`, `nextMvpTop3`, `nextQntMvpTop1`, `nextQntMvpTop2`, `nextQntMvpTop3`, `controleRewards`) values ("+.@rotacao_mvp+", '"+.@startingDateMvp$+"', "+.tempoDuracaoMvp+", 503, 502, 501, 3, 2, 1, 503, 502, 501, 3, 2, 1, 0)";
+		
+		} else {
+			set .rotacaoMvp, .@rotacao_mvp;
+			set .tempoDuracaoMvp, .@duracaoMvp;
+			set .inicioRankingMvp$, .@startingDateMvp$;
+			setarray .premiosMvp[0], .@premioMvpTop1, .@premioMvpTop2, .@premioMvpTop3;
+			setarray .quantMvp[0], .@qntMvpTop1, .@qntMvpTop2, .@qntMvpTop3;
+			setarray .nextPremiosMvp[0], .@nextPrizeMvpT1, .@nextPrizeMvpT2, .@nextPrizeMvpT3; 
+			setarray .nextQuantMvp[0], .@nextQntMvpT1, .@nextQntMvpT2, .@nextQntMvpT3;
+		}
+		
+		// ------------- Busca no Banco de dados das premiações e quantidades salvas WOE ----------------
+		
+		.@rotacao_woe = query_sql( "SELECT rotacao, timeLimit FROM `woe_rank_archive` where `controleRewards` = 0", .@rotacao_woe, .@duracaoWoe );
+		.@date_woe = query_sql( "SELECT timeStart FROM `woe_rank_archive` where `controleRewards` = 0", .@startingDateWoe$ );
+		.@premiosKillerWoe = query_sql( "SELECT killerTop1, killerTop2, killerTop3 FROM `woe_rank_archive` where `controleRewards` = 0", .@premioKillerTop1, .@premioKillerTop2, .@premioKillerTop3 );
+		.@premiosBreakerWoe = query_sql( "SELECT breakerTop1, breakerTop2, breakerTop3 FROM `woe_rank_archive` where `controleRewards` = 0", .@premioBreakerTop1, .@premioBreakerTop2, .@premioBreakerTop3 );
+		.@premiosGuildWoe = query_sql( "SELECT guildWinner FROM `woe_rank_archive` where `controleRewards` = 0", .@premioGuildwinner );
+		.@qntKillerWoe = query_sql( "SELECT qntKillerTop1, qntKillerTop2, qntKillerTop3 FROM `woe_rank_archive` where `controleRewards` = 0", .@qntKillerTop1, .@qntKillerTop2, .@qntKillerTop3 );
+		.@qntBreakerWoe = query_sql( "SELECT qntBreakerTop1, qntBreakerTop2, qntBreakerTop3 FROM `woe_rank_archive` where `controleRewards` = 0", .@qntBreakerTop1, .@qntBreakerTop2, .@qntBreakerTop3 );
+		.@qntGuildWoe = query_sql( "SELECT qntGuildWinner FROM `woe_rank_archive` where `controleRewards` = 0", .@qntGuildWinner );
+		.@nextKillerWoe = query_sql( "SELECT nextKillerTop1, nextKillerTop2, nextKillerTop3, nextQntKillerTop1, nextQntKillerTop2, nextQntKillerTop3 FROM `woe_rank_archive` where `controleRewards` = 0", .@nextPKillerWoeT1, .@nextPKillerWoeT2, .@nextPKillerWoeT3, .@nextQntKillerT1, .@nextQntKillerT2, .@nextQntKillerT3);
+		.@nextBreakerWoe = query_sql( "SELECT nextBreakerTop1, nextBreakerTop2, nextBreakerTop3, nextQntBreakerTop1, nextQntBreakerTop2, nextQntBreakerTop3 FROM `woe_rank_archive` where `controleRewards` = 0", .@nextPBreakerWoeT1, .@nextPBreakerWoeT2, .@nextPBreakerWoeT3, .@nextQntBreakerT1, .@nextQntBreakerT2, .@nextQntBreakerT3);
+		.@nextGuildWoe = query_sql( "SELECT nextGuildWinner, nextQntGuildWinner FROM `woe_rank_archive` where `controleRewards` = 0", .@nextPGuildWinner, .@nextQntGuildWinner );
+		
+		if (!.@rotacao_woe && !.@premiosKillerWoe && !.@premiosBreakerWoe && !.@premiosGuildWoe && !.@qntKillerWoe && !.@qntBreakerWoe && 
+			!.@qntGuildWoe && !.@nextKillerWoe && !.@nextBreakerWoe && !.@nextGuildWoe && !.@nextWoe && !.@date_woe) {
+			.@rotacao_woe = 1;
+			query_sql( "SELECT CURDATE()", .@startingDateWoe$ );
+			setarray .premiosKillerWoe[0], 503, 502, 501;
+			setarray .premiosBreakerWoe[0], 503, 502, 501;
+			setarray .premiosGuildWoe[0], 503;
+			setarray .quantKillerWoe[0], 3, 2, 1;
+			setarray .quantBreakerWoe[0], 3, 2, 1;
+			setarray .quantGuildWoe[0], 3;
+			setarray .nextPremiosKillerWoe[0], 503, 502, 501;
+			setarray .nextPremiosBreakerWoe[0], 503, 502, 501;
+			setarray .nextPremiosGuildWoe[0], 503, 502, 501;
+			setarray .nextQuantKillerWoe[0], 3, 2, 1;
+			setarray .nextQuantBreakerWoe[0], 3, 2, 1;
+			setarray .nextQuantGuildWoe[0], 3;
+			
+			
+			query_sql "insert into `woe_rank_archive` (`rotacao`, `timeStart`, `timeLimit`, `killerTop1`, `killerTop2`, `killerTop3`, `breakerTop1`, `breakerTop2`, `breakerTop3`, `qntKillerTop1`, `qntKillerTop2`, `qntKillerTop3`, `qntBreakerTop1`, `qntBreakerTop2`, `qntBreakerTop3`, `guildWinner`, `qntGuildWinner`, `nextKillerTop1`, `nextKillerTop2`, `nextKillerTop3`, `nextBreakerTop1`, `nextBreakerTop2`, `nextBreakerTop3`, `nextQntKillerTop1`, `nextQntKillerTop2`, `nextQntKillerTop3`, `nextQntBreakerTop1`, `nextQntBreakerTop2`, `nextQntBreakerTop3`, `nextGuildWinner`, `nextQntGuildWinner`, `controleRewards`) values ("+.@rotacao_woe+", '"+.@startingDateWoe$+"', "+.tempoDuracaoWoe+", 503, 502, 501, 503, 502, 501, 3, 2, 1, 3, 2, 1, 503, 3, 503, 502, 501, 503, 502, 501, 3, 2, 1, 3, 2, 1, 503, 3, 0)";
+		
+		} else {
+			set .rotacaoWoe, .@rotacao_woe;
+			set .tempoDuracaoWoe, .@duracaoWoe;
+			set .inicioRankingWoe$, .@startingDateWoe$;
+			setarray .premiosKillerWoe[0], .@premioKillerTop1, .@premioKillerTop2, .@premioKillerTop3;
+			setarray .premiosBreakerWoe[0], .@premioBreakerTop1, .@premioBreakerTop2, .@premioBreakerTop3;
+			setarray .premiosGuildWoe[0], .@premioGuildWinner;
+			setarray .quantKillerWoe[0], .@qntKillerTop1, .@qntKillerTop2, .@qntKillerTop3;
+			setarray .quantBreakerWoe[0], .@qntBreakerTop1, .@qntBreakerTop2, .@qntBreakerTop3;
+			setarray .quantGuildWoe[0], .@qntGuildWinner;
+			setarray .nextPremiosKillerWoe[0], .@nextPKillerWoeT1, .@nextPKillerWoeT2, .@nextPKillerWoeT3; 
+			setarray .nextPremiosBreakerWoe[0], .@nextPKillerWoeT1, .@nextPKillerWoeT2, .@nextPKillerWoeT3; 
+			setarray .nextPremiosGuildWoe[0], .@nextPGuildWinner;
+			setarray .nextQuantKillerWoe[0], .@nextQntKillerT1, .@nextQntKillerT2, .@nextQntKillerT3;
+			setarray .nextQuantBreakerWoe[0], .@nextQntBreakerT1, .@nextQntBreakerT2, .@nextQntBreakerT3;
+			setarray .nextQuantGuildWoe[0], .@nextQntGuildWinner;
+		}
+		
+		// Cálculo de Duração do Ranking PvP
+		query_sql( "SELECT DATEDIFF(CURDATE(), `timeStart`) FROM `pvp_rank_archive` WHERE `controleRewards` = 0", .@timePassedPvp);
+		// Cálculo de Duração do Ranking MvP
+		query_sql( "SELECT DATEDIFF(CURDATE(), `timeStart`) FROM `mvp_rank_archive` WHERE `controleRewards` = 0", .@timePassedMvp);
+		// Cálculo de Duração do Ranking Woe
+		query_sql( "SELECT DATEDIFF(CURDATE(), `timeStart`) FROM `woe_rank_archive` WHERE `controleRewards` = 0", .@timePassedWoe);
+		
+		set .tempoRestantePvp, (.tempoDuracaoPvp - .@timePassedPvp);
+		set .tempoRestanteMvp, (.tempoDuracaoMvp - .@timePassedMvp);
+		set .tempoRestanteWoe, (.tempoDuracaoWoe - .@timePassedWoe);
+		
+		// Chat título do npc
+		//waitingroom "Rankings",0;
+		
+	end;
+	
+}

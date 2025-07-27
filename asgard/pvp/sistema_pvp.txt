@@ -1,0 +1,577 @@
+//-------------------------------------------------------------------------------------------||
+//   __  __                                  _                _____           _       _      ||
+//  |  \/  |                                (_)              / ____|         (_)     | |     ||
+//  | \  / | __ _  __ _ _ __ ___   __ _ _ __ _ _ __   __ _  | (___   ___ _ __ _ _ __ | |_    ||
+//  | |\/| |/ _` |/ _` | '_ ` _ \ / _` | '__| | '_ \ / _` |  \___ \ / __| '__| | '_ \| __|   ||
+//  | |  | | (_| | (_| | | | | | | (_| | |  | | | | | (_| |  ____) | (__| |  | | |_) | |_    ||
+//  |_|  |_|\__,_|\__, |_| |_| |_|\__,_|_|  |_|_| |_|\__, | |_____/ \___|_|  |_| .__/ \__|   ||
+//                 __/ |                              __/ |                    | |           ||
+//                |___/                              |___/                     |_|           ||
+//-------------------------------------------------------------------------------------------||
+//   VENDAS DE SERVIÇOS SERVIDORES DE RAGNAROK ONLINE/PERFECT WORLD/MU/AION/CABAL/MINECRAFT  ||
+//DISCORD:   https://discordapp.com/channels/@me/Magmaring#0352                              ||
+//INSTAGRAM: https://www.instagram.com/evandro_srk/                                          ||
+//FACEBOOK:  https://www.facebook.com/sorakamente/                                           ||
+//GITHUB:    https://github.com/magmaring                                                    ||
+//-------------------------------------------------------------------------------------------||
+// = Criação:                                                                                ||
+// - [ADM] Magmaring - Evandro Oliveira     												 ||
+//-------------------------------------------------------------------------------------------||
+// = Revisão:                                                                                ||
+// - Esse arquivo teve sua última revisão 07 de janeiro de 2024    				         	 ||
+//-------------------------------------------------------------------------------------------||
+prontera,164,198,3	script	Gestor PvP	11001,{
+	
+	function PvpLink;
+	mes .nomeNpc$;
+	mes "Oi, seja bem-vindo às Arenas PVP do servidor!";
+	mes "O que você gostaria de fazer?";
+	if (select("^0000FFEntrar no PvP^000000:Pontuação") == 2) {
+		clear;
+		mes .nomeNpc$;
+		if( !#PONTOSPVP )
+			#PONTOSPVP = 0;
+		mes "Você possui ^0000FF"+#PONTOSPVP+"^000000 pontos PvP.";
+		close;
+	}
+	clear;
+	mes .nomeNpc$;
+	mes "Ok, em qual arena você gostaria de entrar?";
+	
+	// Opções Menu
+	set .menuArena1$, "Arena Livre (^FF0000"+getmapusers(.arenas$[0])+" jogadores^000000)";
+	set .menuArena2$, "Arena sem MOB (^FF0000"+getmapusers(.arenas$[1])+" jogadores^000000)";
+	set .menuArena3$, "Arena sem Donate (^FF0000"+getmapusers(.arenas$[2])+" jogadores^000000)";
+	
+	switch (select(""+.menuArena1$+":"+.menuArena2$+":"+.menuArena3$+"")) {
+		case 1:
+			clear;
+			mes .nomeNpc$;
+			mes "Tudo bem, você será teleportado à Arena 1!";
+			// Remove todos os buffs do jogador
+			sc_end(-1);
+			sc_end SC_CP_WEAPON;
+			sc_end SC_CP_ARMOR;
+			sc_end SC_CP_SHIELD;
+			sc_end SC_CP_HELM;
+			// Rebuffa o jogador VIP
+			if ( vip_status(1) )
+				callsub OnVipRebuff;
+			else
+				callsub OnNormalRebuff;
+			PvpLink();
+			repairall;
+			sleep2 500;
+			if (getgroupid() < 90)
+				mapannounce "prontera","O jogador ["+strcharinfo(0)+"] acabou de entrar na Arena Livre!!",bc_blue;
+			warp .arenas$[0],0,0;
+			close2;
+			break;
+		case 2:
+			clear;
+			if (getcharid(1) || getcharid(2)) {
+				mes .nomeNpc$;
+				mes "^FF0000Você não pode entrar na Arena 2 com um grupo ou clã!^000000 Retorne quando estiver pronto.";
+				close;
+			}
+			mes .nomeNpc$;
+			mes "Tudo bem, você será teleportado à Arena 2!";
+			// Remove todos os buffs do jogador
+			sc_end(-1);
+			sc_end SC_CP_WEAPON;
+			sc_end SC_CP_ARMOR;
+			sc_end SC_CP_SHIELD;
+			sc_end SC_CP_HELM;
+			// Rebuffa o jogador VIP
+			if ( vip_status(1) )
+				callsub OnVipRebuff;
+			else
+				callsub OnNormalRebuff;
+			PvpLink();
+			repairall;
+			sleep2 500;
+			if (getgroupid() < 90)
+				mapannounce "prontera","O jogador ["+strcharinfo(0)+"] acabou de entrar na Arena sem Mob!!",bc_blue;
+			warp .arenas$[1],0,0;
+			close2;
+			break;
+		case 3:
+			clear;
+			callsub OnChecagemCash;
+			mes .nomeNpc$;
+			mes "Tudo bem, você será teleportado à Arena 3!";
+			// Remove todos os buffs do jogador
+			sc_end(-1);
+			sc_end SC_CP_WEAPON;
+			sc_end SC_CP_ARMOR;
+			sc_end SC_CP_SHIELD;
+			sc_end SC_CP_HELM;
+			// Rebuffa o jogador VIP
+			if ( vip_status(1) )
+				callsub OnVipRebuff;
+			else
+				callsub OnNormalRebuff;
+			PvpLink();
+			repairall;
+			sleep2 500;
+			if (getgroupid() < 90)
+				mapannounce "prontera","O jogador ["+strcharinfo(0)+"] acabou de entrar na Arena sem Donate!!",bc_blue;
+			warp .arenas$[2],0,0;
+			close2;
+			break;
+		default:
+			clear;
+			mes .nomeNpc$;
+			mes "No momento as Arenas estão inacessíveis. Tente mais tarde.";
+			close;
+			break;
+	}
+	
+	end;
+
+
+function	PvpLink	{
+	
+	switch ( basejob ) {
+	  case Job_Alchemist:set .@spirit, 445; break;
+	  case Job_Monk: set .@spirit, 447; break;
+	  case Job_Star_Gladiator:  set .@spirit, 448; break;
+	  case Job_Sage: set .@spirit, 449; break;
+	  case Job_Crusader:set .@spirit, 450; break;
+	  case Job_SuperNovice:   set .@spirit, 451; break;
+	  case Job_Knight:set .@spirit, 452; break;
+	  case Job_Wizard:set .@spirit, 453; break;
+	  case Job_Priest:set .@spirit, 454; break;
+	  case Job_Bard: case Job_Dancer: set .@spirit, 455; break;
+	  case Job_Rogue: set .@spirit, 456; break;
+	  case Job_Blacksmith:   set .@spirit, 458; break;
+	  case Job_Hunter:set .@spirit, 460; break;
+	  case Job_Soul_Linker: break;
+	  case Job_Assassin: break;
+	  // case Job_Soul_Linker:   set .@spirit, 461; break;
+	  default:
+		if ( upper == 1 && baselevel < 70 )
+			set .@spirit, 494; break;
+	}
+	if ( .@spirit ) {
+	  sc_start4 sc_spirit, 360000, 5, .@spirit,0,0;
+	  skilleffect .@spirit, 5;
+	}
+	return;
+}
+
+// ===================================================================
+//	Configurações do NPC / Gestão
+// ===================================================================
+
+	OnInit:
+		
+		// Nome do NPC
+		set .nomeNpc$, "[^0000FF --- Gestor PvP --- ^000000]";
+		
+		// Lista de Itens bloqueados
+		setarray .cashBloqueado[0], 501, 502;
+		
+		// Pontos por Arena (Arena 1, Arena 2, Arena 3)
+		setarray .pontoArena[0], 3, 2, 1;
+		
+		// Tempo máximo permitido para ficar AFK em segundos + 5 segundos adicionais
+		// Ex: o valor 55 abaixo = 50 segundos + 5 segundos do temporizador + 15 segundos de aviso =  1m10 segundos para teleportar AFK
+		set .tempoMaxAfk, 55;
+		
+		// Arenas PVP ( Substituir mapas entre Aspas duplas "" )
+		// Ex: Se eu quiser por PRONTERA como a Arena Livre, eu poria o mapa no lugar do 'guild_vs3':
+		// setarray .arenas$[0], "prontera", "06guild_01", "guild_vs5";
+		setarray .arenas$[0], "guild_vs3", "06guild_01", "guild_vs5";
+		
+		for (.@i = 0; .@i < getarraysize( .arenas$ ); .@i++) {
+			if ( .arenas$[.@i] == .arenas$[1] ) {
+				if (!getmapflag(.arenas$[.@i], mf_partylock)) {
+					setmapflag .arenas$[.@i], mf_partylock;
+				}
+			}
+			if ( getmapflag(.arenas$[.@i], mf_gvg) ) {
+				removemapflag .arenas$[.@i], mf_gvg;
+			}
+			if ( !getmapflag(.arenas$[.@i], mf_noreturn) ) {
+				setmapflag .arenas$[.@i], mf_noreturn;
+			}
+			if ( !getmapflag(.arenas$[.@i], mf_noteleport) ) {
+				setmapflag .arenas$[.@i], mf_noteleport;
+			}
+			if ( !getmapflag(.arenas$[.@i], mf_nomemo) ) {
+				setmapflag .arenas$[.@i], mf_nomemo;
+			}
+			if ( !getmapflag(.arenas$[.@i], mf_nosave) ) {
+				setmapflag .arenas$[.@i], mf_nosave;
+			}
+			if ( !getmapflag(.arenas$[.@i], mf_nogo) ) {
+				setmapflag .arenas$[.@i], mf_nogo;
+			}
+			if ( !getmapflag(.arenas$[.@i], mf_loadevent) ) {
+				setmapflag .arenas$[.@i], mf_loadevent;
+			}
+			if ( !getmapflag(.arenas$[.@i], mf_pvp) ) {
+				setmapflag .arenas$[.@i], mf_pvp;
+			}
+			if ( !getmapflag(.arenas$[.@i], mf_nobranch) ) {
+				setmapflag .arenas$[.@i], mf_nobranch;
+			}
+		}
+				
+	end;
+
+// ===================================================================
+//	Rebuffar jogador VIP e Não VIP após remover buffs ativos
+// ===================================================================
+
+	OnVipRebuff:
+	// sc_start <status do buff>, <duração em milisegundos>, <nv habilidade>;
+		sc_start SC_BLESSING, 1080000, 10;
+		sc_start SC_INCREASEAGI, 1080000, 10;
+		sc_start SC_MAGNIFICAT, 1080000, 5;
+		sc_start SC_GLORIA, 1080000, 5;
+		sc_start SC_STRFOOD, 1080000, 10;
+		sc_start SC_AGIFOOD, 1080000, 10;	
+		sc_start SC_VITFOOD, 1080000, 10;	
+		sc_start SC_INTFOOD, 1080000, 10;	
+		sc_start SC_DEXFOOD, 1080000, 10;	
+		sc_start SC_LUKFOOD, 1080000, 10;	
+		sc_start SC_HITFOOD, 1080000, 10;	
+		return;
+	end;
+
+	OnNormalRebuff:
+	// sc_start <status do buff>, <duração em milisegundos>, <nv habilidade>;
+		sc_start SC_BLESSING, 1080000, 10;
+		sc_start SC_INCREASEAGI, 1080000, 10;
+		sc_start SC_STRFOOD, 1080000, 5;
+		sc_start SC_AGIFOOD, 1080000, 5;	
+		sc_start SC_VITFOOD, 1080000, 5;	
+		sc_start SC_INTFOOD, 1080000, 5;	
+		sc_start SC_DEXFOOD, 1080000, 5;	
+		sc_start SC_LUKFOOD, 1080000, 5;	
+		sc_start SC_HITFOOD, 1080000, 5;
+		return;
+	end;
+
+
+// ===================================================================
+//	Contabilização de Mortes PvP / WoE & Pontuações
+// ===================================================================
+
+	OnPCDieEvent:
+		.@map$ = strcharinfo(3);
+		.@matador = killerrid;
+		
+		if ( killerrid != 0 ) {
+			attachrid .@matador;
+			// Pontuação da Arena 1
+			if ( .@map$ == .arenas$[0] ) {
+				if ( !#PONTOSPVP )
+					#PONTOSPVP = 3;
+				else
+					#PONTOSPVP += 3;
+				message rid2name(.@matador),"Você matou um jogador!";
+				query_sql "update `char` set arena1_pvp = arena1_pvp +3 where char_id = "+ getcharid(0);
+				dispbottom "[PvP]: Você ganhou "+.pontoArena[0]+" pontos por matar alguém em "+.@map$+"! [Total: "+#PONTOSPVP+"]";
+			// Pontuação da Arena 2
+			} else if ( .@map$ == .arenas$[1] ) {
+				if ( !#PONTOSPVP )
+					#PONTOSPVP = 2;
+				else
+					#PONTOSPVP += 2;
+				query_sql "update `char` set arena2_pvp = arena2_pvp +2 where char_id = "+ getcharid(0);
+				message rid2name(.@matador),"Você matou um jogador!";
+				dispbottom "[PvP]: Você ganhou "+.pontoArena[1]+" pontos por matar alguém em "+.@map$+"! [Total: "+#PONTOSPVP+"]";
+			// Pontuação da Arena 3
+			} else if ( .@map$ == .arenas$[2] ) {
+				if ( !#PONTOSPVP )
+					#PONTOSPVP = 1;
+				else
+					#PONTOSPVP += 1;
+				query_sql "update `char` set arena3_pvp = arena3_pvp +1 where char_id = "+ getcharid(0);
+				message rid2name(.@matador),"Você matou um jogador!";
+				dispbottom "[PvP]: Você ganhou "+.pontoArena[2]+" ponto por matar alguém em "+.@map$+"! [Total: "+#PONTOSPVP+"]";
+				
+		// ============================================================================================================
+		//	Pontuação WoE - Killers
+		// ============================================================================================================		
+		
+			} 
+			if ( agitcheck() ) {
+				setarray .woeMaps1$[0], "aldeg_cas01", "aldeg_cas02", "aldeg_cas03", "aldeg_cas04", "aldeg_cas05", "gefg_cas01",
+									   "gefg_cas02", "gefg_cas03", "gefg_cas04", "gefg_cas05", "payg_cas01", "payg_cas02",
+									   "payg_cas03", "payg_cas04", "payg_cas05", "prtg_cas01", "prtg_cas02", "prtg_cas03",
+									   "prtg_cas04", "prtg_cas05";
+				for ( .@i = 0; .@i < getarraysize( .woeMaps1$ ); .@i++ ) {
+					if ( .@map$ == .woeMaps1$[.@i] ) {
+						.@killerPontos = getvariableofnpc( .killerPontos, "Rankings do Servidor");
+						.@killerLoja = getvariableofnpc( .killerLoja, "Rankings do Servidor");
+						if ( !#WOEPONTOS )
+							#WOEPONTOS = .@killerLoja;
+						else
+							#WOEPONTOS += .@killerLoja;
+						query_sql( "UPDATE `char` SET `woe_killer_rank` = woe_killer_rank + "+.@killerPontos+" WHERE `char_id` = "+ getcharid(0) );
+						query_sql( "SELECT `woe_killer_rank` FROM `char` WHERE `char_id` = "+getcharid(0), .@totalKillerPoints );
+						dispbottom "[Sistema de Rankings]: Você ganhou +"+.@killerPontos+" ponto no ranking de Killers WoE por ter abatido um jogador no ["+getcastlename(.@map$)+"]. [Total: "+.@totalKillerPoints+" pontos]";
+						dispbottom "[WoE Pontos]: Você recebeu +"+.@killerLoja+" pontos WoE para trocar por itens exclusivos. [Total: "+#WOEPONTOS+" pontos]";
+					}
+				}
+			}
+
+			if ( agitcheck2() ) {
+				setarray .woeMaps2$[0], "arug_cas01", "arug_cas02", "arug_cas03", "arug_cas04", "arug_cas05", "schg_cas01",
+										"schg_cas02", "schg_cas03", "schg_cas04";
+				for ( .@i = 0; .@i < getarraysize( .woeMaps2$ ); .@i++ ) {
+					if ( .@map$ == .woeMaps2$[.@i] ) {
+						.@killerPontos = getvariableofnpc( .killerPontos, "Rankings do Servidor");
+						.@killerLoja = getvariableofnpc( .killerLoja, "Rankings do Servidor");
+						if ( !#WOEPONTOS )
+							#WOEPONTOS = .@killerLoja;
+						else
+							#WOEPONTOS += .@killerLoja;
+						query_sql( "UPDATE `char` SET `woe_killer_rank` = woe_killer_rank + "+.@killerPontos+" WHERE `char_id` = "+ getcharid(0) );
+						query_sql( "SELECT `woe_killer_rank` FROM `char` WHERE `char_id` = "+getcharid(0), .@totalKillerPoints );
+						dispbottom "[Sistema de Rankings]: Você ganhou +"+.@killerPontos+" ponto no ranking de Killers WoE por ter abatido um jogador no ["+getcastlename(.@map$)+"]. [Total: "+.@totalKillerPoints+" pontos]";
+						dispbottom "[WoE Pontos]: Você recebeu +"+.@killerLoja+" pontos WoE para trocar por itens exclusivos. [Total: "+#WOEPONTOS+" pontos]";
+					}
+				}
+			}
+			detachrid;
+		}
+		
+	end;
+	
+	
+	OnPCKillEvent:
+	// Adiciona um temporizador de 5 segundos no jogador morto
+		.@jogadorMorto = killedrid;
+		if ( killedrid != 0 ) {
+			if (strcharinfo(3) == .arenas$[0] ||
+				strcharinfo(3) == .arenas$[1] ||
+				strcharinfo(3) == .arenas$[2]) {
+				attachrid .@jogadorMorto;
+				addtimer(5000, strnpcinfo(0)+"::On5segundos");
+			}
+		}
+		detachrid;
+	end;
+	
+	// Teleporta o jogador após 5 segundos
+	On5segundos:
+		message rid2name(getcharid(3)),"É hora de resnacer!";
+		sleep2 500;
+		if (strcharinfo(3) == .arenas$[0] ||
+			strcharinfo(3) == .arenas$[1] ||
+			strcharinfo(3) == .arenas$[2]) {
+			warp strcharinfo(3),0,0;
+			percentheal 100, 100;
+			if (vip_status(1))
+				callsub OnVipRebuff;
+			else
+				callsub OnNormalRebuff;
+			repairall;
+			PvpLink();
+		}
+			
+	end;
+
+
+// ===================================================================
+//	Controle de Mortes & Pontuação
+// ===================================================================
+
+	// OnPCDieEvent:
+		// .@map$ = strcharinfo(3);
+		// .@matador = killerrid;
+		
+		// if ( killerrid != 0 ) {
+			// attachrid .@matador;
+			// Pontuação da Arena 1
+			// if ( .@map$ == .arenas$[0] ) {
+				// if ( !#PONTOSPVP )
+					// #PONTOSPVP = 3;
+				// else
+					// #PONTOSPVP += 3;
+				// message rid2name(.@matador),"Você matou um jogador!";
+				// query_sql "update `char` set arena1_pvp = arena1_pvp +3 where char_id = "+ getcharid(0);
+				// dispbottom "[PvP]: Você ganhou "+.pontoArena[0]+" pontos por matar alguém em "+.@map$+"! [Total: "+#PONTOSPVP+"]";
+			// Pontuação da Arena 2
+			// } else if ( .@map$ == .arenas$[1] ) {
+				// if ( !#PONTOSPVP )
+					// #PONTOSPVP = 2;
+				// else
+					// #PONTOSPVP += 2;
+				// query_sql "update `char` set arena2_pvp = arena2_pvp +2 where char_id = "+ getcharid(0);
+				// message rid2name(.@matador),"Você matou um jogador!";
+				// dispbottom "[PvP]: Você ganhou "+.pontoArena[1]+" pontos por matar alguém em "+.@map$+"! [Total: "+#PONTOSPVP+"]";
+			// Pontuação da Arena 3
+			// } else if ( .@map$ == .arenas$[2] ) {
+				// if ( !#PONTOSPVP )
+					// #PONTOSPVP = 1;
+				// else
+					// #PONTOSPVP += 1;
+				// query_sql "update `char` set arena3_pvp = arena3_pvp +1 where char_id = "+ getcharid(0);
+				// message rid2name(.@matador),"Você matou um jogador!";
+				// dispbottom "[PvP]: Você ganhou "+.pontoArena[2]+" ponto por matar alguém em "+.@map$+"! [Total: "+#PONTOSPVP+"]";
+			// }
+			// detachrid;
+		// }
+		
+
+
+	// end;
+	
+	// OnPCKillEvent:
+	// Adiciona um temporizador de 5 segundos no jogador morto
+		// .@jogadorMorto = killedrid;
+		// if ( killedrid != 0 ) {
+			// attachrid .@jogadorMorto;
+			// addtimer(5000, strnpcinfo(0)+"::On5segundos");
+		// }
+		// detachrid;
+	// end;
+	
+	// Teleporta o jogador após 5 segundos
+	// On5segundos:
+		// message rid2name(getcharid(3)),"É hora de resnacer!";
+		// sleep2 500;
+		// if (strcharinfo(3) == .arenas$[0] ||
+			// strcharinfo(3) == .arenas$[1] ||
+			// strcharinfo(3) == .arenas$[2]) {
+			// warp strcharinfo(3),0,0;
+			// percentheal 100, 100;
+			// if (vip_status(1))
+				// callsub OnVipRebuff;
+			// else
+				// callsub OnNormalRebuff;
+			// repairall;
+			// PvpLink();
+		// }
+			
+	// end;
+	
+// ===================================================================
+//	Checagem de Itens Cash (Inventário & Equipados)
+// ===================================================================
+
+	OnChecagemCash:
+		getinventorylist();
+		
+		// Checagem do inventário para itens Cash
+		for ( .@i = 0; .@i < @inventorylist_count; .@i++) {
+			for ( .@j = 0; .@j < getarraysize( .cashBloqueado ); .@j++) {
+				if ( @inventorylist_id[.@i] == .cashBloqueado[.@j] ) {
+					mes .nomeNpc$;
+					mes "Você está com ^FF0000"+(getitemname(@inventorylist_id[.@i]))+"^000000, um item de cash no inventário não permitido.";
+					mes "Coloque-o no armazém para poder acessar a arena.";
+					close;
+				}
+			}
+		}
+		
+		// Checagem do carrinho para itens Cash
+		if ( checkcart() ) {
+			for ( .@j = 0; .@j < getarraysize( .cashBloqueado ); .@j++) {
+				if ( cartcountitem(.cashBloqueado[.@j]) > 0 ) {
+					mes .nomeNpc$;
+					mes "Você está com ^FF0000"+(getitemname(.cashBloqueado[.@j]))+"^000000, um item de cash em seu carrinho não permitido.";
+					mes "Coloque-o no armazém para poder acessar a arena.";
+					close;
+				}
+			}
+		}
+		return;
+	end;
+
+}
+
+// ===================================================================
+//	NPC de Checagem AFK
+// ===================================================================
+
+-	script	#ChecagemIdlePvp	-1,{
+	end;
+	
+	// Início da checagem AFK do personagem ao entrar em uma das arenas
+	OnPCLoadMapEvent:
+		
+		set controlePvp, 0;
+		
+		setarray .arenas$[0], getvariableofnpc(.arenas$[0], "Gestor PvP");
+		setarray .arenas$[1], getvariableofnpc(.arenas$[1], "Gestor PvP");
+		setarray .arenas$[2], getvariableofnpc(.arenas$[2], "Gestor PvP");
+		
+		@playerRID = getattachedrid();
+		if (strcharinfo(3) == .arenas$[0] || strcharinfo(3) == .arenas$[1] || strcharinfo(3) == .arenas$[2]) {
+			.@size = getarraysize($@PvpPlayerRID);
+            for (.@i = 0; .@i < .@size; .@i++) {
+                if ($@PvpPlayerRID[.@i] == @playerRID) {
+                   break;
+                }
+            }
+            if (.@i == .@size) {
+                setarray $@PvpPlayerRID[getarraysize($@PvpPlayerRID)], @playerRID;
+				if (getgroupid() < 90)
+					mapannounce strcharinfo(3), "O jogador [" + rid2name(@playerRID) + "] entrou na Arena!", bc_yellow;
+            }
+            if (.controleChecagem == 0) {
+                initnpctimer;
+                .controleChecagem = 1;
+            }
+        }
+		
+	end;
+	
+	// Temporizador, teste e teleporte de jogadores AFK para o ponto de retorno
+	// OnTimer<tempo em milisegundos> (Ex: 60000 = 60 segundos)
+	OnTimer5000:
+		.@tempoMaxAfk = getvariableofnpc(.tempoMaxAfk, "Gestor PvP");
+		if (getmapusers(.arenas$[0]) == 0 && getmapusers(.arenas$[1]) == 0 && getmapusers(.arenas$[2]) == 0) {
+			stopnpctimer;
+			deletearray $@PvpPlayerRID[0], getarraysize($@PvpPlayerRID);
+			.controleChecagem = 0;
+			end;
+		}
+		for (.@i = 0; .@i < getarraysize($@PvpPlayerRID); .@i++) {
+			if (isloggedin($@PvpPlayerRID[.@i])) {
+				attachrid $@PvpPlayerRID[.@i];
+				if ( strcharinfo(3) == .arenas$[0] ||
+					 strcharinfo(3) == .arenas$[1] ||
+					 strcharinfo(3) == .arenas$[2] ) {
+					if (checkidle() >= .@tempoMaxAfk && getgroupid() < 90) {
+						switch( controlePvp ) {
+							
+							case 0:
+								message rid2name($@PvpPlayerRID[.@i]),"[PvP Arena]: Você está AFK. Movimente-se ou em 15 segundos você será teleportad"+(sex?"o":"a")+".";
+								controlePvP++;
+								break;
+							case 1:
+							case 2:
+								controlePvP++; break;
+							case 3:
+							default:
+								controlePvp = 0;
+								warp "SavePoint",0,0;
+								message rid2name($@PvpPlayerRID[.@i]),"Você estava AFK e foi teleportad"+(sex?"o":"a")+" para seu ponto de retorno.";
+								deletearray $@PvpPlayerRID[.@i],1; break;
+						}
+					 } else { controlePvp = 0; }
+				} else {
+					deletearray $@PvpPlayerRID[.@i],1;
+				}
+				detachrid;
+			} else {
+				deletearray $@PvpPlayerRID[.@i],1;
+			}
+		}
+		setnpctimer 0;
+	
+	end;
+	
+	OnInit:
+		.controleChecagem = 0;
+	end;
+	
+}

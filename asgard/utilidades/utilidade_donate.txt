@@ -1,0 +1,316 @@
+//-------------------------------------------------------------------------------------------||
+//   __  __                                  _                _____           _       _      ||
+//  |  \/  |                                (_)              / ____|         (_)     | |     ||
+//  | \  / | __ _  __ _ _ __ ___   __ _ _ __ _ _ __   __ _  | (___   ___ _ __ _ _ __ | |_    ||
+//  | |\/| |/ _` |/ _` | '_ ` _ \ / _` | '__| | '_ \ / _` |  \___ \ / __| '__| | '_ \| __|   ||
+//  | |  | | (_| | (_| | | | | | | (_| | |  | | | | | (_| |  ____) | (__| |  | | |_) | |_    ||
+//  |_|  |_|\__,_|\__, |_| |_| |_|\__,_|_|  |_|_| |_|\__, | |_____/ \___|_|  |_| .__/ \__|   ||
+//                 __/ |                              __/ |                    | |           ||
+//                |___/                              |___/                     |_|           ||
+//-------------------------------------------------------------------------------------------||
+//   VENDAS DE SERVIÇOS SERVIDORES DE RAGNAROK ONLINE/PERFECT WORLD/MU/AION/CABAL/MINECRAFT  ||
+//DISCORD:   https://discordapp.com/channels/@me/Magmaring#0352                              ||
+//INSTAGRAM: https://www.instagram.com/evandro_srk/                                          ||
+//FACEBOOK:  https://www.facebook.com/sorakamente/                                           ||
+//GITHUB:    https://github.com/magmaring                                                    ||
+//-------------------------------------------------------------------------------------------||
+// = Criação:                                                                                ||
+// - [ADM] Magmaring - Evandro Oliveira     												 ||
+//-------------------------------------------------------------------------------------------||
+// = Revisão:                                                                                ||
+// - Esse arquivo teve sua última revisão 07 de janeiro de 2024    				         	 ||
+//-------------------------------------------------------------------------------------------||
+prontera,141,175,3	script	Vendedor de CashPOINTS	11009,{
+
+
+    //===== Configurações do NPC =================================
+    .npc$ = "^00B2EE[-- Gerente de Doações --]^000000"; // Nome do NPC.
+    set .@valor_minimo_cupom,20; // valor mínimo para utilizar cupom
+    set .@valor_minimo_doar,1;  // valor mínimo para doar
+    set .@mult_donate, 1000;    // valor de multiplicação da doação
+    set @Moeda_RMT, 501;
+
+ OnDonate:   
+ //   mes .npc$;
+//	mes "------------------------------------------";
+//	mes "Olá ^FF4400"+strcharinfo(0)+"^000000:";
+//	mes "Você já fez sua trivia de hoje retorne após o resete.";
+//	mes "------------------------------------------";
+//	close;
+//    switch(select("^006400[>>]^000000 AuraPOINTS")) {
+//    switch(select("^006400[>>]^000000 AuraPOINTS:^006400[>>]^000000 Moeda RMT")) {		
+//        case 1:
+            set .@tipo_doacao$, "AuraPOINTS";
+            set .@tipo_doacao, 0;
+//            break;
+        /*case 2:
+            set .@tipo_doacao$, "Moeda RMT";
+            set .@tipo_doacao, 1;
+            break;*/
+//    }
+
+//    clear;
+		mes .npc$;
+		mes "------------------------------------------";
+		mes "Olá ^FF4400"+strcharinfo(0)+"^000000:";
+		mes "Escolha o tipo de pagamento que deseja realizar na sua doação.";
+		mes "------------------------------------------";
+
+    switch(select("| Escolha | Doações via PIX:| Escolha | Doações via LINK:| Escolha | Informações:| Escolha | Cancelar")){
+
+        case 1:
+            set .@forma_pagamento$, "PIX";
+            break;
+        case 2:
+            set .@forma_pagamento$, "LINK";
+            break;
+         case 3:
+			next;
+			mes .npc$;
+			mes "------------------------------------------";
+			mes "Olá ^FF4400"+strcharinfo(0)+"^000000:";
+			mes "Regras de doações do servidor.";
+			mes "------------------------------------------";
+			mes "Regra 1: Doações irregulares resulta em banimento permanete da conta reportada e qualquer outra conta vinculada no IP/MAC do usuário.";
+			mes "------------------------------------------";
+			next;
+			mes .npc$;
+			mes "------------------------------------------";
+			mes "Olá ^FF4400"+strcharinfo(0)+"^000000:";
+			mes "Regras de doações do servidor.";
+			mes "------------------------------------------";
+			mes "Regra 2: Doações ao servidor não lhe dá direito de ter vantagens com a staff.";
+			mes "------------------------------------------";
+			next;
+			mes .npc$;
+			mes "------------------------------------------";
+			mes "Olá ^FF4400"+strcharinfo(0)+"^000000:";
+			mes "Regras de doações do servidor.";
+			mes "------------------------------------------";
+			mes "Regra 3: LINKs de pagamento realizado com cartões irregulares ou que reportem compra não reconhecida terá a conta reportada e qualquer outra conta vinculada no IP/MAC do usuário.";
+			mes "------------------------------------------";
+			close;
+         case 4:
+            goto Desistir_Donate;
+            break;
+
+
+    }
+
+    clear;
+
+    while(.@valor < .@valor_minimo_doar){
+        clear;
+        mes .npc$;
+		mes "------------------------------------------";
+		mes "Olá ^FF4400"+strcharinfo(0)+"^000000:";
+		mes "Por favor, informe um valor.";
+		mes "------------------------------------------";
+        mes "^FF4400Doação mínima:^000000 -> R$"+.@valor_minimo_doar+",00";
+		mes "------------------------------------------";
+        input .@valor; 
+    }
+        
+    if(.@valor >= .@valor_minimo_cupom && .@tipo_doacao$ == "AuraPOINTS"){
+        clear;
+        mes .npc$;
+		mes "------------------------------------------";
+		mes "Olá ^FF4400"+strcharinfo(0)+"^000000:";
+		mes "Aplicar cupom de parceiros aura?";
+		mes "------------------------------------------";
+		next;
+        if(select("| Escolha | Inserir cupom:| Escolha | Não, obrigado...") == 1){
+            clear;
+            .@count = 3;
+            while(.@count > 0){
+        mes .npc$;
+		mes "------------------------------------------";
+		mes "Olá ^FF4400"+strcharinfo(0)+"^000000:";
+		mes "Informe o cupom do parceiro aura.";
+		mes "------------------------------------------";
+		input .@cupom$;
+
+	query_sql "SELECT `cupom`, `percentual` FROM `cupom_donate` WHERE `cupom` = '" + .@cupom$ + "' AND `status` = 1 AND `validade` >= NOW()",.@cupom_sql$,.@cupom_desconto_sql;
+	if (.@cupom_sql$ != "") {
+		clear;
+		next;
+        mes .npc$;
+		mes "------------------------------------------";
+		mes "Olá ^FF4400"+strcharinfo(0)+"^000000:";
+		mes "Cupom parceiro foi aplicado.";
+		mes "------------------------------------------";
+		next;
+		break;
+		} else {
+		clear;
+		.@count --;
+        mes .npc$;
+		mes "------------------------------------------";
+		mes "Olá ^FF4400"+strcharinfo(0)+"^000000:";
+		mes "Informe o cupom do parceiro aura.";
+		mes "------------------------------------------";
+			}
+		}
+	}
+}
+
+        if ( 1 & 1 ) .@string_list$ = .@string_list$ + "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        if ( 2 & 2 ) .@string_list$ = .@string_list$ + "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        if ( 4 & 4 ) .@string_list$ = .@string_list$ + "0123456789";
+                
+        if ( .@string_list$ != "" ) {
+            .@total_length = getstrlen( .@string_list$ );
+            while ( getstrlen( .@rand_string$ ) < 12 )
+                .@rand_string$ = .@rand_string$ + charat( .@string_list$,rand( .@total_length ) );
+        }
+
+
+        clear;
+        mes .npc$;
+		mes "------------------------------------------";
+		mes "Olá ^FF4400"+strcharinfo(0)+"^000000:";
+		mes "Verifique as informações:";
+		mes "------------------------------------------";
+        mes "ID AuraTRANSFER: ^0000ff"+.@rand_string$+"^000000";
+		mes "------------------------------------------";
+        mes "Você irá receber: ^0000ff"+.@tipo_doacao$+"^000000";
+		mes "------------------------------------------";
+        mes "Tipo de pagamento: ^0000ff"+.@forma_pagamento$+"^000000";
+		mes "------------------------------------------";
+        mes "Valor de doação: ^0000ffR$"+.@valor+",00^000000";
+		mes "------------------------------------------";
+        if (.@cupom_sql$ != "" && .@tipo_doacao$ == "AuraPOINTS") mes "Cupom Aplicado:^0000ff "+.@cupom_sql$+"^000000", "Bônus:^0000ff "+.@cupom_desconto_sql+"%^000000";
+        if(select("| Escolha | Confirmar pagamento:| Escolha | Cancelar") == 2){goto Desistir_Donate;}
+
+
+
+
+        if (.@cupom_sql$ != "" && .@tipo_doacao$ == "AuraPOINTS") query_sql "INSERT INTO `logs_cupom_donate` (`account_id`, `char_name`, `cupom_utilizado`, `valor`, `codigo_transacao`) VALUES ('"+getcharid(3)+"', '"+strcharinfo(0)+"', '"+.@cupom_sql$+"', '"+.@valor+"', '"+.@rand_string$+"')";
+        
+        clear;
+        mes .npc$;
+		mes "------------------------------------------";
+		mes "Olá ^FF4400"+strcharinfo(0)+"^000000:";
+		mes "Aura agradece sua doação:";
+		mes "------------------------------------------";
+        mes "<URL>[Clique aqui para prosseguir]<INFO>https://aura-ro.online/mp/api/"+strtolower(.@forma_pagamento$)+".php?id_transacao="+.@rand_string$+"&vl=" + .@valor + "&user_id=" + getcharid(3) + "&tipo=" + .@tipo_doacao + "</INFO></URL>";
+		mes "------------------------------------------";
+		mes "^FF4400Relogue após concluir pagamento.^000000";
+		mes "------------------------------------------";
+	close;
+    // close2;
+    // callfunc "delivery_donate";
+
+
+
+
+Desistir_Donate:
+        clear;
+        mes .npc$;
+		mes "------------------------------------------";
+		mes "Olá ^FF4400"+strcharinfo(0)+"^000000:";
+		mes "Caso precise de meus serviços sabe onde me encontrar.";
+		mes "------------------------------------------";
+        close;
+OnInit:
+    bindatcmd "doar",strnpcinfo(3)+"::OnDonate";
+	.@UID = getnpcid(0);
+	setunittitle(.@UID, "[ Comerciante Aura ]");
+    setunitdata .@UID, UNPC_GROUP_ID, 108;
+end;
+}
+
+
+
+-	script	delivery	-1,{
+    
+OnPCLoginEvent:    
+    
+    query_sql "SELECT `valor`, `tipo` FROM `payment_data` WHERE `user_id`='"+getcharid(3)+"'",@valor_donate, @tipo;
+    if(@valor_donate >= 1 && @valor_donate <= 1000)
+    {
+        
+        if (@tipo == 1) {
+
+            query_sql "UPDATE `payment_data` SET `valor` = 0 WHERE `user_id`='"+getcharid(3)+"'";
+            query_sql "INSERT INTO `logs_donates` (`acc_id`, `valor`, `resgatou`, `moeda`) VALUES (" + getcharid(3) + "," + (@valor_donate) + "," + (@valor_donate) + ", 'RMT')";
+            getitem @Moeda_RMT, @valor_donate;
+                
+            message strcharinfo(0),"[Sistema de Doação]: Você recebeu "+@valor_donate+" Moedas RMT.";
+            end;
+            
+        } else if (@tipo == 0) {
+
+            .@retorno = query_sql ("SELECT `cupom_utilizado` FROM `logs_cupom_donate` WHERE `account_id`='"+getcharid(3)+"' AND `status_pag` = 1 ORDER BY `id` DESC LIMIT 1", @cupom$);
+
+            if(.@retorno == 1) {
+				query_sql "SELECT `percentual` FROM `cupom_donate` WHERE `cupom` = '"+@cupom$+"'", @percentual;
+				.@cash_total = (@valor_donate * .multiplicador * @percentual / 100) + @valor_donate * .multiplicador;
+				query_sql "UPDATE `logs_cupom_donate` SET `status_pag` = 0 WHERE `account_id`='"+getcharid(3)+"'";
+            } else {
+				.@cash_total = @valor_donate * .multiplicador;
+            }
+
+			switch( .promoAtiva ) {
+				case 1:
+					.@bonus = ((@valor_donate * .multiplicador) * .bonusPercentual) / 100;
+					.@cash_total += .@bonus;
+					break;
+				default: break;
+			}
+            query_sql "UPDATE `payment_data` SET `valor` = 0 WHERE `user_id`='"+getcharid(3)+"'";
+            query_sql "INSERT INTO `logs_donates` (`acc_id`, `valor`, `resgatou`, `moeda`) VALUES (" + getcharid(3) + "," + (@valor_donate) + "," + .@cash_total + ", 'CASH')";
+			set #CASHPOINTS, #CASHPOINTS + .@cash_total;
+            message strcharinfo(0),"[Regen Kjord]: Você recebeu ["+.@cash_total+" AuraPOINTS] e agora possui ["+#CASHPOINTS+" AuraPOINTS]";
+        }
+    } 
+end;
+	
+	OnInit:
+	
+		// Há promoção de ROPs ativa no momento? (0 = Não, 1 = Sim)
+		set .promoAtiva, 0;
+		// Quando a promoção estiver ativa, qual o percentual a mais será adicionado? (20 = 20% adicionais)
+		set .bonusPercentual, 0;
+		// Valor multiplicador de Real para ROPs (Ex: 1000 = 1 real * 1000 = 1.000 ROPs)
+		set .multiplicador, 1000;
+	
+	end;
+}
+
+function	script	delivery_donate	{
+    
+    
+    query_sql "SELECT `valor`, `tipo` FROM `payment_data` WHERE `user_id`='"+getcharid(3)+"'",@valor_donate, @tipo;
+    if(@valor_donate >= 1 && @valor_donate <= 1000)
+    {
+        
+        if (@tipo == 1) {
+
+            query_sql "UPDATE `payment_data` SET `valor` = 0 WHERE `user_id`='"+getcharid(3)+"'";
+            query_sql "INSERT INTO `logs_donates` (`acc_id`, `valor`, `resgatou`, `moeda`) VALUES (" + getcharid(3) + "," + (@valor_donate) + "," + (@valor_donate) + ", 'RMT')";
+            getitem @Moeda_RMT, @valor_donate;
+                
+            message strcharinfo(0),"[Sistema de Doação]: Você recebeu "+@valor_donate+" Moedas RMT";
+            end;
+            
+        } else if (@tipo == 0) {
+
+            .@retorno = query_sql ("SELECT `cupom_utilizado` FROM `logs_cupom_donate` WHERE `account_id`='"+getcharid(3)+"' AND `status_pag` = 1 ORDER BY `id` DESC LIMIT 1", @cupom$);
+            query_sql "SELECT `percentual` FROM `cupom_donate` WHERE `cupom` = '"+@cupom$+"'", @percentual;
+
+            if(.@retorno == 1){
+                .@cash_total = (@valor_donate * .@mult_donate * @percentual / 100) + @valor_donate * .@mult_donate;
+                query_sql "UPDATE `logs_cupom_donate` SET `status_pag` = 0 WHERE `account_id`='"+getcharid(3)+"'";
+            }else{
+                .@cash_total = @valor_donate * .@mult_donate;
+            }
+
+            query_sql "UPDATE `payment_data` SET `valor` = 0 WHERE `user_id`='"+getcharid(3)+"'";
+            query_sql "INSERT INTO `logs_donates` (`acc_id`, `valor`, `resgatou`, `moeda`) VALUES (" + getcharid(3) + "," + (@valor_donate) + "," + .@cash_total + ", 'CASH')";
+            set #CASHPOINTS, #CASHPOINTS + .@cash_total;
+            message strcharinfo(0),"[Regen Kjord]: Você recebeu ["+.@cash_total+" AuraPOINTS] e agora possui ["+#CASHPOINTS+" AuraPOINTS]";	
+            end;
+        }
+    } 
+}

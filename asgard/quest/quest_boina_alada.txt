@@ -1,0 +1,52 @@
+//-------------------------------------------------------------------------------------------||
+//   __  __                                  _                _____           _       _      ||
+//  |  \/  |                                (_)              / ____|         (_)     | |     ||
+//  | \  / | __ _  __ _ _ __ ___   __ _ _ __ _ _ __   __ _  | (___   ___ _ __ _ _ __ | |_    ||
+//  | |\/| |/ _` |/ _` | '_ ` _ \ / _` | '__| | '_ \ / _` |  \___ \ / __| '__| | '_ \| __|   ||
+//  | |  | | (_| | (_| | | | | | | (_| | |  | | | | | (_| |  ____) | (__| |  | | |_) | |_    ||
+//  |_|  |_|\__,_|\__, |_| |_| |_|\__,_|_|  |_|_| |_|\__, | |_____/ \___|_|  |_| .__/ \__|   ||
+//                 __/ |                              __/ |                    | |           ||
+//                |___/                              |___/                     |_|           ||
+//-------------------------------------------------------------------------------------------||
+//   VENDAS DE SERVIÇOS SERVIDORES DE RAGNAROK ONLINE/PERFECT WORLD/MU/AION/CABAL/MINECRAFT  ||
+//DISCORD:   https://discordapp.com/channels/@me/Magmaring#0352                              ||
+//INSTAGRAM: https://www.instagram.com/evandro_srk/                                          ||
+//FACEBOOK:  https://www.facebook.com/sorakamente/                                           ||
+//GITHUB:    https://github.com/magmaring                                                    ||
+//-------------------------------------------------------------------------------------------||
+// = Criação:                                                                                ||
+// - [ADM] Magmaring - Evandro Oliveira     												 ||
+//-------------------------------------------------------------------------------------------||
+// = Revisão:                                                                                ||
+// - Esse arquivo teve sua última revisão 16 de fevereiro de 2024  				         	 ||
+//-------------------------------------------------------------------------------------------||
+rachel,152,131,5	script	Mestre Chapeleiro	857,{
+	onInit:
+		set .@boina_alada, 5170; // ID da Boina Alada
+		set .@boina, 5172; // ID da Boina
+		set .@pluma, 7063; // ID da Pluma
+		set .@tintura_branca, 982; // ID da Tintura Branca
+		set .@plumas_qtd, 100; // Quantidade de Plumas necessárias
+		end;
+
+	mes "Olá, aventureiro! Está interessado em uma Boina Alada?";
+	mes "Para fabricá-la, preciso dos seguintes itens:";
+	mes "^0000FF1x Boina (ID: "+.@boina+")";
+	mes "^0000FF100x Plumas (ID: "+.@pluma+")";
+	mes "^0000FF1x Tintura Branca (ID: "+.@tintura_branca+")";
+
+	if (countitem(.@boina) < 1 || countitem(.@pluma) < .@plumas_qtd || countitem(.@tintura_branca) < 1) {
+		mes "Você não possui todos os itens necessários. Volte quando tiver reunido tudo!";
+		close;
+	}
+
+	mes "Vejo que você trouxe tudo! Ótimo, agora posso criar a Boina Alada para você.";
+
+	delitem .@boina, 1;
+	delitem .@pluma, .@plumas_qtd;
+	delitem .@tintura_branca, 1;
+	getitem .@boina_alada, 1;
+
+	mes "Aqui está sua Boina Alada! Use-a com orgulho.";
+	close;
+}

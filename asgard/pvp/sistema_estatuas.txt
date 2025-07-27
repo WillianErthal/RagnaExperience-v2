@@ -1,0 +1,134 @@
+//-------------------------------------------------------------------------------------------||
+//   __  __                                  _                _____           _       _      ||
+//  |  \/  |                                (_)              / ____|         (_)     | |     ||
+//  | \  / | __ _  __ _ _ __ ___   __ _ _ __ _ _ __   __ _  | (___   ___ _ __ _ _ __ | |_    ||
+//  | |\/| |/ _` |/ _` | '_ ` _ \ / _` | '__| | '_ \ / _` |  \___ \ / __| '__| | '_ \| __|   ||
+//  | |  | | (_| | (_| | | | | | | (_| | |  | | | | | (_| |  ____) | (__| |  | | |_) | |_    ||
+//  |_|  |_|\__,_|\__, |_| |_| |_|\__,_|_|  |_|_| |_|\__, | |_____/ \___|_|  |_| .__/ \__|   ||
+//                 __/ |                              __/ |                    | |           ||
+//                |___/                              |___/                     |_|           ||
+//-------------------------------------------------------------------------------------------||
+//   VENDAS DE SERVIÇOS SERVIDORES DE RAGNAROK ONLINE/PERFECT WORLD/MU/AION/CABAL/MINECRAFT  ||
+//DISCORD:   https://discordapp.com/channels/@me/Magmaring#0352                              ||
+//INSTAGRAM: https://www.instagram.com/evandro_srk/                                          ||
+//FACEBOOK:  https://www.facebook.com/sorakamente/                                           ||
+//GITHUB:    https://github.com/magmaring                                                    ||
+//-------------------------------------------------------------------------------------------||
+// = Criação:                                                                                ||
+// - [ADM] Magmaring - Evandro Oliveira     												 ||
+//-------------------------------------------------------------------------------------------||
+// = Revisão:                                                                                ||
+// - Esse arquivo teve sua última revisão 07 de janeiro de 2024    				         	 ||
+//-------------------------------------------------------------------------------------------||
+prontera,170,156,5	script	TopPVP1	0,{
+	.@char_arena1 = query_sql( "SELECT `arena1_pvp` FROM `char` WHERE `name` ='"+$TopPvPName$[0]+"'", .@count1 );
+	mes "======================";
+	mes "[ ^0000ff--- Top 1 - Arena Livre ---^000000 ]"; 
+	if (.@char_arena1)
+		mes "Nickname: ^0000ff"+$TopPvPName$[0],"Pontuação: ^0000ff"+callfunc("F_InsertComma", .@count1);
+	mes "======================";
+	close;
+	
+	OnInit:
+		setnpcdisplay(strnpcinfo(0), "Projeto Valkyrie");
+		initnpctimer;
+	end;
+	
+	OnTimer6000:
+		
+		for( .@i = 0; .@i < 3; .@i++ ) {
+			specialeffect 402, AREA, ("TopPVP" + (.@i + 1));
+			sleep 500;
+		}
+		
+		setnpctimer 0;
+	end;
+} 
+
+prontera,167,156,5	script	TopPVP2	0,{ 
+	.@char_arena2 = query_sql( "SELECT `arena1_pvp` FROM `char` WHERE `name` ='"+$TopPvPName$[1]+"'", .@count2 );
+	mes "======================";
+	mes "[ ^0000ff--- Top 2 - Arena Livre ---^000000 ]"; 
+	if (.@char_arena2)
+		mes "Nickname: ^0000ff"+$TopPvPName$[1],"Pontuação: ^0000ff"+callfunc("F_InsertComma", .@count2);
+	mes "======================";
+	close; 
+	
+	OnInit:
+		setnpcdisplay(strnpcinfo(0), "Projeto Valkyrie");
+	end;
+} 
+
+prontera,173,156,5	script	TopPVP3	0,{
+	.@char_arena3 = query_sql( "SELECT `arena1_pvp` FROM `char` WHERE `name` ='"+$TopPvPName$[2]+"'", .@count3 );
+	mes "======================";
+	mes "[ ^0000ff--- Top 3 - Arena Livre ---^000000 ]"; 
+	if (.@char_arena3)
+		mes "Nickname: ^0000ff"+$TopPvPName$[2],"Pontuação: ^0000ff"+callfunc("F_InsertComma", .@count3);
+	mes "======================";
+	close;
+	
+	OnInit:		
+		setnpcdisplay(strnpcinfo(0), "Projeto Valkyrie");
+	end;
+}
+
+
+
+-	script	#PvpStatues	-1,{
+	
+	OnInit:
+		if(getarraysize($TopPvPName$) > 3)
+			deletearray $TopPvPName$[0], getarraysize($TopPvPName$);
+		setarray $TopPvPName$[0], "Projeto Valkyrie", "Projeto Valkyrie", "Projeto Valkyrie";
+		initnpctimer;
+		
+		end;
+
+	OnTimer2000:
+		donpcevent strnpcinfo(3)+"::OnUpdateTopPVP";
+		end;
+		
+	OnTimer5000:
+		stopnpctimer;
+		donpcevent strnpcinfo(3)+"::OnUpdateTopPVP";
+		end;
+
+	OnMinute00:
+	OnMinute05:
+	OnMinute10:
+	OnMinute15:
+	OnMinute20:
+	OnMinute25:
+	OnMinute30:
+	OnMinute35:
+	OnMinute40:
+	OnMinute45:
+	OnMinute50:
+	OnMinute55:
+	OnUpdateTopPVP:
+		query_sql("SELECT `name`, `class`, `hair`, `hair_color`, `clothes_color`, `head_top`, `head_mid`, `head_bottom`, `sex` " +
+		          "FROM `char` WHERE `arena1_pvp` > 0 ORDER BY `arena1_pvp` DESC LIMIT 3",
+		          .@name$, .@class, .@hair, .@hair_color, .@clothes_color, .@head_top, .@head_mid, .@head_bottom, .@sex$);
+		 
+		
+		for (.@i = 0; .@i < 3; .@i++) {
+			if (.@i < getarraysize(.@name$)) {
+				set $TopPvPName$[.@i], .@name$[.@i];
+				setunitdata getnpcid(0, "TopPVP" + (.@i + 1)), UNPC_HAIRSTYLE, .@hair[.@i];
+				setunitdata getnpcid(0, "TopPVP" + (.@i + 1)), UNPC_HAIRCOLOR, .@hair_color[.@i];
+				setunitdata getnpcid(0, "TopPVP" + (.@i + 1)), UNPC_CLOTHCOLOR, .@clothes_color[.@i];
+				setunitdata getnpcid(0, "TopPVP" + (.@i + 1)), UNPC_HEADTOP, .@head_top[.@i];
+				setunitdata getnpcid(0, "TopPVP" + (.@i + 1)), UNPC_HEADMIDDLE, .@head_mid[.@i];
+				setunitdata getnpcid(0, "TopPVP" + (.@i + 1)), UNPC_HEADBOTTOM, .@head_bottom[.@i];
+				setunitdata getnpcid(0, "TopPVP" + (.@i + 1)), UNPC_CLASS, .@class[.@i];
+				setunitdata getnpcid(0, "TopPVP" + (.@i + 1)), UNPC_SEX, (.@sex$[.@i] == "M") ? 1 : 0;
+				setnpcdisplay("TopPVP" + (.@i + 1), .@name$[.@i]);
+			} else {
+				set $TopPvPName$[.@i], "No Player";
+				setnpcdisplay("TopPVP" + (.@i + 1), "No Player");
+			}
+		}
+		
+	end;
+}

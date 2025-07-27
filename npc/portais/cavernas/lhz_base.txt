@@ -1,0 +1,5 @@
+lhz_base01,104,198,0	warp	lhzwarp0401	1,1,lhz_base02,150,20
+lhz_base02,150,17,0	warp	lhzwarp0501	1,1,lhz_base01,104,195
+
+lhz_base02,261,244,0	warp	lhzwarp04012	1,1,lhz_base03,150,277
+lhz_base03,150,281,0	warp	lhzwarp05013	1,1,lhz_base02,258,244

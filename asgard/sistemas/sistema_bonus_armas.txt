@@ -1,0 +1,255 @@
+//-------------------------------------------------------------------------------------------||
+//   __  __                                  _                _____           _       _      ||
+//  |  \/  |                                (_)              / ____|         (_)     | |     ||
+//  | \  / | __ _  __ _ _ __ ___   __ _ _ __ _ _ __   __ _  | (___   ___ _ __ _ _ __ | |_    ||
+//  | |\/| |/ _` |/ _` | '_ ` _ \ / _` | '__| | '_ \ / _` |  \___ \ / __| '__| | '_ \| __|   ||
+//  | |  | | (_| | (_| | | | | | | (_| | |  | | | | | (_| |  ____) | (__| |  | | |_) | |_    ||
+//  |_|  |_|\__,_|\__, |_| |_| |_|\__,_|_|  |_|_| |_|\__, | |_____/ \___|_|  |_| .__/ \__|   ||
+//                 __/ |                              __/ |                    | |           ||
+//                |___/                              |___/                     |_|           ||
+//-------------------------------------------------------------------------------------------||
+//   VENDAS DE SERVIÇOS SERVIDORES DE RAGNAROK ONLINE/PERFECT WORLD/MU/AION/CABAL/MINECRAFT  ||
+//DISCORD:   https://discordapp.com/channels/@me/Magmaring#0352                              ||
+//INSTAGRAM: https://www.instagram.com/evandro_srk/                                          ||
+//FACEBOOK:  https://www.facebook.com/sorakamente/                                           ||
+//GITHUB:    https://github.com/magmaring                                                    ||
+//-------------------------------------------------------------------------------------------||
+// = Criação:                                                                                ||
+// - [ADM] Magmaring - Evandro Oliveira     												 ||
+//-------------------------------------------------------------------------------------------||
+// = Revisão:                                                                                ||
+// - Esse arquivo teve sua última revisão 07 de janeiro de 2024    				         	 ||
+//-------------------------------------------------------------------------------------------||
+prontera,177,176,3	script	Options de Armas	4_exjob_ninja,{
+
+	disable_items;
+    mes .n$;
+    mes "Olá, ^008aff"+strcharinfo(0)+"^000000. Sou o ^0000FFMestre do Encantamento^000000 responsável por encantar os seus ^FF0000Itens^000000! Aqui você poderá encantar com ^0000FFRandom Options^000000 qualquer arma.";
+    next;
+    mes .n$;
+    mes "O custo do encantamento é de:";
+    mes ""+mesitemlink(.itemRequerido)+", ^0000ff"+.quant+"x^000000.";
+	mes "O que deseja fazer?";
+    switch(select("^0084ff[»]^000000 Encantar Armas:^0084ff[»]^000000 Resetar Options:^0084ff[»]^000000 Mais Informações:Cancelar")) {
+        case 1:
+            if(getequipid(EQI_HAND_R) < 1) {
+				clear;
+                mes .n$;
+                mes "Você deve estar equipado com um item para encantar encantado.";
+                end;
+            }
+
+            set .@part,EQI_HAND_R;
+            goto CONTINUE;
+        end;
+		
+		case 2:
+			clear;
+			set .@part,EQI_HAND_R;
+			if (!getequiprandomoption(.@part, 0, ROA_ID)) {
+				mes .n$;
+				mes "O seu item ainda não foi encantado.";
+				close;
+			} else {
+				goto RESETAR;
+			}
+			
+			break;
+			
+		case 3:
+			clear;
+			mes .n$;
+			mes "No momento, temos três encantamentos específicos a serem sorteados:";
+			mes "- ^0000FFAtaque Físico (1% ~ 3%)^000000", "- ^0000FFAtaque à Distância (3% ~ 5%)^000000", "- ^0000FFAtaque Mágico (3% ~ 5%)^000000";
+			next;
+			mes .n$;
+			mes "Apesar de poder escolher o tipo de encantamento, ^FF0000há uma chance de falha de "+.falha+"%^000000.";
+			mes "Não se preocupe pois ^0000FFseu item não quebrará e também cartas e refinamento serão preservados^000000.";
+			next;
+			mes .n$;
+			mes "E aí, vamos encantar sua arma hoje?";
+			close;
+			break;
+		
+        case 4:
+        end;
+    }
+
+CONTINUE:
+	clear;
+    if(!getequipid(.@part)) {
+        mes .n$;
+        mes "Você está usando um equipamento que não pode ser encantado.";
+        end;
+    }
+	
+	if (countitem(.itemRequerido) < .quant) {
+		mes .n$;
+		mes "Você não possui ao menos ^0000ff"+.quant+"^000000 "+mesitemlink(.itemRequerido)+".";
+		close;
+	}
+	
+	if (getequiprandomoption(.@part, 0, ROA_ID)) {
+		mes .n$;
+		mes "O seu item já foi encantado anteriormente. Volte com um item sem Options.";
+		close;
+	}
+	
+	mes .n$;
+	mes "Sortearemos um bônus de uma das categorias abaixo. Qual você deseja?";
+	switch( select("^0084ff[»]^000000 Ataque Físico %:^0084ff[»]^000000 Ataque à Distância %:^0084ff[»]^000000 Ataque Mágico %: Cancelar") ) {
+		
+		case 1:
+			// ATK %
+			set .RandOpt1_P[0], 13;
+			// Percentuais a serem sorteados
+			set .RandOpt1_P_MinV[0], 1;
+			set .RandOpt1_P_MaxV[0], 3;
+			break;
+		
+		case 2:
+			// LONG-RNGD ATK %
+			set .RandOpt1_P[0], 166;
+			// Percentuais a serem sorteados
+			set .RandOpt1_P_MinV[0], 3;
+			set .RandOpt1_P_MaxV[0], 5;
+			break;
+		
+		case 3:
+			// MATK %
+			set .RandOpt1_P[0], 14;
+			// Percentuais a serem sorteados
+			set .RandOpt1_P_MinV[0], 3;
+			set .RandOpt1_P_MaxV[0], 5;
+			break;
+		
+		default:
+			end;
+		
+	}
+
+    // Atribuindo valor aleatório entre 1 e 5 para o bônus
+    set .@Opt1_V, rand(.RandOpt1_P_MinV[0], .RandOpt1_P_MaxV[0]); // Garante que será um valor aleatório entre 1 e 5
+	set .@index, 0;
+	
+    if (Zeny < .vzeny) goto FALTA_ZENY;
+    if (#CASHPOINTS < .vcash) goto FALTA_CASH;
+    next;
+    mes .n$;
+    mes "Deseja encantar o item abaixo?";
+    switch(select("Cancelar:^FF6600[»]^000000 Encantar ^9964f2"+getitemname(getequipid(.@part))+"^000000")){
+    case 1:
+        end;
+    case 2:
+        clear;
+        progressbar "ffff00",.espera;
+        if(.falha > 100) set .falha,100;
+        if(rand(100) < .falha) goto Falhou;
+        specialeffect2 154;
+        mes .n$;
+        mes "Seu equipamento ^9964f2"+getitemname(getequipid(.@part))+"^000000 foi encantado com sucesso.";
+
+        set .@item,0;
+        set .@item,getequipid(.@part);
+		
+        delitem .itemRequerido, .quant;
+
+        setarray .RandOpt1[0],rand(.RandOpt1_P_MinV,.RandOpt1_P_MaxV); // não mexer
+		setrandomoption(.@part, .@index, .RandOpt1_P, .RandOpt1[0], 0);
+		
+        end;
+    }
+    end;
+    
+    Falhou:
+        specialeffect2 EF_PHARMACY_FAIL;
+        mes .n$;
+        mes "O processo de encantamento do equipamento ^9964f2"+getitemname(getequipid(.@part))+"^000000 falhou^FF0000^000000.";
+        delitem .itemRequerido, .quant;
+    end;
+    
+    MUITO_ITEM:
+        clear;
+        mes .n$;
+        mes "Não foi possível encantar ^9964f2"+getitemname(getequipid(.@part))+"^000000.";
+        mes "Você só deve ter ^FF0000UM^000000 deste equipamento em seu inventário.";
+    end;
+    
+    FALTA_ZENY:
+        clear;
+        mes .n$;
+        mes "Requer:  ^ff0000"+.vzeny+"^000000z";
+    end;
+    
+    FALTA_CASH:
+        clear;
+        mes .n$;
+        mes "Requer:  ^ff008415.000^000000 Pontos de Cash";
+    end;
+    
+    FALTA_ITEM3:
+        clear;
+        mes .n$;
+        mes "Não foi possível encantar ^9964f2"+getitemname(getequipid(.@part))+"^000000.";
+        mes "Requer: 1 ^ff0084"+getitemname(.item1)+"^000000";
+    end;
+	
+	RESETAR:
+		clear;
+		mes .n$;
+		mes "Você gostaria de apagar todas as Options de "+mesitemlink(getequipid(.@part))+"?";
+		if (select("Sim:Não") == 2) {
+			clear;
+			mes .n$;
+			mes "Tudo bem, volte quando quiser apagar os encantamentos da sua arma!";
+			close;
+		} else {
+			clear;
+			mes .n$;
+			mes "Uma vez apagados os encantamentos, seu item será preservado com seu refinamento e cartas iniciais. Deseja prosseguir?";
+			if (select("Sim:Não") == 2) {
+				clear;
+				mes .n$;
+				mes "Até a próxima então.";
+				close;
+			}
+		}
+		
+		getinventorylist;
+		set .@charId, getcharid(3);
+		set .@itemId, getequipid(.@part);
+				
+		set .@refine, getequiprefinerycnt(.@part);
+				
+		set .@card, getequipcardid(.@part, 0);
+		set .@card2, getequipcardid(.@part, 1);
+		set .@card3, getequipcardid(.@part, 2);
+		set .@card4, getequipcardid(.@part, 3);
+		
+		delequip .@part;
+		delitem .itemRequerido, .quant;
+		specialeffect2 EF_POK_JAP;
+		soundeffect "complete.wav", 0;
+		
+		getitem2 .@itemId, 1, 1, .@refine, 0, .@card, .@card2, .@card3, .@card4, .@charId;
+		
+	end;
+    
+OnInit:
+    //==============================
+    //  CONFIGURAÇÕES RANDOM OPTION 
+    //==============================
+    set .n$,"^FF6600[ Options de Armas ]^000000";
+    setarray .RandOpt1_P_MinV[0],1; // valor do mínimo do option
+    setarray .RandOpt1_P_MaxV[0],5; // valor do máximo do option
+    setarray .@OptParam[0],0;
+    setarray .@Optvar[0],0;
+
+	set .itemRequerido, 674; // Item requerido
+    set .quant, 1;         //quantidade do item requerido
+
+    set .espera, 0;            // Delay da barra de progresso em segundos
+    set .falha, 10;            // Define a chance de falha (%)
+    //============================
+    end;
+}

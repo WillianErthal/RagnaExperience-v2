@@ -1,0 +1,54 @@
+//-------------------------------------------------------------------------------------------||
+//   __  __                                  _                _____           _       _      ||
+//  |  \/  |                                (_)              / ____|         (_)     | |     ||
+//  | \  / | __ _  __ _ _ __ ___   __ _ _ __ _ _ __   __ _  | (___   ___ _ __ _ _ __ | |_    ||
+//  | |\/| |/ _` |/ _` | '_ ` _ \ / _` | '__| | '_ \ / _` |  \___ \ / __| '__| | '_ \| __|   ||
+//  | |  | | (_| | (_| | | | | | | (_| | |  | | | | | (_| |  ____) | (__| |  | | |_) | |_    ||
+//  |_|  |_|\__,_|\__, |_| |_| |_|\__,_|_|  |_|_| |_|\__, | |_____/ \___|_|  |_| .__/ \__|   ||
+//                 __/ |                              __/ |                    | |           ||
+//                |___/                              |___/                     |_|           ||
+//-------------------------------------------------------------------------------------------||
+//   VENDAS DE SERVIÇOS SERVIDORES DE RAGNAROK ONLINE/PERFECT WORLD/MU/AION/CABAL/MINECRAFT  ||
+//DISCORD:   https://discordapp.com/channels/@me/Magmaring#0352                              ||
+//INSTAGRAM: https://www.instagram.com/evandro_srk/                                          ||
+//FACEBOOK:  https://www.facebook.com/sorakamente/                                           ||
+//GITHUB:    https://github.com/magmaring                                                    ||
+//-------------------------------------------------------------------------------------------||
+// = Criação:                                                                                ||
+// - [ADM] Magmaring - Evandro Oliveira     												 ||
+//-------------------------------------------------------------------------------------------||
+// = Revisão:                                                                                ||
+// - Esse arquivo teve sua última revisão 07 de janeiro de 2024    				         	 ||
+//-------------------------------------------------------------------------------------------||
+-	script	Pico	-1,{
+
+OnPCLoginEvent:
+
+sleep 1000;
+.onlineusers = getusers(1);
+
+.date$ = gettime(DT_YEAR)+"-"+gettime(DT_MONTH)+"-"+gettime(DT_DAYOFMONTH);
+
+query_sql("SELECT `users` FROM `" + .sqltable$ + "` ORDER BY `users` LIMIT 1",.@countusers);
+
+if(getarraysize(.@countusers) == 0) {
+	query_sql("INSERT INTO `" + .sqltable$ + "` (`users`, `date`) VALUES (" + .onlineusers + ", '" + .date$ + "')");
+} else {
+	if(.onlineusers > .@countusers[0]) {
+		if(.displaypeakannounce == 1){
+			announce "[Elysium]: Um novo record de jogadores foi alcançado ["+.onlineusers+" players].",bc_all;
+		}
+		query_sql("UPDATE `" + .sqltable$ + "` SET `users` = '" + .onlineusers + "', `date` = '" + .date$ + "'");
+	}
+}
+end;
+
+OnInit:
+// CONFIG
+	.sqltable$ = "cp_onlinepeak";
+
+	// 1 = Yes
+	// 0 = No
+	.displaypeakannounce = 1;
+
+}

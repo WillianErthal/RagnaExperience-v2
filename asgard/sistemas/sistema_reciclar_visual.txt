@@ -1,0 +1,123 @@
+//-------------------------------------------------------------------------------------------||
+//   __  __                                  _                _____           _       _      ||
+//  |  \/  |                                (_)              / ____|         (_)     | |     ||
+//  | \  / | __ _  __ _ _ __ ___   __ _ _ __ _ _ __   __ _  | (___   ___ _ __ _ _ __ | |_    ||
+//  | |\/| |/ _` |/ _` | '_ ` _ \ / _` | '__| | '_ \ / _` |  \___ \ / __| '__| | '_ \| __|   ||
+//  | |  | | (_| | (_| | | | | | | (_| | |  | | | | | (_| |  ____) | (__| |  | | |_) | |_    ||
+//  |_|  |_|\__,_|\__, |_| |_| |_|\__,_|_|  |_|_| |_|\__, | |_____/ \___|_|  |_| .__/ \__|   ||
+//                 __/ |                              __/ |                    | |           ||
+//                |___/                              |___/                     |_|           ||
+//-------------------------------------------------------------------------------------------||
+//   VENDAS DE SERVIÇOS SERVIDORES DE RAGNAROK ONLINE/PERFECT WORLD/MU/AION/CABAL/MINECRAFT  ||
+//DISCORD:   https://discordapp.com/channels/@me/Magmaring#0352                              ||
+//INSTAGRAM: https://www.instagram.com/evandro_srk/                                          ||
+//FACEBOOK:  https://www.facebook.com/sorakamente/                                           ||
+//GITHUB:    https://github.com/magmaring                                                    ||
+//-------------------------------------------------------------------------------------------||
+// = Criação:                                                                                ||
+// - [ADM] Magmaring - Evandro Oliveira     												 ||
+//-------------------------------------------------------------------------------------------||
+// = Revisão:                                                                                ||
+// - Esse arquivo teve sua última revisão 07 de janeiro de 2024    				         	 ||
+//-------------------------------------------------------------------------------------------||
+-	shop	reciclagem_visuais	-1, 501:50.
+
+prontera,183,170,3	script	Reciclador de Visuais	11006,{
+    mes .nomeNPC$;
+    mes "Oi, eu estou à cargo da reciclagem de itens visuais!";
+    mes "Cada item visual poderá ser trocado por ^0000FF"+callfunc("F_InsertComma", .cashBack)+" ROP's.^000000";
+	mes "Aviso: ^FF0000Itens não visuais serão desconsiderados na hora da venda.^000000";
+    next;
+    mes .nomeNPC$;
+    mes "Lembre-se que ^FF0000seu item visual será perdido^000000 e em troca ^0000FFvocê receberá os ROP's equivalentes.^000000";
+	close2;
+    
+	npcshopdelitem "reciclagem_visuais", 501, 502;
+	
+	getinventorylist;
+	for( .@i = 0; .@i < @inventory_count; .@i++ ) {
+		set .@checa_loc, getiteminfo( @inventorylist_id[.@i], ITEMINFO_LOCATIONS );
+		switch( .@checa_loc ) {	
+			// Topos Visuais
+			case 1024:
+			// Meios Visuais
+			case 2048:
+			// Baixos Visuais
+			case 4096:
+			// Topos + Meios + Baixos Visuais
+			case 7168:
+			// Topos + Meios Visuais
+			case 3072:	
+			// Capas Visuais
+			case 8192:
+				npcshopadditem "reciclagem_visuais", @inventorylist_id[.@i], -1;
+				break;
+			default:
+				npcshopdelitem "reciclagem_visuais", @inventorylist_id[.@i];
+				break;
+		}
+	}
+	callshop "reciclagem_visuais", 2;
+    npcshopattach "reciclagem_visuais";
+    end;
+
+OnSellItem:
+    .@totalCash = 0;
+    // Loop through each item sold to check if it’s a costume
+    for (.@i = 0; .@i < getarraysize(@sold_nameid); .@i++) {
+		set .@equip_loc, getiteminfo(@sold_nameid[.@i], ITEMINFO_LOCATIONS);
+		if (countitem(@sold_nameid[.@i]) < @sold_quantity[.@i] || @sold_quantity[.@i] <= 0) {
+			mes "omgh4x!";
+			close;
+		} 
+		
+        .@itemQty = @sold_quantity[.@i];
+		.@itemID = @sold_nameid[.@i];
+		
+		switch( .@equip_loc ) {	
+			// Topos Visuais
+			case 1024:
+			// Meios Visuais
+			case 2048:
+			// Baixos Visuais
+			case 4096:
+			// Topos + Meios + Baixos Visuais
+			case 7168:
+			// Topos + Meios Visuais
+			case 3072:	
+			// Capas Visuais
+			case 8192:
+				// ROP's adicionais
+				.@totalCash += .cashBack * .@itemQty;
+				delitem .@itemID, .@itemQty;
+				break;
+			default:
+				break;
+		}
+    }
+	deletearray @sold_quantity, getarraysize(@sold_quantity);
+	deletearray @sold_nameid, getarraysize(@sold_nameid);
+    // Add the calculated ROPs to the player's cash points if there were valid costumes sold
+    if (.@totalCash > 0) {
+        set #CASHPOINTS, #CASHPOINTS + .@totalCash;
+        mes .nomeNPC$;
+        mes "Você recebeu ^0000FF"+callfunc("F_InsertComma", .@totalCash)+" ROP's^000000 em troca dos visuais reciclados!";
+        dispbottom "[Reciclagem de Visuais]: Você reciclou visuais e recebeu "+callfunc("F_InsertComma", .@totalCash)+" ROP's. [Total: "+callfunc("F_InsertComma", #CASHPOINTS)+"]";
+    } else {
+        mes .nomeNPC$;
+        mes "Perdão, mas eu só trabalho com itens visuais.";
+    }
+	close;
+
+OnInit:
+    // Nome do NPC
+    .nomeNPC$ = "[^0000FFReciclador de Visuais^000000]";
+    // Valor em ROP's dado em troca por cada item visual
+    .cashBack = 2500;
+
+    // Configure items for the shop (dummy values)
+    npcshopitem "reciclagem_visuais", 501, 40, 502, 200;
+	
+	//waitingroom " Recicle Visuais",0;
+    end;
+}
