@@ -11972,6 +11972,12 @@ static const struct _battle_data {
 	{ "loot_range",                         &battle_config.loot_range,                      12,     1,      MAX_WALKPATH,   },
 	{ "assist_range",                       &battle_config.assist_range,                    11,     1,      MAX_WALKPATH,   },
 
+	// RAGNAEXPERIENCE [RomuloSM]: Pet Random Option
+	{ "pet_random_full_loyalty", &battle_config.pet_random_full_loyalty, 2028, 0, INT_MAX, },
+	{ "pet_random_not_hungry", &battle_config.pet_random_not_hungry, 2029, 0, INT_MAX, },
+	{ "pet_random_full_loyalty_not_hungry", &battle_config.pet_random_full_loyalty_not_hungry, 2030, 0, INT_MAX, },
+	// RAGNAEXPERIENCE [RomuloSM]: Pet Random Option
+
 #include <custom/battle_config_init.inc>
 };
 

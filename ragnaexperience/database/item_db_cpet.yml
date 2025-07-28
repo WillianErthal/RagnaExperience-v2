@@ -89,6 +89,11 @@ Header:
   Version: 3
 
 Body:
+
+#=============================================================
+# - CUSTOM PET EGG PRE RANDOM OPTION 
+#=============================================================
+
   - Id: 41073
     AegisName: Poring_Egg_C
     Name: Poring Egg

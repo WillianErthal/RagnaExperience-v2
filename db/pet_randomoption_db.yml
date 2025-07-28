@@ -1,0 +1,7 @@
+Header:
+  Type: PET_RANDOM_OPT_DB
+  Version: 1
+
+Footer:
+  Imports:
+    - Path: ragnaexperience/database/cpet_randomoption.yml

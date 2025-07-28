@@ -262,4 +262,30 @@ void pet_delautobonus(map_session_data &sd, std::vector<std::shared_ptr<s_petaut
 void do_init_pet(void);
 void do_final_pet(void);
 
+//RAGNAEXPERIENCE [RomuloSM]: Pet Random Option
+struct s_pet_random_option {
+	t_itemid nameId;
+	uint16 randomopt_group;
+};
+
+class PetRandomOptionDatabase : public TypesafeYamlDatabase<t_itemid, s_pet_random_option> {
+public:
+	PetRandomOptionDatabase() : TypesafeYamlDatabase("PET_RANDOM_OPT_DB", 1) {
+
+	}
+
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode(const ryml::NodeRef& node);
+};
+
+extern PetRandomOptionDatabase pet_randomoption_db;
+
+enum pet_special_opt : uint8 {
+	PET_FULL_LOYALTY = 0,
+	PET_NOT_HUNGRY
+};
+
+bool pet_check_special_options(map_session_data *sd, struct pet_data *pd, uint8 type);
+//RAGNAEXPERIENCE [RomuloSM]: Pet Random Option
+
 #endif /* PET_HPP */

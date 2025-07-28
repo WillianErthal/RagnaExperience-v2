@@ -27750,6 +27750,123 @@ BUILDIN_FUNC(preg_match) {
 #endif
 }
 
+//RAGNAEXPERIENCE [RomuloSM]: Adiciona um Random Option em um Ovo de Pet.
+//	pet_setrandomoption(<pet_id>,<index>,<id>,<value>,<param>{,<char id>});
+BUILDIN_FUNC(pet_setrandomoption) {
+	map_session_data *sd;
+	int i, pet_id, index, id, value, param;
+
+	if (!script_charid2sd(7, sd)) {
+		script_pushint(st, 0);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	pet_id = script_getnum(st, 2);
+	index = script_getnum(st, 3);
+	id = script_getnum(st, 4);
+	value = script_getnum(st, 5);
+	param = script_getnum(st, 6);
+
+	if( id ) {
+		std::shared_ptr<s_random_opt_data> opt = random_option_db.find(static_cast<uint16>(id));
+
+		if (opt == nullptr) {
+			ShowError("buildin_pet_setrandomoption: Random option ID %d does not exists.\n", id);
+			script_pushint(st, 0);
+			return SCRIPT_CMD_FAILURE;
+		}
+	}
+
+	if (index < 0 || index >= MAX_ITEM_RDM_OPT) {
+		ShowError("buildin_pet_setrandomoption: Invalid random option index %d.\n", index);
+		script_pushint(st, 0);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	ARR_FIND(0, MAX_INVENTORY, i, sd->inventory_data[i] && sd->inventory_data[i]->type == IT_PETEGG && sd->inventory.u.items_inventory[i].card[0] == CARD0_PET && sd->inventory.u.items_inventory[i].card[1] == GetWord(pet_id,0) && sd->inventory.u.items_inventory[i].card[2] == GetWord(pet_id,1) );
+
+	if( i < MAX_INVENTORY ) {
+		log_pick_pc(sd, LOG_TYPE_SCRIPT, -1, &sd->inventory.u.items_inventory[i]);
+		sd->inventory.u.items_inventory[i].option[index].id = id;
+		sd->inventory.u.items_inventory[i].option[index].value = value;
+		sd->inventory.u.items_inventory[i].option[index].param = param;
+		clif_delitem(*sd, i, 1, 3);
+		log_pick_pc(sd, LOG_TYPE_SCRIPT, -1, &sd->inventory.u.items_inventory[i]);
+		clif_additem(sd, i, 1, 0);
+		script_pushint(st,1);
+	}
+	else {
+		ShowError("buildin_pet_setrandomoption: No Egge Pet %d (CID=%d/AID=%d).\n", pet_id, sd->status.char_id, sd->status.account_id);
+		script_pushint(st, 0);
+	}
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+// pet_getrandomoption <pet_id>,{,<char id>};
+BUILDIN_FUNC(pet_getrandomoption) {
+	map_session_data *sd;
+	int i, pet_id, j = 0;
+
+	if (!script_charid2sd(3, sd)) {
+		script_pushint(st, 0);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	pet_id = script_getnum(st, 2);
+
+	ARR_FIND(0, MAX_INVENTORY, i, sd->inventory_data[i] && sd->inventory_data[i]->type == IT_PETEGG && sd->inventory.u.items_inventory[i].card[0] == CARD0_PET && sd->inventory.u.items_inventory[i].card[1] == GetWord(pet_id,0) && sd->inventory.u.items_inventory[i].card[2] == GetWord(pet_id,1));
+	if( i < MAX_INVENTORY ) {
+		for( int k = 0; k < MAX_ITEM_RDM_OPT; k++ ) {
+			pc_setreg(sd,reference_uid(add_str("@pet_option_idx"), k), k);
+			pc_setreg(sd,reference_uid(add_str("@pet_option_id"), k),sd->inventory.u.items_inventory[i].option[k].id);
+			pc_setreg(sd,reference_uid(add_str("@pet_option_value"), k),sd->inventory.u.items_inventory[i].option[k].value);
+			pc_setreg(sd,reference_uid(add_str("@pet_option_parameter"), k),sd->inventory.u.items_inventory[i].option[k].param);
+
+			if( sd->inventory.u.items_inventory[i].option[k].id )
+				j++;
+		}
+
+		pc_setreg(sd,add_str("@pet_option_count"),j);
+	}
+	else {
+		ShowError("buildin_pet_getrandomoption: No Egge Pet %d (CID=%d/AID=%d).\n", pet_id, sd->status.char_id, sd->status.account_id);
+	}
+
+	script_pushint(st, j);
+	return SCRIPT_CMD_SUCCESS;	
+}
+//RAGNAEXPERIENCE [RomuloSM]: Adiciona um Random Option em um Ovo de Pet.
+
+// pet_checkrandomoption <pet_id>,<option_id>,{,<char id>};
+BUILDIN_FUNC(pet_checkrandomoption) {
+	map_session_data *sd;
+	int i, k, pet_id, id, j = 0;
+
+	if (!script_charid2sd(4, sd)) {
+		script_pushint(st, -1);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	pet_id = script_getnum(st, 2);
+	id = script_getnum(st, 3);
+
+	ARR_FIND(0, MAX_INVENTORY, i, sd->inventory_data[i] && sd->inventory_data[i]->type == IT_PETEGG && sd->inventory.u.items_inventory[i].card[0] == CARD0_PET && sd->inventory.u.items_inventory[i].card[1] == GetWord(pet_id,0) && sd->inventory.u.items_inventory[i].card[2] == GetWord(pet_id,1));
+	if( i < MAX_INVENTORY ) {
+		ARR_FIND(0, MAX_ITEM_RDM_OPT, k, sd->inventory.u.items_inventory[i].option[k].id == id);
+		if( k < MAX_ITEM_RDM_OPT )
+			script_pushint(st, k);
+		else
+			script_pushint(st, -1);
+	}
+	else {
+		ShowError("buildin_pet_checkrandomoption: No Egge Pet %d (CID=%d/AID=%d).\n", pet_id, sd->status.char_id, sd->status.account_id);
+		script_pushint(st, -1);
+	}
+
+	return SCRIPT_CMD_SUCCESS;	
+}
+
 /// script command definitions
 /// for an explanation on args, see add_buildin_func
 struct script_function buildin_func[] = {
@@ -28476,6 +28593,12 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF2(permission_add, "permission_remove", "i?"),
 
 	BUILDIN_DEF( mesitemicon, "i??" ),
+
+	//RAGNAEXPERIENCE [RomuloSM]: Pet Random Options
+	BUILDIN_DEF(pet_setrandomoption, "iiii?"),
+	BUILDIN_DEF(pet_getrandomoption, "i?"),
+	BUILDIN_DEF(pet_checkrandomoption, "ii?"),
+	//RAGNAEXPERIENCE [RomuloSM]: Pet Random Options
 
 #include <custom/script_def.inc>
 

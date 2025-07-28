@@ -2830,6 +2830,18 @@ static void clif_addcards(struct EQUIPSLOTINFO* buf, struct item* item) {
 
 	// Pet eggs
 	if (item->card[0] == CARD0_PET) {
+		//RAGNAEXPERIENCE [RomuloSM]: Pet Random Option
+		int i;
+		ARR_FIND(0, MAX_ITEM_RDM_OPT, i, item->option[i].id != 0);
+		if (i < MAX_ITEM_RDM_OPT) {
+			buf->card[0] = 0;
+			buf->card[1] = 0;
+			buf->card[2] = 0;
+			buf->card[3] = 0;
+			return;
+			
+		}
+		//RAGNAEXPERIENCE [RomuloSM]: Pet Random Option
 		buf->card[0] = 0;
 		buf->card[1] = 0;
 		// Pet intimacy

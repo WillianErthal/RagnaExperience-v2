@@ -4156,6 +4156,32 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 		}
 	}
 
+	//RAGNAEXPERIENCE [RomuloSM]: Pet Random Option
+	if( sd->pd ) {
+		struct pet_data *pd = sd->pd;
+		index = pet_egg_search( sd, pd->pet.pet_id );
+		if( sd->inventory_data[index] ) {
+			current_equip_item_index = index;
+			for (uint8 j = 0; j < MAX_ITEM_RDM_OPT; j++) {
+				short opt_id = sd->inventory.u.items_inventory[index].option[j].id;
+
+				if (!opt_id)
+					continue;
+				current_equip_opt_index = j;
+
+				std::shared_ptr<s_random_opt_data> data = random_option_db.find(opt_id);
+
+				if (!data || !data->script)
+					continue;
+				if (!pc_has_permission(sd, PC_PERM_USE_ALL_EQUIPMENT) && itemdb_type(sd->inventory.u.items_inventory[index].nameid) != IT_PETEGG )
+					continue;
+
+				run_script(data->script, 0, sd->bl.id, 0);
+			}
+		}
+	}
+	//RAGNAEXPERIENCE [RomuloSM]: Pet Random Option
+
 	pc_bonus_script(sd);
 
 	if( sd->pd ) { // Pet Bonus

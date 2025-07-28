@@ -849,6 +849,11 @@ static TIMER_FUNC(pet_hungry){
 
 	pd->pet_hungry_timer = INVALID_TIMER;
 
+	//RAGNAEXPERIENCE [RomuloSM]: Pet Random Option
+	if (pet_check_special_options(sd, pd, PET_FULL_LOYALTY))
+		 pd->pet.intimate = PET_INTIMATE_MAX;
+	//RAGNAEXPERIENCE [RomuloSM]: Pet Random Option
+
 	if (pd->pet.intimate <= PET_INTIMATE_NONE)
 		return 1; //You lost the pet already, the rest is irrelevant.
 
@@ -860,6 +865,11 @@ static TIMER_FUNC(pet_hungry){
 		interval = pet_db_ptr->hungry_delay;
 
 	pd->pet.hungry -= pet_db_ptr->fullness;
+
+	//RAGNAEXPERIENCE [RomuloSM]: Pet Random Option
+	if (pet_check_special_options(sd, pd, PET_NOT_HUNGRY))
+		 pd->pet.hungry = PET_HUNGRY_STUFFED;
+	//RAGNAEXPERIENCE [RomuloSM]: Pet Random Option
 
 	if( pd->pet.hungry < PET_HUNGRY_NONE ) {
 		unit_stop_attack( &pd->bl );
@@ -1028,6 +1038,13 @@ bool pet_data_init(map_session_data *sd, struct s_pet *pet)
 	status_set_viewdata(&pd->bl, pet->class_);
 	unit_dataset(&pd->bl);
 	pd->ud.dir = sd->ud.dir;
+
+	//RAGNAEXPERIENCE [RomuloSM]: Pet Random Option
+	if (pet_check_special_options(sd, pd, PET_FULL_LOYALTY))
+		 pd->pet.intimate = PET_INTIMATE_MAX;
+	if (pet_check_special_options(sd, pd, PET_NOT_HUNGRY))
+		 pd->pet.hungry = PET_HUNGRY_STUFFED;
+	//RAGNAEXPERIENCE [RomuloSM]: Pet Random Option
 
 	pd->bl.m = sd->bl.m;
 	pd->bl.x = sd->bl.x;
@@ -1399,6 +1416,92 @@ bool pet_get_egg(uint32 account_id, int16 pet_class, int32 pet_id ) {
 	tmp_item.card[2] = GetWord(pet_id,1);
 	tmp_item.card[3] = 0; //New pets are not named.
 	tmp_item.card[3] |= pet_get_card3_intimacy( pet->intimate ); // Store intimacy status based on initial intimacy
+
+	//RAGNAEXPERIENCE [RomuloSM]: Pet Random Option
+	std::shared_ptr<s_pet_random_option> prndopt = pet_randomoption_db.find(pet->EggID);
+	if( prndopt != nullptr ) {
+		std::shared_ptr<s_random_opt_group> group = random_option_group.find(prndopt->randomopt_group);
+
+		auto apply_sub = []( s_item_randomoption& item_option, const std::shared_ptr<s_random_opt_group_entry>& option ){
+			item_option.id = option->id;
+			item_option.value = rnd_value( option->min_value, option->max_value );
+			item_option.param = option->param;
+		};
+
+			// (Re)initialize all the options
+		for( size_t i = 0; i < MAX_ITEM_RDM_OPT; i++ ){
+			tmp_item.option[i].id = 0;
+			tmp_item.option[i].value = 0;
+			tmp_item.option[i].param = 0;
+		};
+
+		for( size_t i = 0; i < group->slots.size(); i++ ){
+			// Try to apply an entry
+			for( size_t j = 0, max = group->slots[static_cast<uint16>(i)].size() * 3; j < max; j++ ){
+				std::shared_ptr<s_random_opt_group_entry> option = util::vector_random( group->slots[static_cast<uint16>(i)] );
+
+				if( rnd() % 10000 < option->chance ){
+					apply_sub( tmp_item.option[i], option );
+					break;
+				}
+			}
+
+			// If no entry was applied, assign one
+			if( tmp_item.option[i].id == 0 ){
+				std::shared_ptr<s_random_opt_group_entry> option = util::vector_random( group->slots[static_cast<uint16>(i)] );
+
+				// Apply an entry without checking the chance
+				apply_sub( tmp_item.option[i], option );
+			}
+		}
+
+		// Apply Random options (if available)
+		if( group->max_random > 0 ){
+			for( size_t i = 0; i < min( group->max_random, MAX_ITEM_RDM_OPT ); i++ ){
+				// If item already has an option in this slot, skip it
+				if( tmp_item.option[i].id > 0 ){
+					continue;
+				}
+
+				std::shared_ptr<s_random_opt_group_entry> option = util::vector_random( group->random_options );
+
+				if( rnd() % 10000 < option->chance ){
+					apply_sub( tmp_item.option[i], option );
+				}
+			}
+		}
+
+		// Fix any gaps, the client cannot handle this
+		for( size_t i = 0; i < MAX_ITEM_RDM_OPT; i++ ){
+			// If an option is empty
+			if( tmp_item.option[i].id == 0 ){
+				// Check if any other options, after the empty option exist
+				size_t j;
+				for( j = i + 1; j < MAX_ITEM_RDM_OPT; j++ ){
+					if(tmp_item.option[j].id != 0 ){
+						break;
+					}
+				}
+
+				// Another option was found, after the empty option
+				if( j < MAX_ITEM_RDM_OPT ){
+					// Move the later option forward
+					tmp_item.option[i].id = tmp_item.option[j].id;
+					tmp_item.option[i].value = tmp_item.option[j].value;
+					tmp_item.option[i].param = tmp_item.option[j].param;
+
+					// Reset the option that was moved
+					tmp_item.option[j].id = 0;
+					tmp_item.option[j].value = 0;
+					tmp_item.option[j].param = 0;
+				}else{
+					// Cancel early
+					break;
+				}
+			}
+		}
+	}
+	//RAGNAEXPERIENCE [RomuloSM]: Pet Random Option
 
 	if((ret = pc_additem(sd,&tmp_item,1,LOG_TYPE_PICKDROP_PLAYER))) {
 		clif_additem(sd, 0, 0, ret);
@@ -2473,12 +2576,96 @@ TIMER_FUNC(pet_endautobonus) {
 	return 0;
 }
 
+//RAGNAEXPERIENCE [RomuloSM]: Pet Random Option
+PetRandomOptionDatabase pet_randomoption_db;
+
+const std::string PetRandomOptionDatabase::getDefaultLocation() {
+	return std::string(db_path) + "/pet_randomoption_db.yml";
+}
+
+uint64 PetRandomOptionDatabase::parseBodyNode( const ryml::NodeRef& node ){
+	t_itemid item_id;
+
+	std::string name;
+
+	if( !this->asString( node, "Item", name ) ){
+		return 0;
+	}
+
+
+	std::shared_ptr<item_data> id = item_db.search_aegisname(name.c_str());
+	
+	if( id == nullptr ){
+		this->invalidWarning( node["Item"], "Unknown item \"%s\".\n", name.c_str() );
+		return 0;
+	}
+
+	item_id = id->nameid;
+
+	std::shared_ptr<s_pet_db> pet = pet_db_search(item_id, PET_EGG);
+
+	if( pet == nullptr ) {
+		this->invalidWarning( node["Item"], "Pet Egg not found for item \"%s\".\n", name.c_str() );
+		return 0;
+	}
+
+	std::shared_ptr<s_pet_random_option> prndopt = this->find(item_id);
+	bool exists = prndopt != nullptr;
+
+	if (!exists) {
+		if (!this->nodesExist(node, { "RandomOptionGroup" }))
+			return 0;
+
+		prndopt = std::make_shared<s_pet_random_option>();
+		prndopt->nameId = item_id;
+	}
+
+	if (this->nodeExists(node, "RandomOptionGroup")) {
+		uint16 group = 0;
+		std::string group_name;
+
+		if (!this->asString(node, "RandomOptionGroup", group_name))
+			return false;
+
+		if (!random_option_group.option_get_id(group_name.c_str(), group))
+			this->invalidWarning(node["RandomOptionGroup"], "Unknown random option group %s for egg %s, defaulting to no group.\n", group_name.c_str(), name.c_str());
+
+		prndopt->randomopt_group = group;
+	}
+
+	if (!exists)
+		this->put(prndopt->nameId, prndopt);
+
+	return 1;
+}
+
+bool pet_check_special_options(map_session_data *sd, struct pet_data *pd, uint8 type) {
+	nullpo_retr(false, sd);
+	nullpo_retr(false, pd);
+
+	int i = MAX_ITEM_RDM_OPT, n = pet_egg_search( sd, pd->pet.pet_id );
+
+	if( n == -1 ){
+		return false;
+ 	}
+
+	if( type == PET_FULL_LOYALTY && battle_config.pet_random_full_loyalty )
+		ARR_FIND(0, MAX_ITEM_RDM_OPT, i, sd->inventory.u.items_inventory[n].option[i].id == battle_config.pet_random_full_loyalty || sd->inventory.u.items_inventory[n].option[i].id == battle_config.pet_random_full_loyalty_not_hungry);
+	else if( type == PET_NOT_HUNGRY && battle_config.pet_random_not_hungry )
+		ARR_FIND(0, MAX_ITEM_RDM_OPT, i, sd->inventory.u.items_inventory[n].option[i].id == battle_config.pet_random_not_hungry || sd->inventory.u.items_inventory[n].option[i].id == battle_config.pet_random_full_loyalty_not_hungry);
+
+	return ( i < MAX_ITEM_RDM_OPT ) ? true : false;
+}
+//RAGNAEXPERIENCE [RomuloSM]: Pet Random Option
+
 /**
  * Initialize pet data.
  */
 void do_init_pet(void)
 {
 	pet_db.load();
+
+	pet_randomoption_db.load(); //RAGNAEXPERIENCE [RomuloSM]: Pet Random Option
 
 	add_timer_func_list(pet_hungry,"pet_hungry");
 	add_timer_func_list(pet_ai_hard,"pet_ai_hard");
@@ -2501,4 +2688,5 @@ void do_final_pet(void)
 	pet_autobonuses.clear();
 
 	pet_db.clear();
+	pet_randomoption_db.clear(); //RAGNAEXPERIENCE [RomuloSM]: Pet Random Option
 }

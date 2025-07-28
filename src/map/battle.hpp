@@ -771,6 +771,12 @@ struct Battle_Config
 	int32 loot_range;
 	int32 assist_range;
 
+	//RAGNAEXPERIENCE [RomuloSM]: Pet Random Option
+	int32 pet_random_full_loyalty;
+	int32 pet_random_not_hungry;
+	int32 pet_random_full_loyalty_not_hungry;
+	//RAGNAEXPERIENCE [RomuloSM]: Pet Random Option
+
 #include <custom/battle_config_struct.inc>
 };
 
