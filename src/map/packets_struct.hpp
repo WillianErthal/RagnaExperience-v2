@@ -79,7 +79,7 @@ enum packet_headers {
 	authokType = 0x73,
 #elif PACKETVER < 20141022
 	authokType = 0x2eb,
-// Some clients smaller than 20160330 cant be tested [4144]
+	// Some clients smaller than 20160330 cant be tested [4144]
 #elif PACKETVER < 20160330
 	authokType = 0xa18,
 #else
@@ -515,7 +515,7 @@ struct packet_authok {
 #if PACKETVER >= 20080102
 	int16 font;
 #endif
-// Some clients smaller than 20160330 cant be tested [4144]
+	// Some clients smaller than 20160330 cant be tested [4144]
 #if PACKETVER >= 20141022 && PACKETVER < 20160330
 	uint8 sex;
 #endif
@@ -749,7 +749,7 @@ struct packet_spawn_unit {
 #if PACKETVER >= 20150513
 	int16 body;
 #endif
-/* Might be earlier, this is when the named item bug began */
+	/* Might be earlier, this is when the named item bug began */
 #if PACKETVER >= 20131223
 	char name[NAME_LENGTH];
 #endif
@@ -823,7 +823,7 @@ struct packet_unit_walking {
 #if PACKETVER >= 20150513
 	uint16 body;
 #endif
-/* Might be earlier, this is when the named item bug began */
+	/* Might be earlier, this is when the named item bug began */
 #if PACKETVER >= 20131223
 	char name[NAME_LENGTH];
 #endif
@@ -895,7 +895,7 @@ struct packet_idle_unit {
 #if PACKETVER >= 20150513
 	uint16 body;
 #endif
-/* Might be earlier, this is when the named item bug began */
+	/* Might be earlier, this is when the named item bug began */
 #if PACKETVER >= 20131223
 	char name[NAME_LENGTH];
 #endif
@@ -939,18 +939,18 @@ struct packet_maptypeproperty2 {
 	int16 PacketType;
 	int16 type;
 	struct {
-		uint32 party             : 1;  // Show attack cursor on non-party members (PvP)
-		uint32 guild             : 1;  // Show attack cursor on non-guild members (GvG)
-		uint32 siege             : 1;  // Show emblem over characters' heads when in GvG (WoE castle)
-		uint32 mineffect         : 1;  // Automatically enable /mineffect
-		uint32 nolockon          : 1;  // TODO: What does this do? (shows attack cursor on non-party members)
-		uint32 countpk           : 1;  /// Show the PvP counter
-		uint32 nopartyformation  : 1;  /// Prevent party creation/modification
-		uint32 bg                : 1;  // TODO: What does this do? Probably related to Battlegrounds, but I'm not sure on the effect
-		uint32 nocostume         : 1;  /// Does not show costume sprite.
-		uint32 usecart           : 1;  /// Allow opening cart inventory
+		uint32 party : 1;  // Show attack cursor on non-party members (PvP)
+		uint32 guild : 1;  // Show attack cursor on non-guild members (GvG)
+		uint32 siege : 1;  // Show emblem over characters' heads when in GvG (WoE castle)
+		uint32 mineffect : 1;  // Automatically enable /mineffect
+		uint32 nolockon : 1;  // TODO: What does this do? (shows attack cursor on non-party members)
+		uint32 countpk : 1;  /// Show the PvP counter
+		uint32 nopartyformation : 1;  /// Prevent party creation/modification
+		uint32 bg : 1;  // TODO: What does this do? Probably related to Battlegrounds, but I'm not sure on the effect
+		uint32 nocostume : 1;  /// Does not show costume sprite.
+		uint32 usecart : 1;  /// Allow opening cart inventory
 		uint32 summonstarmiracle : 1;  // TODO: What does this do? Related to Taekwon Masters, but I have no idea.
-		uint32 SpareBits         : 21; /// Currently ignored, reserved for future updates
+		uint32 SpareBits : 21; /// Currently ignored, reserved for future updates
 	} flag;
 } __attribute__((packed));
 
@@ -3182,7 +3182,7 @@ struct PACKET_ZC_PC_PURCHASE_ITEMLIST_FROMMC_sub {
 #if PACKETVER >= 20150226
 	struct ItemOptions option_data[MAX_ITEM_OPTIONS];
 #endif
-// [4144] date 20160921 not confirmed. Can be bigger or smaller
+	// [4144] date 20160921 not confirmed. Can be bigger or smaller
 #if PACKETVER >= 20160921
 	uint32 location;
 	uint16 viewSprite;
@@ -3197,7 +3197,7 @@ struct PACKET_ZC_PC_PURCHASE_ITEMLIST_FROMMC {
 	int16 packetType;
 	int16 packetLength;
 	uint32 AID;
-// [4144] unconfirmed field
+	// [4144] unconfirmed field
 	uint32 venderId;
 	struct PACKET_ZC_PC_PURCHASE_ITEMLIST_FROMMC_sub items[];
 } __attribute__((packed));
@@ -3430,9 +3430,9 @@ struct PACKET_CZ_SEARCH_STORE_INFO {
 	uint8 itemsCount;
 	uint8 cardsCount;
 	struct PACKET_CZ_SEARCH_STORE_INFO_item items[];  // items[itemCount]
-/*
-	struct PACKET_CZ_SEARCH_STORE_INFO_item cards[cardCount];
-*/
+	/*
+		struct PACKET_CZ_SEARCH_STORE_INFO_item cards[cardCount];
+	*/
 } __attribute__((packed));
 
 struct PACKET_ZC_SEARCH_STORE_INFO_FAILED {
@@ -5920,7 +5920,7 @@ struct PACKET_ZC_GOLDPCCAFE_POINT {
 	int32 point;
 	int32 playedTime;
 } __attribute__((packed));
-DEFINE_PACKET_HEADER(ZC_GOLDPCCAFE_POINT , 0x0a15);
+DEFINE_PACKET_HEADER(ZC_GOLDPCCAFE_POINT, 0x0a15);
 #endif // PACKETVER >= 20140611
 
 #if PACKETVER >= 20140430
@@ -5936,7 +5936,7 @@ struct PACKET_ZC_DYNAMICNPC_CREATE_RESULT {
 	uint16 PacketType;
 	uint32 result; // enum dynamicnpc_create_result
 } __attribute__((packed));
-DEFINE_PACKET_HEADER(ZC_DYNAMICNPC_CREATE_RESULT , 0x0a17);
+DEFINE_PACKET_HEADER(ZC_DYNAMICNPC_CREATE_RESULT, 0x0a17);
 #endif // PACKETVER_MAIN_NUM >= 20140430 || PACKETVER_RE_NUM >= 20140430 || defined(PACKETVER_ZERO)
 
 struct PACKET_CZ_REQ_GUILD_EMBLEM_IMG1 {
@@ -6068,6 +6068,7 @@ struct PACKET_CZ_ADVENTURER_AGENCY_JOIN_RESULT {
 DEFINE_PACKET_HEADER(CZ_ADVENTURER_AGENCY_JOIN_RESULT, 0x0af8);
 #endif  // PACKETVER_MAIN_NUM >= 20191218 || PACKETVER_RE_NUM >= 20191211 || PACKETVER_ZERO_NUM >= 20191224
 
+//RAGNAEXPERIENCE - 6 - adventure - guide - update - for - 20240516 - clients
 #if (PACKETVER_MAIN_NUM >= 20240516)
 struct PACKET_CZ_QUEST_STATUS_REQ_SUB
 {
@@ -6076,8 +6077,8 @@ struct PACKET_CZ_QUEST_STATUS_REQ_SUB
 
 struct PACKET_CZ_QUEST_STATUS_REQ
 {
-    int16 PacketType;
-    uint16 PacketLength;
+	int16 PacketType;
+	uint16 PacketLength;
 	PACKET_CZ_QUEST_STATUS_REQ_SUB List[];
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(CZ_QUEST_STATUS_REQ, 0x0bf3);
@@ -6096,6 +6097,7 @@ struct PACKET_ZC_QUEST_STATUS_ACK
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_QUEST_STATUS_ACK, 0x0bf4);
 #endif
+//RAGNAEXPERIENCE - 6 - adventure - guide - update - for - 20240516 - clients
 
 struct PACKET_CZ_REQ_EMOTION2 {
 	int16 packetType;
